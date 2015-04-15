@@ -94,11 +94,12 @@ Metrics metrics;
 
 class Processor
 {
+
 public:
 	vector<CacheLine> cache;
 	int cacheMaxSize;
 
-	Metrics write(string address, Metrics metrics)
+	bool write(string address)
 	{
 
 	}
@@ -115,6 +116,7 @@ public:
 				wasHit = true;
 				// Set Usefulness here?
 
+				//makeMostRecentlyUsed(it);
 				lineToMove = (*it);
 				cache.erase(it);
 
@@ -158,12 +160,12 @@ public:
 		return wasHit;
 	}
 
-	void update(string address)
+	bool update(string address)
 	{
 
 	}
 
-	void invalidate(string address)
+	bool invalidate(string address)
 	{
 
 	}
@@ -226,6 +228,13 @@ void cacheSimulator(vector<string> commandFileVector, int cacheSize, string prot
 		else if (stringCommandAction == "W") // If it is a write
 		{
 			metrics.writes += 1;
+
+			wasHit = processors.at(processorForCommand).write(address);
+
+			if (wasHit)
+			{
+				metrics.writeHits += 1;
+			}
 
 			if (output == "t")
 			{

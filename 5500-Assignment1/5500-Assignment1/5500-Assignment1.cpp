@@ -227,15 +227,6 @@ public:
 	{
 		bool wasInvalidated = false;
 
-		//for (auto it = cache.begin(); it != cache.end(); it++)
-		//{
-		//	if ((*it).address == address)
-		//	{
-		//		wasInvalidated = true;
-		//		cache.assign = CacheLine("");
-		//	}
-		//}
-
 		for (int i = 0; i < cache.size(); i++)
 		{
 			if (cache[i].address == address)
@@ -249,16 +240,17 @@ public:
 	}
 };
 
-string invalidateProcessors(vector<Processor> * processors, string addressToInvalidate, int excludedProcessor)
+string invalidateProcessors(vector<Processor> &processors, string addressToInvalidate, int excludedProcessor)
 {
 	string invalidatedProcs = "";
-	for each (Processor proc in (*processors))
+
+	for (auto it = processors.begin(); it != processors.end(); it++)
 	{
-		if (proc.processorNumber == excludedProcessor)
+		if ((*it).processorNumber == excludedProcessor)
 			continue;
-		if (proc.invalidate(addressToInvalidate))
+		if ((*it).invalidate(addressToInvalidate))
 		{
-			invalidatedProcs += to_string(proc.processorNumber) + " ";
+			invalidatedProcs += to_string((*it).processorNumber) + " ";
 		}
 	}
 	return invalidatedProcs;
@@ -282,12 +274,12 @@ vector<string> stringSplit(string stringToBeSplit)
 void cacheSimulator(vector<string> commandFileVector, int cacheSize, string protocol,
 	string output, int numberOfProcessors)
 {
-	vector<Processor> * processors = new vector<Processor>;
+	vector<Processor> processors;
 
 	for (int i = 0; i < numberOfProcessors; i++)
 	{
 		Processor p(i, cacheSize);
-		processors->push_back(p);
+		processors.push_back(p);
 	}
 
 	for each (string command in commandFileVector)
@@ -305,7 +297,7 @@ void cacheSimulator(vector<string> commandFileVector, int cacheSize, string prot
 		{
 			metrics.reads += 1;
 
-			wasHit = processors->at(processorForCommand).read(address);
+			wasHit = processors.at(processorForCommand).read(address);
 
 			if (wasHit)
 			{
@@ -321,7 +313,7 @@ void cacheSimulator(vector<string> commandFileVector, int cacheSize, string prot
 		{
 			metrics.writes += 1;
 
-			wasHit = processors->at(processorForCommand).write(address);
+			wasHit = processors.at(processorForCommand).write(address);
 
 			if (wasHit)
 			{
@@ -342,8 +334,6 @@ void cacheSimulator(vector<string> commandFileVector, int cacheSize, string prot
 			}
 		}
 	}
-
-	delete processors;
 
 	if (output == "s")
 	{

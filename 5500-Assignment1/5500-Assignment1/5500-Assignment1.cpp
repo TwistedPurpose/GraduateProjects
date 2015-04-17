@@ -94,14 +94,86 @@ Metrics metrics;
 
 class Processor
 {
+	void evictOrAddAddress(string address)
+	{
+		CacheLine lineToMove;
 
+		bool foundEmptyAddress = false;
+
+		for (auto it = cache.begin(); it != cache.end(); ++it)
+		{
+			if ((*it).address == "") // Only used for Invalidation
+			{
+				(*it).address = address;
+				lineToMove = (*it);
+				cache.erase(it);
+
+				lineToMove.WasUpdated = false;  // Don't care, we're using invalidate, just resetting this
+				lineToMove.IsUseful = false;
+
+				cache.push_back(lineToMove);
+				foundEmptyAddress = true;
+				break;
+			}
+		}
+
+		if (!foundEmptyAddress)  //
+		{
+			CacheLine newLine(address);
+
+			if (cache.size() >= cacheMaxSize) // Delete least recently used if cache is full
+			{
+				cache.erase(cache.begin());
+			}
+
+			cache.push_back(address);
+		}
+	}
 public:
+	int processorNumber;
 	vector<CacheLine> cache;
 	int cacheMaxSize;
 
+	Processor(){}
+
+	Processor(int _processorNumber, int _cacheSize)
+	{
+		processorNumber = _processorNumber;
+		cacheMaxSize = _cacheSize;
+	}
+
 	bool write(string address)
 	{
+		bool wasHit = false;
+		CacheLine lineToMove;
 
+		for (auto it = cache.begin(); it != cache.end(); ++it)
+		{
+			if ((*it).address == address)  // If there was a hit
+			{
+				wasHit = true;
+
+				if ((*it).WasUpdated) // Check to see if write made an update useless
+					metrics.uselessUpdates += 1;
+
+				(*it).WasUpdated = false; // Reset update/usefulness
+				(*it).IsUseful = false;
+
+				lineToMove = (*it); // Push to be most recently used
+				cache.erase(it);
+
+				cache.push_back(lineToMove);
+
+				break;
+			}
+		}
+
+		if (!wasHit)
+		{
+			evictOrAddAddress(address);
+		}
+
+		return wasHit;
 	}
 
 	bool read(string address)
@@ -114,9 +186,10 @@ public:
 			if ((*it).address == address)  // If there was a hit
 			{
 				wasHit = true;
-				// Set Usefulness here?
 
-				//makeMostRecentlyUsed(it);
+				if ((*it).WasUpdated)
+					(*it).IsUseful = true;
+
 				lineToMove = (*it);
 				cache.erase(it);
 
@@ -128,33 +201,7 @@ public:
 
 		if (!wasHit)
 		{
-			bool foundEmptyAddress = false;
-
-			for (auto it = cache.begin(); it != cache.end(); ++it)
-			{
-				if ((*it).address == "") // Only used for Invalidation
-				{
-					(*it).address = address;
-					lineToMove = (*it);
-					cache.erase(it);
-
-					cache.push_back(lineToMove);
-					foundEmptyAddress = true;
-					break;
-				}
-			}
-
-			if (!foundEmptyAddress)
-			{
-				CacheLine newLine(address);
-
-				if (cache.size() >= cacheMaxSize) // Delete least recently used if cache is full
-				{
-					cache.erase(cache.begin());
-				}
-
-				cache.push_back(address);
-			}
+			evictOrAddAddress(address);
 		}
 
 		return wasHit;
@@ -162,16 +209,60 @@ public:
 
 	bool update(string address)
 	{
-
+		bool wasUpdated = false;
+		for each (CacheLine line in cache)
+		{
+			if (line.address == address)
+			{
+				wasUpdated = true;
+				line.WasUpdated = true;
+				line.IsUseful = false;
+				metrics.updates += 1;
+			}
+		}
+		return wasUpdated;
 	}
 
 	bool invalidate(string address)
 	{
+		bool wasInvalidated = false;
 
+		//for (auto it = cache.begin(); it != cache.end(); it++)
+		//{
+		//	if ((*it).address == address)
+		//	{
+		//		wasInvalidated = true;
+		//		cache.assign = CacheLine("");
+		//	}
+		//}
+
+		for (int i = 0; i < cache.size(); i++)
+		{
+			if (cache[i].address == address)
+			{
+				wasInvalidated = true;
+				cache[i].address = "";
+			}
+		}
+
+		return wasInvalidated;
 	}
 };
 
-
+string invalidateProcessors(vector<Processor> * processors, string addressToInvalidate, int excludedProcessor)
+{
+	string invalidatedProcs = "";
+	for each (Processor proc in (*processors))
+	{
+		if (proc.processorNumber == excludedProcessor)
+			continue;
+		if (proc.invalidate(addressToInvalidate))
+		{
+			invalidatedProcs += to_string(proc.processorNumber) + " ";
+		}
+	}
+	return invalidatedProcs;
+}
 
 vector<string> stringSplit(string stringToBeSplit)
 {
@@ -191,13 +282,12 @@ vector<string> stringSplit(string stringToBeSplit)
 void cacheSimulator(vector<string> commandFileVector, int cacheSize, string protocol,
 	string output, int numberOfProcessors)
 {
-	vector<Processor> processors;
+	vector<Processor> * processors = new vector<Processor>;
 
 	for (int i = 0; i < numberOfProcessors; i++)
 	{
-		Processor p;
-		p.cacheMaxSize = cacheSize;
-		processors.push_back(p);
+		Processor p(i, cacheSize);
+		processors->push_back(p);
 	}
 
 	for each (string command in commandFileVector)
@@ -209,11 +299,13 @@ void cacheSimulator(vector<string> commandFileVector, int cacheSize, string prot
 		string stringCommandAction = commandLine.at(1).c_str();
 		string address = commandLine.at(2).c_str();
 
+		string affectedProcessors = "";
+
 		if (stringCommandAction == "R")  // if it is a read
 		{
 			metrics.reads += 1;
 
-			wasHit = processors.at(processorForCommand).read(address);
+			wasHit = processors->at(processorForCommand).read(address);
 
 			if (wasHit)
 			{
@@ -222,26 +314,36 @@ void cacheSimulator(vector<string> commandFileVector, int cacheSize, string prot
 
 			if (output == "t")
 			{
-				printTrace(processorForCommand, address, stringCommandAction, wasHit, protocol, "");
+				printTrace(processorForCommand, address, stringCommandAction, wasHit, protocol, affectedProcessors);
 			}
 		}
 		else if (stringCommandAction == "W") // If it is a write
 		{
 			metrics.writes += 1;
 
-			wasHit = processors.at(processorForCommand).write(address);
+			wasHit = processors->at(processorForCommand).write(address);
 
 			if (wasHit)
 			{
 				metrics.writeHits += 1;
 			}
 
+			if (protocol == "i")
+			{
+				affectedProcessors = invalidateProcessors(processors, address, processorForCommand);
+			} else if (protocol == "u")
+			{
+
+			}
+
 			if (output == "t")
 			{
-				printTrace(processorForCommand, address, stringCommandAction, wasHit, protocol, "");
+				printTrace(processorForCommand, address, stringCommandAction, wasHit, protocol, affectedProcessors);
 			}
 		}
 	}
+
+	delete processors;
 
 	if (output == "s")
 	{

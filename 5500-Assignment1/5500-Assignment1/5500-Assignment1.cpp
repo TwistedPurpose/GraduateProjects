@@ -28,13 +28,13 @@ public:
 	{
 		cout << "Number of read hits: " << readHits << endl;
 		cout << "Number of reads: " << reads << endl;
-		cout << "Read hit rate: " << (double)readHits / (double)reads << endl;
+		cout << "Read hit rate: " << ((double)readHits / (double)reads) * 100 << "%" << endl;
 		cout << "Number of write hits: " << writeHits << endl;
 		cout << "Number of writes: " << writes << endl;
-		cout << "Write hit rate: " << (double)writeHits / (double)writes << endl;
+		cout << "Write hit rate: " << ((double)writeHits / (double)writes) * 100 << "%" << endl;
 		cout << "Number of useless updates: " << uselessUpdates << endl;
 		cout << "Number of updates: " << updates << endl;
-		cout << "Write hit rate: " << (double)uselessUpdates / (double)updates << endl;
+		cout << "Percentage of useless updates: " << ((double)uselessUpdates / (double)updates) * 100 << "%" << endl;
 	}
 };
 
@@ -153,7 +153,7 @@ public:
 			{
 				wasHit = true;
 
-				if ((*it).WasUpdated) // Check to see if write made an update useless
+				if ((*it).WasUpdated && !(*it).IsUseful) // Check to see if write made an update useless
 					metrics.uselessUpdates += 1;
 
 				(*it).WasUpdated = false; // Reset update/usefulness
@@ -210,13 +210,14 @@ public:
 	bool update(string address)
 	{
 		bool wasUpdated = false;
-		for each (CacheLine line in cache)
+
+		for (auto it = cache.begin(); it != cache.end(); it++)
 		{
-			if (line.address == address)
+			if ((*it).address == address)
 			{
 				wasUpdated = true;
-				line.WasUpdated = true;
-				line.IsUseful = false;
+				(*it).WasUpdated = true;
+				(*it).IsUseful = false;
 				metrics.updates += 1;
 			}
 		}
@@ -254,6 +255,22 @@ string invalidateProcessors(vector<Processor> &processors, string addressToInval
 		}
 	}
 	return invalidatedProcs;
+}
+
+string updateProcessors(vector<Processor> &processors, string addressToUpdate, int excludedProcessor)
+{
+	string updatedProcs = "";
+
+	for (auto it = processors.begin(); it != processors.end(); it++)
+	{
+		if ((*it).processorNumber == excludedProcessor)
+			continue;
+		if ((*it).update(addressToUpdate))
+		{
+			updatedProcs += to_string((*it).processorNumber) + " ";
+		}
+	}
+	return updatedProcs;
 }
 
 vector<string> stringSplit(string stringToBeSplit)

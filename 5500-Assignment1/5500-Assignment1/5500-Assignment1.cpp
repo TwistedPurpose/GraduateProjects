@@ -21,10 +21,10 @@ public:
 	int reads = 0;
 	int writeHits = 0;
 	int writes = 0;
-	int uselessUpdates = 0;
+	int usefulUpdates = 0;
 	int updates = 0;
 
-	void printStats()
+	void printStats(string protocol)
 	{
 		cout << "Number of read hits: " << readHits << endl;
 		cout << "Number of reads: " << reads << endl;
@@ -32,9 +32,12 @@ public:
 		cout << "Number of write hits: " << writeHits << endl;
 		cout << "Number of writes: " << writes << endl;
 		cout << "Write hit rate: " << ((double)writeHits / (double)writes) * 100 << "%" << endl;
-		cout << "Number of useless updates: " << uselessUpdates << endl;
-		cout << "Number of updates: " << updates << endl;
-		cout << "Percentage of useless updates: " << ((double)uselessUpdates / (double)updates) * 100 << "%" << endl;
+		if (protocol == "u")
+		{
+			cout << "Number of useless updates: " << updates - usefulUpdates << endl;
+			cout << "Number of updates: " << updates << endl;
+			cout << "Percentage of useless updates: " << ((double)(updates - usefulUpdates) / (double)updates) * 100 << "%" << endl;
+		}
 	}
 };
 
@@ -153,9 +156,6 @@ public:
 			{
 				wasHit = true;
 
-				if ((*it).WasUpdated && !(*it).IsUseful) // Check to see if write made an update useless
-					metrics.uselessUpdates += 1;
-
 				(*it).WasUpdated = false; // Reset update/usefulness
 				(*it).IsUseful = false;
 
@@ -187,8 +187,11 @@ public:
 			{
 				wasHit = true;
 
-				if ((*it).WasUpdated)
+				if ((*it).WasUpdated && !(*it).IsUseful)
+				{
 					(*it).IsUseful = true;
+					metrics.usefulUpdates += 1;
+				}
 
 				lineToMove = (*it);
 				cache.erase(it);
@@ -340,9 +343,10 @@ void cacheSimulator(vector<string> commandFileVector, int cacheSize, string prot
 			if (protocol == "i")
 			{
 				affectedProcessors = invalidateProcessors(processors, address, processorForCommand);
-			} else if (protocol == "u")
+			}
+			else if (protocol == "u")
 			{
-
+				affectedProcessors = updateProcessors(processors, address, processorForCommand);
 			}
 
 			if (output == "t")
@@ -354,7 +358,7 @@ void cacheSimulator(vector<string> commandFileVector, int cacheSize, string prot
 
 	if (output == "s")
 	{
-		metrics.printStats();
+		metrics.printStats(protocol);
 	}
 }
 

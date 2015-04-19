@@ -1,0 +1,20 @@
+Please answer the following questions:
+
+1. After looking at the results, what cache coherence policy seems better?
+Invalidate or update?  Why?
+
+Update seems the better of the two methods.  While there is a large amount of waste from useless updates, there is also a substantially higher rate of write hits and a marginal increase of read hits.
+
+Despite the large amount of useless updates, the cost of invalidation is close to the same.
+
+2. Describe two different "threats to validity" due to shortcomings in the
+simulator. Note: The threats to validity must be related to shortcomings
+in the simulator and not other factors (such as the input data).
+
+The simulator is serial and thus doesn't accurately simulate parallel activity.  If parallelism were implemented, it doesn't take into account data consistency.
+
+3. Describe how you would address these shortcomings in the simulator.  Your
+answer must not only describe "what" you would add but also "how" you would
+add it. 
+
+Each "processor" would be put into a thread to simulate parallelism.  To simulate the data consistency of the system, locks would be added to the processors to ensure a form of data consistency.

@@ -4,8 +4,6 @@ Class: CPCS 5500
 Assignment: 1
 */
 
-#define TEST
-
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -17,12 +15,22 @@ using namespace std;
 class Metrics
 {
 public:
-	int readHits = 0;
-	int reads = 0;
-	int writeHits = 0;
-	int writes = 0;
-	int usefulUpdates = 0;
-	int updates = 0;
+	int readHits;
+	int reads;
+	int writeHits;
+	int writes;
+	int usefulUpdates;
+	int updates;
+
+	Metrics()
+	{
+		readHits = 0;
+		reads = 0;
+		writeHits = 0;
+		writes = 0;
+		usefulUpdates = 0;
+		updates = 0;
+	}
 
 	void printStats(string protocol)
 	{
@@ -82,11 +90,16 @@ void printTrace(int processorNumber, string address, string operation, bool wasH
 class CacheLine
 {
 public:
-	string address = "";
-	bool IsUseful = false;
-	bool WasUpdated = false;
+	string address;
+	bool IsUseful;
+	bool WasUpdated;
 
-	CacheLine() {}
+	CacheLine() 
+	{
+		address = "";
+		IsUseful = false;
+		WasUpdated = false;
+	}
 	CacheLine(string _address)
 	{
 		address = _address;
@@ -103,7 +116,7 @@ class Processor
 
 		bool foundEmptyAddress = false;
 
-		for (auto it = cache.begin(); it != cache.end(); ++it)
+		for (vector<CacheLine>::iterator it = cache.begin(); it != cache.end(); ++it)
 		{
 			if ((*it).address == "") // Only used for Invalidation
 			{
@@ -120,7 +133,7 @@ class Processor
 			}
 		}
 
-		if (!foundEmptyAddress)  //
+		if (!foundEmptyAddress)  // Add a new line and possibly evict the least recently used.
 		{
 			CacheLine newLine(address);
 
@@ -150,7 +163,7 @@ public:
 		bool wasHit = false;
 		CacheLine lineToMove;
 
-		for (auto it = cache.begin(); it != cache.end(); ++it)
+		for (vector<CacheLine>::iterator it = cache.begin(); it != cache.end(); ++it)
 		{
 			if ((*it).address == address)  // If there was a hit
 			{
@@ -168,7 +181,7 @@ public:
 			}
 		}
 
-		if (!wasHit)
+		if (!wasHit) // If there was a miss
 		{
 			evictOrAddAddress(address);
 		}
@@ -181,18 +194,21 @@ public:
 		bool wasHit = false;
 		CacheLine lineToMove;
 
-		for (auto it = cache.begin(); it != cache.end(); ++it)
+		for (vector<CacheLine>::iterator it = cache.begin(); it != cache.end(); ++it)
 		{
 			if ((*it).address == address)  // If there was a hit
 			{
 				wasHit = true;
 
+				// Check to see if a read made something useful
 				if ((*it).WasUpdated && !(*it).IsUseful)
 				{
+					//If so, increment usefulness and mark the cache as useful
 					(*it).IsUseful = true;
 					metrics.usefulUpdates += 1;
 				}
 
+				// Move to most recently used
 				lineToMove = (*it);
 				cache.erase(it);
 
@@ -202,6 +218,7 @@ public:
 			}
 		}
 
+		//If there was a miss...
 		if (!wasHit)
 		{
 			evictOrAddAddress(address);
@@ -214,14 +231,16 @@ public:
 	{
 		bool wasUpdated = false;
 
-		for (auto it = cache.begin(); it != cache.end(); it++)
+		for (vector<CacheLine>::iterator it = cache.begin(); it != cache.end(); it++)
 		{
+			// If address is a match, then update...
 			if ((*it).address == address)
 			{
 				wasUpdated = true;
 				(*it).WasUpdated = true;
 				(*it).IsUseful = false;
 				metrics.updates += 1;
+				break;
 			}
 		}
 		return wasUpdated;
@@ -233,10 +252,12 @@ public:
 
 		for (int i = 0; i < cache.size(); i++)
 		{
+			// If address matches, empty it out.
 			if (cache[i].address == address)
 			{
 				wasInvalidated = true;
 				cache[i].address = "";
+				break;
 			}
 		}
 
@@ -248,13 +269,18 @@ string invalidateProcessors(vector<Processor> &processors, string addressToInval
 {
 	string invalidatedProcs = "";
 
-	for (auto it = processors.begin(); it != processors.end(); it++)
+	for (vector<Processor>::iterator it = processors.begin(); it != processors.end(); it++)
 	{
+		// Ignore the processor just used
 		if ((*it).processorNumber == excludedProcessor)
 			continue;
+
+		//Invalidate if a match
 		if ((*it).invalidate(addressToInvalidate))
 		{
-			invalidatedProcs += to_string((*it).processorNumber) + " ";
+			ostringstream stringStream;
+			stringStream << (*it).processorNumber;
+			invalidatedProcs += stringStream.str() + " ";
 		}
 	}
 	return invalidatedProcs;
@@ -263,14 +289,19 @@ string invalidateProcessors(vector<Processor> &processors, string addressToInval
 string updateProcessors(vector<Processor> &processors, string addressToUpdate, int excludedProcessor)
 {
 	string updatedProcs = "";
-
-	for (auto it = processors.begin(); it != processors.end(); it++)
+	
+	for (vector<Processor>::iterator it = processors.begin(); it != processors.end(); it++)
 	{
+		// Ignore the processor just used
 		if ((*it).processorNumber == excludedProcessor)
 			continue;
+
+		// Update if a match
 		if ((*it).update(addressToUpdate))
 		{
-			updatedProcs += to_string((*it).processorNumber) + " ";
+			ostringstream stringStream;
+			stringStream << (*it).processorNumber;
+			updatedProcs += stringStream.str() + " ";
 		}
 	}
 	return updatedProcs;
@@ -296,16 +327,19 @@ void cacheSimulator(vector<string> commandFileVector, int cacheSize, string prot
 {
 	vector<Processor> processors;
 
+	// Setup processors
 	for (int i = 0; i < numberOfProcessors; i++)
 	{
 		Processor p(i, cacheSize);
 		processors.push_back(p);
 	}
 
-	for each (string command in commandFileVector)
+	// Start simulation
+	for (vector<string>::iterator it = commandFileVector.begin(); it != commandFileVector.end(); it++)
 	{
-		vector<string> commandLine = stringSplit(command);
+		vector<string> commandLine = stringSplit((*it));
 
+		// Get next command
 		bool wasHit = false;
 		int processorForCommand = atoi(commandLine.at(0).c_str());
 		string stringCommandAction = commandLine.at(1).c_str();
@@ -340,10 +374,12 @@ void cacheSimulator(vector<string> commandFileVector, int cacheSize, string prot
 				metrics.writeHits += 1;
 			}
 
+			// If invalidate
 			if (protocol == "i")
 			{
 				affectedProcessors = invalidateProcessors(processors, address, processorForCommand);
 			}
+			// If update
 			else if (protocol == "u")
 			{
 				affectedProcessors = updateProcessors(processors, address, processorForCommand);
@@ -366,7 +402,7 @@ vector<string> parseFile(string filePath)
 {
 	vector<string> wordVector;
 
-	ifstream myFile(filePath);
+	ifstream myFile(filePath.c_str());
 	if (myFile.is_open())
 	{
 		string word;
@@ -388,7 +424,7 @@ vector<string> parseFile(string filePath)
 
 int main(int argc, char* argv[])
 {
-	if (argc != 5)
+	if (argc != 5) // If not enough arguments error out
 	{
 		cout << argc;
 		cerr << "Improper number of arguments!" << endl;
@@ -397,7 +433,7 @@ int main(int argc, char* argv[])
 
 	vector<string> commandFileVector = parseFile(argv[1]);
 
-	if (commandFileVector.empty())
+	if (commandFileVector.empty()) // If file doesn't open, error out
 	{
 		cerr << "Unable to open file!" << endl;
 		exit(-1);
@@ -411,9 +447,4 @@ int main(int argc, char* argv[])
 	commandFileVector.erase(commandFileVector.begin());
 
 	cacheSimulator(commandFileVector, cacheSize, protocol, output, numberOfProcessors);
-
-#ifdef TEST
-	int i = 0;
-	cin >> i;
-#endif
 }

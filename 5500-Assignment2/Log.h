@@ -5,6 +5,8 @@
 
 #include <cstdio>
 #include <pthread.h>
+#include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -15,10 +17,7 @@ private:
 	
 
 public:
-	Log()
-	{
-
-	}
+	Log();
 
 	void clearLog();
 

@@ -14,7 +14,7 @@ void Log::clearLog()
 
 void Log::setupLog()
 {
-	ofstream logFile;
-	logFile.open("LOG");
+	fstream logFile("LOG");
+	logFile << flush;
 	logFile.close();
 }

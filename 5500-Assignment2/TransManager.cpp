@@ -110,3 +110,8 @@ void TransManager::commitTransaction(int id)
 void TransManager::abortTransaction(int id)
 {
 }
+
+void TransManager::releaseLocks()
+{
+
+}

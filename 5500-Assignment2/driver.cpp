@@ -7,17 +7,17 @@ void threadOne(TransManager transManager)
 
 }
 
-void threadOne(TransManager transManager)
+void threadTwo(TransManager transManager)
 {
 
 }
 
-void threadOne(TransManager transManager)
+void threadThree(TransManager transManager)
 {
 
 }
 
-void threadOne(TransManager transManager)
+void threadFour(TransManager transManager)
 {
 
 }

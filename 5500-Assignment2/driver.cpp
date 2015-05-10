@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
 	else
 	{
 		cerr << "Invalid command line arguments.";
-		exit(-1);
+		return -1;
 	}
 
 	//Spin off threads

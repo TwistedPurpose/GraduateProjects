@@ -12,9 +12,17 @@ void Log::clearLog()
 	remove("LOG");
 }
 
-void Log::setupLog()
+void Log::lockLog()
 {
-	fstream logFile("LOG");
-	logFile << flush;
-	logFile.close();
+	pthread_mutex_lock(&logLock);
+}
+
+void Log::unlockLog()
+{
+	pthread_mutex_unlock(&logLock);
+}
+
+void Log::commit(int threadId, int transactionId)
+{
+	throw "Log::commit not yet implemented";
 }

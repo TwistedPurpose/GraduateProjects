@@ -18,10 +18,10 @@ private:
 
 public:
 	Log();
-
 	void clearLog();
-
-	void setupLog();
+	void lockLog();
+	void unlockLog();
+	void commit(int threadId, int transactionId);
 };
 
 #endif // LOG_H

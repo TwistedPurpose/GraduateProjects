@@ -20,7 +20,6 @@ void TransManager::reset()
 {
 	disk.formatDisk();
 	log.clearLog();
-	log.setupLog();
 }
 
 // recover: Recover from a crash:
@@ -96,6 +95,8 @@ void TransManager::putValue(
 // id:		transaction id returned from beginTransaction
 void TransManager::commitTransaction(int id)
 {
+	log.commit(threadId, id);
+	releaseLocks();
 }
 
 // abortTransaction: Aborts the transaction:

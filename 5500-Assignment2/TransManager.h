@@ -99,9 +99,15 @@ class TransManager
     
     Disk disk;		// Disk to access
     Log log;		// Log file
-	int numberOfThreads;
 
     // TODO: Add your own data members and private functions here.
+
+	vector<int> heldLocks;
+	vector<pthread_mutex_t> * diskLocks;
+	int threadId;
+	int numberOfThreads;
+
+	void releaseLocks();
 };
 
 #endif

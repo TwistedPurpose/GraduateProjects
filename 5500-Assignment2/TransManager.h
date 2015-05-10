@@ -99,6 +99,7 @@ class TransManager
     
     Disk disk;		// Disk to access
     Log log;		// Log file
+	int numberOfThreads;
 
     // TODO: Add your own data members and private functions here.
 };

@@ -5,6 +5,7 @@
 // Constructor
 TransManager::TransManager(int numThreads)
 {
+	numberOfThreads = numThreads;
 }
 
 // Destructor
@@ -17,6 +18,9 @@ TransManager::~TransManager()
 // - Clears out the log.
 void TransManager::reset()
 {
+	disk.formatDisk();
+	log.clearLog();
+	log.setupLog();
 }
 
 // recover: Recover from a crash:
@@ -28,6 +32,7 @@ void TransManager::reset()
 // such that each threads starts with transaction 0.
 int* TransManager::recover()
 {
+	return new int[numberOfThreads];
 }
 
 // beginTransaction: Marks the beginning of the transaction.  It does the
@@ -45,6 +50,7 @@ int TransManager::beginTransaction(
     int transId,
     const vector<int> &locationList)
 {
+	return 0;
 }
 
 // getValue: Returns the current value of the specifed location.
@@ -54,6 +60,7 @@ int TransManager::beginTransaction(
 int TransManager::getValue(
     int location)
 {
+	return 0;
 }
 
 // putValue: Places the specified value in the specified location on the disk.

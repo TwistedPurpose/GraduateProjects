@@ -2,3 +2,12 @@
 
 #include "Log.h"
 
+void Log::clearLog()
+{
+	remove("LOG");
+}
+
+void Log::setupLog()
+{
+
+}

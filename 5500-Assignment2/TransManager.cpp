@@ -6,11 +6,18 @@
 TransManager::TransManager(int numThreads)
 {
 	numberOfThreads = numThreads;
+
+	diskLocks = new pthread_mutex_t[50];
+	for (int i = 0; i < 50; i++)
+	{
+		pthread_mutex_init(&diskLocks[i], NULL);
+	}
 }
 
 // Destructor
 TransManager::~TransManager()
 {
+	delete diskLocks;
 }
 
 // reset: Resets the manager:
@@ -50,7 +57,13 @@ int TransManager::beginTransaction(
     int transId,
     const vector<int> &locationList)
 {
-	return 0;
+	int globalTransactionId;
+	log.begin(threadId, transId);
+	heldLocks = locationList;
+	aquireDiskLocks();
+	//TODO: get globaltrandactioncounter lock
+	globalTransactionId = globalTransactionCounter + 1;
+	return globalTransactionId;
 }
 
 // getValue: Returns the current value of the specifed location.
@@ -60,7 +73,7 @@ int TransManager::beginTransaction(
 int TransManager::getValue(
     int location)
 {
-	return 0;
+	return disk.readFromDisk(location);
 }
 
 // putValue: Places the specified value in the specified location on the disk.
@@ -96,8 +109,9 @@ void TransManager::putValue(
 // id:		transaction id returned from beginTransaction
 void TransManager::commitTransaction(int id)
 {
-	log.commit(threadId, id);
-	releaseLocks();
+	//Finish This
+	log.commit(id);
+	releaseDiskLocks();
 }
 
 // abortTransaction: Aborts the transaction:
@@ -111,7 +125,18 @@ void TransManager::abortTransaction(int id)
 {
 }
 
-void TransManager::releaseLocks()
+void TransManager::aquireDiskLocks()
 {
+	for (auto it = heldLocks.begin(); it != heldLocks.end(); it++)
+	{
+		pthread_mutex_lock(&diskLocks[*it]);
+	}
+}
 
+void TransManager::releaseDiskLocks()
+{
+	for (auto it = heldLocks.begin(); it != heldLocks.end(); it++)
+	{
+		pthread_mutex_unlock(&diskLocks[*it]);
+	}
 }

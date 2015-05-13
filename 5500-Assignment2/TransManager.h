@@ -103,11 +103,12 @@ class TransManager
     // TODO: Add your own data members and private functions here.
 
 	vector<int> heldLocks;
-	vector<pthread_mutex_t> * diskLocks;
-	int threadId;
+	pthread_mutex_t * diskLocks;
 	int numberOfThreads;
+	int globalTransactionCounter;
 
-	void releaseLocks();
+	void releaseDiskLocks();
+	void aquireDiskLocks();
 };
 
 #endif

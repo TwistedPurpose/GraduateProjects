@@ -81,9 +81,9 @@ int main(int argc, char* argv[])
 
 	//Spin off threads
 	threadOne(transManager);
-	threadTwo(transManager);
-	threadThree(transManager);
-	threadFour(transManager);
+	//threadTwo(transManager);
+	//threadThree(transManager);
+	//threadFour(transManager);
 
 	//Wait for threads to come back
 

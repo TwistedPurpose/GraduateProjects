@@ -23,7 +23,7 @@ public:
 	Log();
 	void clearLog();
 
-	void begin(int threadId, int transactionId);
+	void begin(int threadId, int transactionId, int globalTransactionId);
 	void update(int transactionId, int location, int value);
 	void commit(int transactionId);
 	void abort(int transactionId);

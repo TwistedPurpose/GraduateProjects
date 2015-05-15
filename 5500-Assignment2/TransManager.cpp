@@ -57,12 +57,15 @@ int TransManager::beginTransaction(
     int transId,
     const vector<int> &locationList)
 {
-	int globalTransactionId;
-	log.begin(threadId, transId);
+	//TODO: get globaltrandactioncounter lock
+	pthread_mutex_lock(&globalTransactionCounterLock);
+	int globalTransactionId = globalTransactionCounter + 1;
+	pthread_mutex_unlock(&globalTransactionCounterLock);
+
+	log.begin(threadId, transId, globalTransactionId);
 	heldLocks = locationList;
 	aquireDiskLocks();
-	//TODO: get globaltrandactioncounter lock
-	globalTransactionId = globalTransactionCounter + 1;
+
 	return globalTransactionId;
 }
 
@@ -91,6 +94,8 @@ void TransManager::putValue(
     int location,
     int newValue)
 {
+	log.update(id, location, newValue);
+	disk.writeToDisk(location, newValue);
 }
 
 void TransManager::putValue(

@@ -13,7 +13,7 @@ void Log::clearLog()
 }
 
 
-void Log::begin(int threadId, int transactionId)
+void Log::begin(int threadId, int transactionId, int globalTransactionId)
 {
 	lockLog();
 	writeToLog("BEGIN " + to_string(threadId) + " " + to_string(transactionId));

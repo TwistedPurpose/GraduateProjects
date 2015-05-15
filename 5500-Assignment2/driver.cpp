@@ -5,7 +5,31 @@
 
 void threadOne(TransManager transManager)
 {
+	int numberToAdd = 1;
+	int rangeBegin = 0;
+	int rangeEnd = 9;
+	vector<int> diskLocationsUsed;
 
+	for (int i = 0; i <= 4; i++, numberToAdd++)
+	{
+		for (int k = rangeBegin; k <= rangeEnd; k++)
+		{
+			diskLocationsUsed.push_back(k);
+		}
+
+		int transactionId = transManager.beginTransaction(1, i, diskLocationsUsed);
+		for (int j = rangeBegin; j <= rangeEnd; j++)
+		{
+			int value = transManager.getValue(j);
+			value += numberToAdd;
+			transManager.putValue(transactionId,j,value);
+		}
+		transManager.commitTransaction(transactionId);
+
+		rangeBegin = rangeEnd + 1;
+		rangeEnd = rangeEnd + 10;
+		diskLocationsUsed.clear();
+	}
 }
 
 void threadTwo(TransManager transManager)
@@ -57,9 +81,9 @@ int main(int argc, char* argv[])
 
 	//Spin off threads
 	threadOne(transManager);
-	threadOne(transManager);
-	threadOne(transManager);
-	threadOne(transManager);
+	threadTwo(transManager);
+	threadThree(transManager);
+	threadFour(transManager);
 
 	//Wait for threads to come back
 

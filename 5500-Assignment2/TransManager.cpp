@@ -19,7 +19,6 @@ TransManager::TransManager(int numThreads)
 // Destructor
 TransManager::~TransManager()
 {
-	delete diskLocks;
 }
 
 // reset: Resets the manager:

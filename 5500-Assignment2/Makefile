@@ -5,7 +5,7 @@ FLAGS = -lpthread
 all: driver
 
 driver:
-	$(CPP) -std=c++0X $(FLAGS) -o $(TARGET_NAME) Disk.cpp Log.cpp TransManager.cpp driver.cpp
+	$(CPP) -std=c++0x $(FLAGS) -o $(TARGET_NAME) Disk.cpp Log.cpp TransManager.cpp driver.cpp
 
 clean:
 	rm -f *.o $(TARGET_NAME)

@@ -5,6 +5,7 @@
 // Constructor
 TransManager::TransManager(int numThreads)
 {
+	globalTransactionCounter = 0;
 	numberOfThreads = numThreads;
 
 	diskLocks = new pthread_mutex_t[50];
@@ -12,6 +13,7 @@ TransManager::TransManager(int numThreads)
 	{
 		pthread_mutex_init(&diskLocks[i], NULL);
 	}
+	pthread_mutex_init(&globalTransactionCounterLock, NULL);
 }
 
 // Destructor

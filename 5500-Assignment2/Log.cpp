@@ -12,7 +12,6 @@ void Log::clearLog()
 	remove("LOG");
 }
 
-
 void Log::begin(int threadId, int transactionId, int globalTransactionId)
 {
 	lockLog();

@@ -132,7 +132,7 @@ void TransManager::abortTransaction(int id)
 
 void TransManager::aquireDiskLocks()
 {
-	for (auto it = heldLocks.begin(); it != heldLocks.end(); it++)
+	for (vector<int>::iterator it = heldLocks.begin(); it != heldLocks.end(); it++)
 	{
 		pthread_mutex_lock(&diskLocks[*it]);
 	}
@@ -140,7 +140,7 @@ void TransManager::aquireDiskLocks()
 
 void TransManager::releaseDiskLocks()
 {
-	for (auto it = heldLocks.begin(); it != heldLocks.end(); it++)
+	for (vector<int>::iterator it = heldLocks.begin(); it != heldLocks.end(); it++)
 	{
 		pthread_mutex_unlock(&diskLocks[*it]);
 	}

@@ -1,7 +1,7 @@
 // CPSC 5500 - Atomic Transactions: driver
 
 #include "TransManager.h"
-#include <string>
+#include <string.h>
 
 void threadOne(TransManager transManager)
 {

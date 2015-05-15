@@ -38,7 +38,6 @@ void TransManager::reset()
 // such that each threads starts with transaction 0.
 int* TransManager::recover()
 {
-	throw "Recover not yet implemented";
 	return new int[numberOfThreads];
 }
 

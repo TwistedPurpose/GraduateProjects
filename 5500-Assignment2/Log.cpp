@@ -60,7 +60,7 @@ void Log::unlockLog()
 void Log::writeToLog(string message)
 {
 	ofstream logFile;
-	logFile.open("LOG");
-	logFile << message << endl;
+	logFile.open("LOG", ios::app);
+	logFile << message + "\n";
 	logFile.close();
 }

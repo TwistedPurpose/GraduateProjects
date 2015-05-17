@@ -59,7 +59,8 @@ int TransManager::beginTransaction(
 {
 	//TODO: get globaltrandactioncounter lock
 	pthread_mutex_lock(&globalTransactionCounterLock);
-	int globalTransactionId = globalTransactionCounter + 1;
+	globalTransactionCounter = globalTransactionCounter + 1;
+	int globalTransactionId = globalTransactionCounter;
 	pthread_mutex_unlock(&globalTransactionCounterLock);
 
 	log.begin(threadId, transId, globalTransactionId);

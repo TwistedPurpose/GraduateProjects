@@ -10,7 +10,7 @@ void threadOne(TransManager transManager)
 	int rangeEnd = 9;
 	vector<int> diskLocationsUsed;
 
-	for (int i = 0; i <= 4; i++, numberToAdd++)
+	for (int i = 0; i < 5; i++, numberToAdd++)
 	{
 		for (int k = rangeBegin; k <= rangeEnd; k++)
 		{
@@ -18,11 +18,12 @@ void threadOne(TransManager transManager)
 		}
 
 		int transactionId = transManager.beginTransaction(1, i, diskLocationsUsed);
-		for (int j = rangeBegin; j <= rangeEnd; j++)
+		for (vector<int>::iterator it = diskLocationsUsed.begin(); it != diskLocationsUsed.end();
+			it++)
 		{
-			int value = transManager.getValue(j);
+			int value = transManager.getValue(*it);
 			value += numberToAdd;
-			transManager.putValue(transactionId,j,value);
+			transManager.putValue(transactionId,*it,value);
 		}
 		transManager.commitTransaction(transactionId);
 
@@ -34,7 +35,35 @@ void threadOne(TransManager transManager)
 
 void threadTwo(TransManager transManager)
 {
+	int numberToAdd = 10;
+	int mod = 5;
+	vector<int> diskLocationsUsed;
 
+	for (int i = 0; i < 5; i++, numberToAdd += 10)
+	{
+		for (int k = 0; k < 50; k++)
+		{
+			if (k % mod == i)
+			{
+				diskLocationsUsed.push_back(k);
+			}
+		}
+
+		int transactionId = transManager.beginTransaction(2, i, diskLocationsUsed);
+		for (vector<int>::iterator it = diskLocationsUsed.begin(); it != diskLocationsUsed.end();
+			it++)
+		{
+			if (*it % mod == i)
+			{
+				int value = transManager.getValue(*it);
+				value += numberToAdd;
+				transManager.putValue(transactionId, *it, value);
+			}
+		}
+		transManager.commitTransaction(transactionId);
+
+		diskLocationsUsed.clear();
+	}
 }
 
 void threadThree(TransManager transManager)

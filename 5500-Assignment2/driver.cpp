@@ -2,6 +2,7 @@
 
 #include "TransManager.h"
 #include <string.h>
+#include <stdio.h>
 
 void * threadZeroWork(void * transManager)
 {

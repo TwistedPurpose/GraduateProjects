@@ -82,27 +82,58 @@ void threadOne(TransManager transManager)
 
 void threadTwo(TransManager transManager)
 {
+	int numberToAddOrSubtract = 2;
 	int threadNumber = 2;
+	vector<int> diskLocationsUsed;
+
+	for (int i = 0; i < 25; i++)
+	{
+		int subLocation = 2 * i;
+		int addLocation = (2 * i) + 1;
+		//Remove later, add abort
+		if (i == 20)
+			continue;
+
+		diskLocationsUsed.push_back(subLocation);
+		diskLocationsUsed.push_back(addLocation);
+		int transactionId = transManager.beginTransaction(threadNumber, i, diskLocationsUsed);
+
+		int subValue = transManager.getValue(subLocation);
+		subValue -= 2;
+		transManager.putValue(transactionId, subLocation, subValue);
+
+		int addValue = transManager.getValue(addLocation);
+		addValue += 2;
+		transManager.putValue(transactionId, addLocation, addValue);
+
+		if (i == 20)
+		{
+			transManager.abortTransaction(transactionId);
+		}
+		else 
+		{
+			transManager.commitTransaction(transactionId);
+		}
+
+	}
+
 }
 
 void threadThree(TransManager transManager)
 {
-	int numberToAdd = 1;
 	int threadNumber = 3;
 	vector<int> diskLocationsUsed;
 
-	for (int i = 0; i < 50; i++, numberToAdd++)
+	for (int i = 0; i < 50; i++)
 	{
 		diskLocationsUsed.push_back(i);
 
 		int transactionId = transManager.beginTransaction(threadNumber, i, diskLocationsUsed);
-		for (vector<int>::iterator it = diskLocationsUsed.begin(); it != diskLocationsUsed.end();
-			it++)
-		{
-			int value = transManager.getValue(*it);
-			value += numberToAdd;
-			transManager.putValue(transactionId, *it, value);
-		}
+
+		int value = transManager.getValue(i);
+		value += i + 1;
+		transManager.putValue(transactionId, i, value);
+		
 		transManager.commitTransaction(transactionId);
 
 		diskLocationsUsed.clear();

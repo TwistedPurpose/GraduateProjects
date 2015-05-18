@@ -3,9 +3,10 @@
 #include "TransManager.h"
 #include <string.h>
 
-void threadOne(TransManager transManager)
+void threadZero(TransManager transManager)
 {
 	int numberToAdd = 1;
+	int threadNumber = 0;
 	int rangeBegin = 0;
 	int rangeEnd = 9;
 	vector<int> diskLocationsUsed;
@@ -17,7 +18,7 @@ void threadOne(TransManager transManager)
 			diskLocationsUsed.push_back(k);
 		}
 
-		int transactionId = transManager.beginTransaction(1, i, diskLocationsUsed);
+		int transactionId = transManager.beginTransaction(threadNumber, i, diskLocationsUsed);
 		for (vector<int>::iterator it = diskLocationsUsed.begin(); it != diskLocationsUsed.end();
 			it++)
 		{
@@ -33,14 +34,19 @@ void threadOne(TransManager transManager)
 	}
 }
 
-void threadTwo(TransManager transManager)
+void threadOne(TransManager transManager)
 {
 	int numberToAdd = 10;
+	int threadNumber = 1;
 	int mod = 5;
 	vector<int> diskLocationsUsed;
 
 	for (int i = 0; i < 5; i++, numberToAdd += 10)
 	{
+		// Simulate abort, remove this later
+		if (i == 3)
+			continue;
+
 		for (int k = 0; k < 50; k++)
 		{
 			if (k % mod == i)
@@ -49,7 +55,7 @@ void threadTwo(TransManager transManager)
 			}
 		}
 
-		int transactionId = transManager.beginTransaction(2, i, diskLocationsUsed);
+		int transactionId = transManager.beginTransaction(threadNumber, i, diskLocationsUsed);
 		for (vector<int>::iterator it = diskLocationsUsed.begin(); it != diskLocationsUsed.end();
 			it++)
 		{
@@ -60,20 +66,47 @@ void threadTwo(TransManager transManager)
 				transManager.putValue(transactionId, *it, value);
 			}
 		}
-		transManager.commitTransaction(transactionId);
+
+		if (i == 3)
+		{
+			//Add aborts later
+			//transManager.abortTransaction(transactionId);
+		}
+		{
+			transManager.commitTransaction(transactionId);
+		}
 
 		diskLocationsUsed.clear();
 	}
 }
 
-void threadThree(TransManager transManager)
+void threadTwo(TransManager transManager)
 {
-
+	int threadNumber = 2;
 }
 
-void threadFour(TransManager transManager)
+void threadThree(TransManager transManager)
 {
+	int numberToAdd = 1;
+	int threadNumber = 3;
+	vector<int> diskLocationsUsed;
 
+	for (int i = 0; i < 50; i++, numberToAdd++)
+	{
+		diskLocationsUsed.push_back(i);
+
+		int transactionId = transManager.beginTransaction(threadNumber, i, diskLocationsUsed);
+		for (vector<int>::iterator it = diskLocationsUsed.begin(); it != diskLocationsUsed.end();
+			it++)
+		{
+			int value = transManager.getValue(*it);
+			value += numberToAdd;
+			transManager.putValue(transactionId, *it, value);
+		}
+		transManager.commitTransaction(transactionId);
+
+		diskLocationsUsed.clear();
+	}
 }
 
 int main(int argc, char* argv[])
@@ -109,10 +142,10 @@ int main(int argc, char* argv[])
 	}
 
 	//Spin off threads
+	threadZero(transManager);
 	threadOne(transManager);
 	//threadTwo(transManager);
-	//threadThree(transManager);
-	//threadFour(transManager);
+	threadThree(transManager);
 
 	//Wait for threads to come back
 

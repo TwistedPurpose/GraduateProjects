@@ -5,7 +5,9 @@
 // Constructor
 TransManager::TransManager(int numThreads)
 {
-	globalTransactionCounter = 0;
+
+	globalTransactionCounter = new int;
+	*globalTransactionCounter = 0;
 	numberOfThreads = numThreads;
 
 	diskLocks = new pthread_mutex_t[50];
@@ -57,10 +59,9 @@ int TransManager::beginTransaction(
     int transId,
     const vector<int> &locationList)
 {
-	//TODO: get globaltrandactioncounter lock
 	pthread_mutex_lock(&globalTransactionCounterLock);
-	globalTransactionCounter = globalTransactionCounter + 1;
-	int globalTransactionId = globalTransactionCounter;
+	*globalTransactionCounter = *globalTransactionCounter + 1;
+	int globalTransactionId = *globalTransactionCounter;
 	pthread_mutex_unlock(&globalTransactionCounterLock);
 
 	log.begin(threadId, transId, globalTransactionId);
@@ -145,4 +146,14 @@ void TransManager::releaseDiskLocks()
 	{
 		pthread_mutex_unlock(&diskLocks[*it]);
 	}
+}
+
+void TransManager::createBackup()
+{
+
+}
+
+void TransManager::clearBackup()
+{
+
 }

@@ -106,7 +106,7 @@ class TransManager
 	pthread_mutex_t globalTransactionCounterLock;
 	pthread_mutex_t * diskLocks;
 	int numberOfThreads;
-	int globalTransactionCounter;
+	int * globalTransactionCounter;
 
 	void releaseDiskLocks();
 	void aquireDiskLocks();

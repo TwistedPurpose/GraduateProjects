@@ -190,10 +190,6 @@ int main(int argc, char* argv[])
 	pthread_create(&threadOne, NULL, threadOneWork, &transManager);
 	pthread_create(&threadTwo, NULL, threadTwoWork, &transManager);
 	pthread_create(&threadThree, NULL, threadThreeWork, &transManager);
-	//threadZeroWork(transManager);
-	//threadOneWork(transManager);
-	//threadTwoWork(transManager);
-	//threadThreeWork(transManager);
 
 	pthread_join(threadZero, NULL);
 	pthread_join(threadOne, NULL);

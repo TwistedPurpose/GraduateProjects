@@ -3,13 +3,14 @@
 #include "TransManager.h"
 #include <string.h>
 
-void threadZero(TransManager transManager)
+void * threadZeroWork(void * transManager)
 {
 	int numberToAdd = 1;
 	int threadNumber = 0;
 	int rangeBegin = 0;
 	int rangeEnd = 9;
 	vector<int> diskLocationsUsed;
+	TransManager * trans = static_cast<TransManager *>(transManager);
 
 	for (int i = 0; i < 5; i++, numberToAdd++)
 	{
@@ -18,15 +19,15 @@ void threadZero(TransManager transManager)
 			diskLocationsUsed.push_back(k);
 		}
 
-		int transactionId = transManager.beginTransaction(threadNumber, i, diskLocationsUsed);
+		int transactionId = trans->beginTransaction(threadNumber, i, diskLocationsUsed);
 		for (vector<int>::iterator it = diskLocationsUsed.begin(); it != diskLocationsUsed.end();
 			it++)
 		{
-			int value = transManager.getValue(*it);
+			int value = trans->getValue(*it);
 			value += numberToAdd;
-			transManager.putValue(transactionId,*it,value);
+			trans->putValue(transactionId, *it, value);
 		}
-		transManager.commitTransaction(transactionId);
+		trans->commitTransaction(transactionId);
 
 		rangeBegin = rangeEnd + 1;
 		rangeEnd = rangeEnd + 10;
@@ -34,7 +35,7 @@ void threadZero(TransManager transManager)
 	}
 }
 
-void threadOne(TransManager transManager)
+void threadOneWork(TransManager transManager)
 {
 	int numberToAdd = 10;
 	int threadNumber = 1;
@@ -80,7 +81,7 @@ void threadOne(TransManager transManager)
 	}
 }
 
-void threadTwo(TransManager transManager)
+void threadTwoWork(TransManager transManager)
 {
 	int numberToAddOrSubtract = 2;
 	int threadNumber = 2;
@@ -119,7 +120,7 @@ void threadTwo(TransManager transManager)
 
 }
 
-void threadThree(TransManager transManager)
+void threadThreeWork(TransManager transManager)
 {
 	int threadNumber = 3;
 	vector<int> diskLocationsUsed;
@@ -145,6 +146,11 @@ int main(int argc, char* argv[])
 	int numberOfThreads = 4;
 	TransManager transManager(numberOfThreads);
 	int * threadStates;
+
+	pthread_t threadZero;
+	pthread_t threadOne;
+	pthread_t threadTwo;
+	pthread_t threadThree;
 
 	//Delete this later
 	transManager.debugTurnCrashesOff();
@@ -173,10 +179,13 @@ int main(int argc, char* argv[])
 	}
 
 	//Spin off threads
-	threadZero(transManager);
-	threadOne(transManager);
-	//threadTwo(transManager);
-	threadThree(transManager);
+	pthread_create(&threadZero, NULL, threadZeroWork, &transManager);
+	//threadZeroWork(transManager);
+	//threadOneWork(transManager);
+	//threadTwoWork(transManager);
+	//threadThreeWork(transManager);
+
+	pthread_join(threadZero, NULL);
 
 	//Wait for threads to come back
 

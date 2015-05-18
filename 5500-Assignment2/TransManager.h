@@ -110,6 +110,8 @@ class TransManager
 
 	void releaseDiskLocks();
 	void aquireDiskLocks();
+	void createBackup();
+	void clearBackup();
 };
 
 #endif

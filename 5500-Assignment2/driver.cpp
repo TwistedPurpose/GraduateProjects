@@ -6,12 +6,13 @@
 
 void * threadZeroWork(void * transManager)
 {
+	TransManager * trans = static_cast<TransManager *>(transManager);
 	int numberToAdd = 1;
 	int threadNumber = 0;
 	int rangeBegin = 0;
 	int rangeEnd = 9;
 	vector<int> diskLocationsUsed;
-	TransManager * trans = static_cast<TransManager *>(transManager);
+	
 
 	for (int i = 0; i < 5; i++, numberToAdd++)
 	{
@@ -36,8 +37,9 @@ void * threadZeroWork(void * transManager)
 	}
 }
 
-void threadOneWork(TransManager transManager)
+void * threadOneWork(void * transManager)
 {
+	TransManager * trans = static_cast<TransManager *>(transManager);
 	int numberToAdd = 10;
 	int threadNumber = 1;
 	int mod = 5;
@@ -57,15 +59,15 @@ void threadOneWork(TransManager transManager)
 			}
 		}
 
-		int transactionId = transManager.beginTransaction(threadNumber, i, diskLocationsUsed);
+		int transactionId = trans->beginTransaction(threadNumber, i, diskLocationsUsed);
 		for (vector<int>::iterator it = diskLocationsUsed.begin(); it != diskLocationsUsed.end();
 			it++)
 		{
 			if (*it % mod == i)
 			{
-				int value = transManager.getValue(*it);
+				int value = trans->getValue(*it);
 				value += numberToAdd;
-				transManager.putValue(transactionId, *it, value);
+				trans->putValue(transactionId, *it, value);
 			}
 		}
 
@@ -75,15 +77,16 @@ void threadOneWork(TransManager transManager)
 			//transManager.abortTransaction(transactionId);
 		}
 		{
-			transManager.commitTransaction(transactionId);
+			trans->commitTransaction(transactionId);
 		}
 
 		diskLocationsUsed.clear();
 	}
 }
 
-void threadTwoWork(TransManager transManager)
+void * threadTwoWork(void * transManager)
 {
+	TransManager * trans = static_cast<TransManager *>(transManager);
 	int numberToAddOrSubtract = 2;
 	int threadNumber = 2;
 	vector<int> diskLocationsUsed;
@@ -98,31 +101,32 @@ void threadTwoWork(TransManager transManager)
 
 		diskLocationsUsed.push_back(subLocation);
 		diskLocationsUsed.push_back(addLocation);
-		int transactionId = transManager.beginTransaction(threadNumber, i, diskLocationsUsed);
+		int transactionId = trans->beginTransaction(threadNumber, i, diskLocationsUsed);
 
-		int subValue = transManager.getValue(subLocation);
+		int subValue = trans->getValue(subLocation);
 		subValue -= 2;
-		transManager.putValue(transactionId, subLocation, subValue);
+		trans->putValue(transactionId, subLocation, subValue);
 
-		int addValue = transManager.getValue(addLocation);
+		int addValue = trans->getValue(addLocation);
 		addValue += 2;
-		transManager.putValue(transactionId, addLocation, addValue);
+		trans->putValue(transactionId, addLocation, addValue);
 
 		if (i == 20)
 		{
-			transManager.abortTransaction(transactionId);
+			trans->abortTransaction(transactionId);
 		}
 		else 
 		{
-			transManager.commitTransaction(transactionId);
+			trans->commitTransaction(transactionId);
 		}
 
 	}
 
 }
 
-void threadThreeWork(TransManager transManager)
+void * threadThreeWork(void * transManager)
 {
+	TransManager * trans = static_cast<TransManager *>(transManager);
 	int threadNumber = 3;
 	vector<int> diskLocationsUsed;
 
@@ -130,13 +134,13 @@ void threadThreeWork(TransManager transManager)
 	{
 		diskLocationsUsed.push_back(i);
 
-		int transactionId = transManager.beginTransaction(threadNumber, i, diskLocationsUsed);
+		int transactionId = trans->beginTransaction(threadNumber, i, diskLocationsUsed);
 
-		int value = transManager.getValue(i);
+		int value = trans->getValue(i);
 		value += i + 1;
-		transManager.putValue(transactionId, i, value);
+		trans->putValue(transactionId, i, value);
 		
-		transManager.commitTransaction(transactionId);
+		trans->commitTransaction(transactionId);
 
 		diskLocationsUsed.clear();
 	}
@@ -181,12 +185,18 @@ int main(int argc, char* argv[])
 
 	//Spin off threads
 	pthread_create(&threadZero, NULL, threadZeroWork, &transManager);
+	pthread_create(&threadOne, NULL, threadOneWork, &transManager);
+	pthread_create(&threadTwo, NULL, threadTwoWork, &transManager);
+	pthread_create(&threadThree, NULL, threadThreeWork, &transManager);
 	//threadZeroWork(transManager);
 	//threadOneWork(transManager);
 	//threadTwoWork(transManager);
 	//threadThreeWork(transManager);
 
 	pthread_join(threadZero, NULL);
+	pthread_join(threadOne, NULL);
+	pthread_join(threadTwo, NULL);
+	pthread_join(threadThree, NULL);
 
 	//Wait for threads to come back
 

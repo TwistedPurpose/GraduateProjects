@@ -1,6 +1,6 @@
 TARGET_NAME = atomic
 CPP = g++
-FLAGS = -lpthread
+FLAGS = -lpthread -pthread
 
 all: driver
 

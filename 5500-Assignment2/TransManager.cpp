@@ -65,8 +65,8 @@ int TransManager::beginTransaction(
 	pthread_mutex_unlock(&globalTransactionCounterLock);
 
 	log.begin(threadId, transId, globalTransactionId);
-	heldLocks = locationList;
-	aquireDiskLocks();
+	heldLocks[globalTransactionId] = locationList;
+	aquireDiskLocks(globalTransactionId);
 
 	return globalTransactionId;
 }
@@ -116,9 +116,9 @@ void TransManager::putValue(
 // id:		transaction id returned from beginTransaction
 void TransManager::commitTransaction(int id)
 {
-	//Finish This
+	//undo abort checking
 	log.commit(id);
-	releaseDiskLocks();
+	releaseDiskLocks(id);
 }
 
 // abortTransaction: Aborts the transaction:
@@ -130,19 +130,24 @@ void TransManager::commitTransaction(int id)
 // id:		transaction id returned from beginTransaction
 void TransManager::abortTransaction(int id)
 {
+	//do abort stuff
+	log.abort(id);
+	releaseDiskLocks(id);
 }
 
-void TransManager::aquireDiskLocks()
+void TransManager::aquireDiskLocks(int id)
 {
-	for (vector<int>::iterator it = heldLocks.begin(); it != heldLocks.end(); it++)
+	vector<int> locks = heldLocks[id];
+	for (vector<int>::iterator it = locks.begin(); it != locks.end(); it++)
 	{
 		pthread_mutex_lock(&diskLocks[*it]);
 	}
 }
 
-void TransManager::releaseDiskLocks()
+void TransManager::releaseDiskLocks(int id)
 {
-	for (vector<int>::iterator it = heldLocks.begin(); it != heldLocks.end(); it++)
+	vector<int> locks = heldLocks[id];
+	for (vector<int>::iterator it = locks.begin(); it != locks.end(); it++)
 	{
 		pthread_mutex_unlock(&diskLocks[*it]);
 	}

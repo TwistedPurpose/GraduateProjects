@@ -12,7 +12,6 @@ void * threadZeroWork(void * transManager)
 	int rangeBegin = 0;
 	int rangeEnd = 9;
 	vector<int> diskLocationsUsed;
-	
 
 	for (int i = 0; i < 5; i++, numberToAdd++)
 	{
@@ -35,6 +34,7 @@ void * threadZeroWork(void * transManager)
 		rangeEnd = rangeEnd + 10;
 		diskLocationsUsed.clear();
 	}
+	return NULL;
 }
 
 void * threadOneWork(void * transManager)
@@ -82,6 +82,7 @@ void * threadOneWork(void * transManager)
 
 		diskLocationsUsed.clear();
 	}
+	return NULL;
 }
 
 void * threadTwoWork(void * transManager)
@@ -121,7 +122,7 @@ void * threadTwoWork(void * transManager)
 		}
 
 	}
-
+	return NULL;
 }
 
 void * threadThreeWork(void * transManager)
@@ -144,6 +145,7 @@ void * threadThreeWork(void * transManager)
 
 		diskLocationsUsed.clear();
 	}
+	return NULL;
 }
 
 int main(int argc, char* argv[])

@@ -9,6 +9,7 @@
 #include <vector>
 #include <deque>
 #include <pthread.h>
+#include <map>
 using namespace std;
 
 class TransManager
@@ -102,14 +103,15 @@ class TransManager
 
     // TODO: Add your own data members and private functions here.
 
-	vector<int> heldLocks;
+	map<int, vector<int>> heldLocks;
+	//vector<int> heldLocks;
 	pthread_mutex_t globalTransactionCounterLock;
 	pthread_mutex_t * diskLocks;
 	int numberOfThreads;
 	int * globalTransactionCounter;
 
-	void releaseDiskLocks();
-	void aquireDiskLocks();
+	void releaseDiskLocks(int id);
+	void aquireDiskLocks(int id);
 	void createBackup();
 	void clearBackup();
 };

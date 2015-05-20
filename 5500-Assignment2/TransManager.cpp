@@ -119,6 +119,7 @@ void TransManager::putValue(
 // id:		transaction id returned from beginTransaction
 void TransManager::commitTransaction(int id)
 {
+	backups[id].clear();
 	log.commit(id);
 	releaseDiskLocks(id);
 }

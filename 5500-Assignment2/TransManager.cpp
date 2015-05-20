@@ -65,8 +65,8 @@ int TransManager::beginTransaction(
 
 	log.begin(threadId, transId, globalTransactionId);
 	heldLocks[globalTransactionId] = locationList;
-	createBackup(globalTransactionId, locationList);
 	aquireDiskLocks(globalTransactionId);
+	createBackup(globalTransactionId, locationList);
 
 	return globalTransactionId;
 }

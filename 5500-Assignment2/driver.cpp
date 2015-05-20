@@ -74,7 +74,7 @@ void * threadOneWork(void * transManager)
 		if (i == 3)
 		{
 			//Add aborts later
-			//transManager.abortTransaction(transactionId);
+			trans->abortTransaction(transactionId);
 		}
 		{
 			trans->commitTransaction(transactionId);

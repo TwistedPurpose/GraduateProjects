@@ -29,14 +29,14 @@ void Log::update(int transactionId, int location, int currentValue, int value)
 void Log::commit(int transactionId)
 {
 	lockLog();
-	writeToLog("COMMIT " + to_string(transactionId));
+	writeToLog("COMMITTED " + to_string(transactionId));
 	unlockLog();
 }
 
 void Log::abort(int transactionId)
 {
 	lockLog();
-	writeToLog("ABORT " + to_string(transactionId));
+	writeToLog("ABORTED " + to_string(transactionId));
 	unlockLog();
 }
 

@@ -24,7 +24,7 @@ public:
 	void clearLog();
 
 	void begin(int threadId, int transactionId, int globalTransactionId);
-	void update(int transactionId, int location, int value);
+	void update(int transactionId, int location, int currentValue, int value);
 	void commit(int transactionId);
 	void abort(int transactionId);
 	void neverFinish(int transactionId);

@@ -104,16 +104,16 @@ class TransManager
     // TODO: Add your own data members and private functions here.
 
 	map<int, vector<int>> heldLocks;
-	//vector<int> heldLocks;
+	map<int, vector<pair<int, int>>> backups;
 	pthread_mutex_t globalTransactionCounterLock;
 	pthread_mutex_t * diskLocks;
 	int numberOfThreads;
-	int * globalTransactionCounter;
+	int globalTransactionCounter;
 
 	void releaseDiskLocks(int id);
 	void aquireDiskLocks(int id);
-	void createBackup();
-	void clearBackup();
+	void createBackup(int transactionId, vector<int> locations);
+	void restoreBackup(int transactionId);
 };
 
 #endif

@@ -6,8 +6,7 @@
 TransManager::TransManager(int numThreads)
 {
 
-	globalTransactionCounter = new int;
-	*globalTransactionCounter = 0;
+	globalTransactionCounter = 0;
 	numberOfThreads = numThreads;
 
 	diskLocks = new pthread_mutex_t[50];
@@ -60,12 +59,13 @@ int TransManager::beginTransaction(
     const vector<int> &locationList)
 {
 	pthread_mutex_lock(&globalTransactionCounterLock);
-	*globalTransactionCounter = *globalTransactionCounter + 1;
-	int globalTransactionId = *globalTransactionCounter;
+	globalTransactionCounter = globalTransactionCounter + 1;
+	int globalTransactionId = globalTransactionCounter;
 	pthread_mutex_unlock(&globalTransactionCounterLock);
 
 	log.begin(threadId, transId, globalTransactionId);
 	heldLocks[globalTransactionId] = locationList;
+	createBackup(globalTransactionId, locationList);
 	aquireDiskLocks(globalTransactionId);
 
 	return globalTransactionId;
@@ -96,7 +96,8 @@ void TransManager::putValue(
     int location,
     int newValue)
 {
-	log.update(id, location, newValue);
+	int oldValue = getValue(location);
+	log.update(id, location, oldValue, newValue);
 	disk.writeToDisk(location, newValue);
 }
 
@@ -106,6 +107,8 @@ void TransManager::putValue(
     int newValue,
     int currValue)
 {
+	log.update(id, location, currValue, newValue);
+	disk.writeToDisk(location, newValue);
 }
 
 // commitTransaction: Commits the transaction:
@@ -116,7 +119,6 @@ void TransManager::putValue(
 // id:		transaction id returned from beginTransaction
 void TransManager::commitTransaction(int id)
 {
-	//undo abort checking
 	log.commit(id);
 	releaseDiskLocks(id);
 }
@@ -130,7 +132,7 @@ void TransManager::commitTransaction(int id)
 // id:		transaction id returned from beginTransaction
 void TransManager::abortTransaction(int id)
 {
-	//do abort stuff
+	restoreBackup(id);
 	log.abort(id);
 	releaseDiskLocks(id);
 }
@@ -153,12 +155,23 @@ void TransManager::releaseDiskLocks(int id)
 	}
 }
 
-void TransManager::createBackup()
+void TransManager::createBackup(int transactionId, vector<int> locations)
 {
-
+	vector<pair<int, int>> backupValues;
+	for (vector<int>::iterator it = locations.begin(); it != locations.end(); it++)
+	{
+		pair<int, int> locationValuePair(*it, getValue(*it));
+		backupValues.push_back(locationValuePair);
+	}
+	backups[transactionId] = backupValues;
 }
 
-void TransManager::clearBackup()
+void TransManager::restoreBackup(int transactionId)
 {
-
+	vector<pair<int, int>> backupValues = backups[transactionId];
+	for (vector<pair<int, int>>::iterator it = backupValues.begin(); it != backupValues.end(); it++)
+	{
+		pair<int, int> val = *it;
+		disk.writeToDisk(val.first, val.second);
+	}
 }

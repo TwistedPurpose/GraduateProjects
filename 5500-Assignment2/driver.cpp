@@ -191,12 +191,11 @@ int main(int argc, char* argv[])
 	pthread_create(&threadTwo, NULL, threadTwoWork, &transManager);
 	pthread_create(&threadThree, NULL, threadThreeWork, &transManager);
 
+	//Wait for threads to come back
 	pthread_join(threadZero, NULL);
 	pthread_join(threadOne, NULL);
 	pthread_join(threadTwo, NULL);
 	pthread_join(threadThree, NULL);
-
-	//Wait for threads to come back
 
 	//Delete this later
 	transManager.debugPrintDiskContents();

@@ -15,14 +15,14 @@ void Log::clearLog()
 void Log::begin(int threadId, int transactionId, int globalTransactionId)
 {
 	lockLog();
-	writeToLog("BEGIN " + to_string(threadId) + " " + to_string(transactionId) + " " + to_string(globalTransactionId));
+	writeToLog("BEGIN " + to_string(globalTransactionId) + " " + to_string(threadId) + " " + to_string(transactionId));
 	unlockLog();
 }
 
-void Log::update(int transactionId, int location, int value)
+void Log::update(int transactionId, int location, int currentValue, int value)
 {
 	lockLog();
-	writeToLog("UPDATE " + to_string(transactionId) + " " + to_string(location) + " " + to_string(value));
+	writeToLog("UPDATE " + to_string(transactionId) + " " + to_string(location) + " " + to_string(currentValue) + " " + to_string(value));
 	unlockLog();
 }
 
@@ -61,6 +61,11 @@ void Log::writeToLog(string message)
 {
 	ofstream logFile;
 	logFile.open("LOG", ios::app);
+	if (!logFile.is_open())
+	{
+		cerr << "Unable to create or open log file!" << endl;
+		exit(-1);
+	}
 	logFile << message + "\n";
 	logFile.close();
 }

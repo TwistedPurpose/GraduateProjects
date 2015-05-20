@@ -48,8 +48,8 @@ void * threadOneWork(void * transManager)
 	for (int i = 0; i < 5; i++, numberToAdd += 10)
 	{
 		// Simulate abort, remove this later
-		if (i == 3)
-			continue;
+		//if (i == 3)
+		//	continue;
 
 		for (int k = 0; k < 50; k++)
 		{
@@ -96,9 +96,9 @@ void * threadTwoWork(void * transManager)
 	{
 		int subLocation = 2 * i;
 		int addLocation = (2 * i) + 1;
-		//Remove later, add abort
-		if (i == 20)
-			continue;
+		////Remove later, add abort
+		//if (i == 20)
+		//	continue;
 
 		diskLocationsUsed.push_back(subLocation);
 		diskLocationsUsed.push_back(addLocation);

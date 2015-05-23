@@ -8,6 +8,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
+#include <vector>
+#include <string.h>
 
 using namespace std;
 
@@ -22,12 +25,14 @@ private:
 public:
 	Log();
 	void clearLog();
+	bool doesLogExist();
 
 	void begin(int threadId, int transactionId, int globalTransactionId);
 	void update(int transactionId, int location, int currentValue, int value);
 	void commit(int transactionId);
 	void abort(int transactionId);
 	void neverFinish(int transactionId);
+	int getGlobalTransactionNumber();
 };
 
 #endif // LOG_H

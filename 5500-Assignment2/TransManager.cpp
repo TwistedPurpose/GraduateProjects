@@ -40,7 +40,92 @@ void TransManager::reset()
 // such that each threads starts with transaction 0.
 int* TransManager::recover()
 {
-	return new int[numberOfThreads];
+	int * lastTransactionsCompleted = new int[numberOfThreads];
+
+	for (int i = 0; i < numberOfThreads; i++)
+	{
+		lastTransactionsCompleted[i] = 0;
+	}
+
+	if (log.doesLogExist())
+	{
+		globalTransactionCounter = log.getGlobalTransactionNumber();
+
+		for (int i = 0; i < numberOfThreads; i++)
+		{
+			ifstream logFile("LOG");
+			string line;
+			int currentTransactionId = 0;
+			bool currentTransactionCompleted = true;
+
+			while (getline(logFile, line))
+			{
+				string buffer;
+				stringstream ss(line);
+				vector<string> logItems;
+
+				while (ss >> buffer)
+					logItems.push_back(buffer);
+
+				string commandType = logItems[0];
+
+				if (logItems[2].compare(to_string(i)) && commandType.compare("BEGIN") == 0)
+				{
+					int currentTransactionId = atoi(logItems[1].c_str);
+					currentTransactionCompleted = false;
+				}
+
+				if (logItems[1].compare(to_string(currentTransactionId)) && (commandType.compare("COMMITTED") == 0 ||
+					commandType.compare("ABORTED") == 0 || commandType.compare("NEVER_FINISHED") == 0))
+				{
+					currentTransactionCompleted = true;
+
+					if (commandType.compare("COMMITTED") == 0 || commandType.compare("ABORTED") == 0)
+					{
+						lastTransactionsCompleted[i] += 1;
+					}
+				}
+			}
+
+			logFile.clear();
+			logFile.seekg(0, ios::beg);
+
+			// Perform Rollback
+			if (!currentTransactionCompleted)
+			{
+				vector<pair<int,int>> updates;
+
+				while (getline(logFile, line))
+				{
+					string buffer;
+					stringstream ss(line);
+					vector<string> logItems;
+
+					while (ss >> buffer)
+						logItems.push_back(buffer);
+
+					string commandType = logItems[0];
+
+					if (logItems[1].compare(to_string(currentTransactionId)) == 0 && commandType.compare("UPDATE"))
+					{
+						updates.push_back(pair<int, int>(atoi(logItems[2].c_str), atoi(logItems[3].c_str)));
+					}
+				}
+
+				for (vector<pair<int, int>>::reverse_iterator it = updates.rbegin(); it != updates.rend(); it++)
+				{
+					putValue(currentTransactionId, (*it).first, (*it).second);
+				}
+
+				log.neverFinish(currentTransactionId);
+			}
+		}
+	}
+	else
+	{
+		reset();
+	}
+	return lastTransactionsCompleted;
 }
 
 // beginTransaction: Marks the beginning of the transaction.  It does the

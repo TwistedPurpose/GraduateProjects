@@ -7,6 +7,14 @@ Log::Log()
 	pthread_mutex_init(&logLock, NULL);
 }
 
+bool Log::doesLogExist()
+{
+	ifstream logFile("LOG");
+	bool logExists = logFile.good();
+	logFile.close();
+	return logExists;
+}
+
 void Log::clearLog()
 {
 	remove("LOG");
@@ -47,6 +55,31 @@ void Log::neverFinish(int transactionId)
 	unlockLog();
 }
 
+int Log::getGlobalTransactionNumber()
+{
+	int globalTransactionNumber = 0;
+	ifstream logFile("LOG");
+	string line;
+
+	while (getline(logFile, line))
+	{
+		string buffer;
+		stringstream ss(line);
+		vector<string> logItems;
+
+		while (ss >> buffer)
+			logItems.push_back(buffer);
+
+		if (logItems[0].compare("BEGIN") == 0)
+		{
+			globalTransactionNumber = stoi(logItems[1].c_str());
+		}
+	}
+	logFile.close();
+
+	return globalTransactionNumber;
+}
+
 void Log::lockLog()
 {
 	pthread_mutex_lock(&logLock);
@@ -69,3 +102,5 @@ void Log::writeToLog(string message)
 	logFile << message + "\n";
 	logFile.close();
 }
+
+void Log::

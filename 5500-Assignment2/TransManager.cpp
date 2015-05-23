@@ -40,11 +40,11 @@ void TransManager::reset()
 // such that each threads starts with transaction 0.
 int* TransManager::recover()
 {
-	int * lastTransactionsCompleted = new int[numberOfThreads];
+	int * lastThreadTransactionsCompleted = new int[numberOfThreads];
 
 	for (int i = 0; i < numberOfThreads; i++)
 	{
-		lastTransactionsCompleted[i] = 0;
+		lastThreadTransactionsCompleted[i] = 0;
 	}
 
 	if (log.doesLogExist())
@@ -82,7 +82,7 @@ int* TransManager::recover()
 
 					if (commandType.compare("COMMITTED") == 0 || commandType.compare("ABORTED") == 0)
 					{
-						lastTransactionsCompleted[i] += 1;
+						lastThreadTransactionsCompleted[i] += 1;
 					}
 				}
 			}
@@ -125,7 +125,7 @@ int* TransManager::recover()
 	{
 		reset();
 	}
-	return lastTransactionsCompleted;
+	return lastThreadTransactionsCompleted;
 }
 
 // beginTransaction: Marks the beginning of the transaction.  It does the

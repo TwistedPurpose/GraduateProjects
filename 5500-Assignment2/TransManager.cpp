@@ -75,7 +75,7 @@ int* TransManager::recover()
 
 				string commandType = logItems[0];
 
-				if (logItems[2].compare(to_string(i)) == 0 && commandType.compare("BEGIN") == 0)
+				if (commandType.compare("BEGIN") == 0 && logItems[2].compare(to_string(i)) == 0)
 				{
 					
 					int currentTransactionId = atoi(logItems[1].c_str());
@@ -98,8 +98,6 @@ int* TransManager::recover()
 						
 					}
 				}
-
-				cout << "end of loop" << endl;
 			}
 
 			// Perform Rollback

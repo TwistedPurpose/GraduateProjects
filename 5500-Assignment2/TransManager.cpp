@@ -74,14 +74,14 @@ int* TransManager::recover()
 
 				string commandType = logItems[0];
 
-				if (logItems[2].compare(to_string(i)) && commandType.compare("BEGIN") == 0)
+				if (logItems[2].compare(to_string(i)) == 0 && commandType.compare("BEGIN") == 0)
 				{
 					cout << line << endl;
 					int currentTransactionId = atoi(logItems[1].c_str());
 					currentTransactionCompleted = false;
 				}
 
-				if (logItems[1].compare(to_string(currentTransactionId)) && (commandType.compare("COMMITTED") == 0 ||
+				if (logItems[1].compare(to_string(currentTransactionId)) == 0 && (commandType.compare("COMMITTED") == 0 ||
 					commandType.compare("ABORTED") == 0 || commandType.compare("NEVER_FINISHED") == 0))
 				{
 					currentTransactionCompleted = true;

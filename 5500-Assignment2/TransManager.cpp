@@ -55,7 +55,7 @@ int* TransManager::recover()
 
 		for (int i = 0; i < numberOfThreads; i++)
 		{
-			cout << "Starting recover for thread: " << i << endl;
+			//cout << "Starting recover for thread: " << i << endl;
 			ifstream logFile("LOG");
 			string line;
 			int currentTransactionId = -1;
@@ -79,8 +79,8 @@ int* TransManager::recover()
 					
 					currentTransactionId = atoi(logItems[1].c_str());
 					currentTransactionCompleted = false;
-					cout << line << endl;
-					cout <<  "Current Transaction ID " << currentTransactionId << endl;
+					//cout << line << endl;
+					//cout <<  "Current Transaction ID " << currentTransactionId << endl;
 				}
 
 				if ((commandType.compare("COMMITTED") == 0 ||
@@ -89,13 +89,11 @@ int* TransManager::recover()
 				{
 					currentTransactionCompleted = true;
 
-					cout << line << endl;
+					//cout << line << endl;
 
 					if (commandType.compare("COMMITTED") == 0 || commandType.compare("ABORTED") == 0)
 					{
-						cout << "got here" << endl;
 						lastThreadTransactionsCompleted[i] += 1;
-						
 					}
 				}
 			}

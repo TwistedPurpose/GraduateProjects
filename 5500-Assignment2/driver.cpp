@@ -146,7 +146,6 @@ int main(int argc, char* argv[])
 {
 	int numberOfThreads = 4;
 	TransManager transManager(numberOfThreads);
-	int * threadStates;
 
 	pthread_t threadZero;
 	pthread_t threadOne;

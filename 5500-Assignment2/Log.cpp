@@ -99,6 +99,6 @@ void Log::writeToLog(string message)
 		cerr << "Unable to create or open log file!" << endl;
 		exit(-1);
 	}
-	logFile << message + "\n";
+	logFile << message << endl;
 	logFile.close();
 }

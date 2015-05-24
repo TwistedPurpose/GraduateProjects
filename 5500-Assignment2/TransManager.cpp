@@ -63,6 +63,7 @@ int* TransManager::recover()
 
 			while (getline(logFile, line))
 			{
+				cout << line << endl;
 				string buffer;
 				stringstream ss(line);
 				vector<string> logItems;
@@ -79,7 +80,7 @@ int* TransManager::recover()
 					
 					int currentTransactionId = atoi(logItems[1].c_str());
 					currentTransactionCompleted = false;
-					cout << line << endl;
+					//cout << line << endl;
 				}
 
 				if ((commandType.compare("COMMITTED") == 0 ||
@@ -88,7 +89,7 @@ int* TransManager::recover()
 				{
 					currentTransactionCompleted = true;
 
-					cout << line << endl;
+					//cout << line << endl;
 
 					if (commandType.compare("COMMITTED") == 0 || commandType.compare("ABORTED") == 0)
 					{

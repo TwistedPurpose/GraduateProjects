@@ -80,6 +80,7 @@ int* TransManager::recover()
 					int currentTransactionId = atoi(logItems[1].c_str());
 					currentTransactionCompleted = false;
 					cout << line << endl;
+					cout <<  "Current Transaction ID " << currentTransactionId << endl;
 				}
 
 				if ((commandType.compare("COMMITTED") == 0 ||

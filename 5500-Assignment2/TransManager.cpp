@@ -55,6 +55,7 @@ int* TransManager::recover()
 
 		for (int i = 0; i < numberOfThreads; i++)
 		{
+			cout << "Starting recover for thread: " << i << endl;
 			ifstream logFile("LOG");
 			string line;
 			int currentTransactionId = -1;

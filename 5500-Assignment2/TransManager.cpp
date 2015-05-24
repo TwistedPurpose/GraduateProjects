@@ -68,16 +68,14 @@ int* TransManager::recover()
 
 				while (ss >> buffer)
 				{
-					cout << buffer;
 					logItems.push_back(buffer);
-					cout << endl;
 				}
 
 				string commandType = logItems[0];
 
 				if (logItems[2].compare(to_string(i)) && commandType.compare("BEGIN") == 0)
 				{
-					cout << commandType << logItems[1] << " On thread " << i << endl;
+					cout << line << endl;
 					int currentTransactionId = atoi(logItems[1].c_str());
 					currentTransactionCompleted = false;
 				}
@@ -87,12 +85,13 @@ int* TransManager::recover()
 				{
 					currentTransactionCompleted = true;
 
-					//cout << commandType << " " << logItems[1] << " On thread " << i << endl;
+					cout << line << endl;
 
 					if (commandType.compare("COMMITTED") == 0 || commandType.compare("ABORTED") == 0)
 					{
-						lastThreadTransactionsCompleted[i] += 1;
 						cout << "got here" << endl;
+						lastThreadTransactionsCompleted[i] += 1;
+						
 					}
 				}
 			}

@@ -77,15 +77,15 @@ int* TransManager::recover()
 				if (commandType.compare("BEGIN") == 0 && logItems[2].compare(to_string(i)) == 0)
 				{
 					
-					int currentTransactionId = atoi(logItems[1].c_str());
+					currentTransactionId = atoi(logItems[1].c_str());
 					currentTransactionCompleted = false;
 					cout << line << endl;
 					cout <<  "Current Transaction ID " << currentTransactionId << endl;
 				}
-				//(commandType.compare("COMMITTED") == 0 ||
-				//	commandType.compare("ABORTED") == 0 || commandType.compare("NEVER_FINISHED") == 0)
-				//	&&
-				if (atoi(logItems[1].c_str()) == currentTransactionId)
+
+				if ((commandType.compare("COMMITTED") == 0 ||
+					commandType.compare("ABORTED") == 0 || commandType.compare("NEVER_FINISHED") == 0)
+					&& atoi(logItems[1].c_str()) == currentTransactionId)
 				{
 					currentTransactionCompleted = true;
 

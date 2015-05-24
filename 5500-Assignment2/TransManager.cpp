@@ -82,8 +82,9 @@ int* TransManager::recover()
 					cout << line << endl;
 				}
 
-				if (logItems[1].compare(to_string(currentTransactionId)) == 0 && (commandType.compare("COMMITTED") == 0 ||
-					commandType.compare("ABORTED") == 0 || commandType.compare("NEVER_FINISHED") == 0))
+				if ((commandType.compare("COMMITTED") == 0 ||
+					commandType.compare("ABORTED") == 0 || commandType.compare("NEVER_FINISHED") == 0) 
+					&& logItems[1].compare(to_string(currentTransactionId)) == 0)
 				{
 					currentTransactionCompleted = true;
 
@@ -97,8 +98,6 @@ int* TransManager::recover()
 					}
 				}
 			}
-
-
 
 			// Perform Rollback
 			if (!currentTransactionCompleted)
@@ -133,6 +132,8 @@ int* TransManager::recover()
 
 				log.neverFinish(currentTransactionId);
 			}
+
+			logFile.close();
 		}
 	}
 	else

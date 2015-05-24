@@ -82,10 +82,10 @@ int* TransManager::recover()
 					cout << line << endl;
 					cout <<  "Current Transaction ID " << currentTransactionId << endl;
 				}
-
-				if ((commandType.compare("COMMITTED") == 0 ||
-					commandType.compare("ABORTED") == 0 || commandType.compare("NEVER_FINISHED") == 0) 
-					&& logItems[1].compare(to_string(currentTransactionId)) == 0)
+				//(commandType.compare("COMMITTED") == 0 ||
+				//	commandType.compare("ABORTED") == 0 || commandType.compare("NEVER_FINISHED") == 0)
+				//	&&
+				if (logItems[1].compare(to_string(currentTransactionId)) == 0)
 				{
 					currentTransactionCompleted = true;
 

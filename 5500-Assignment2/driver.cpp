@@ -153,7 +153,7 @@ int main(int argc, char* argv[])
 	pthread_t threadThree;
 
 	//Delete this later
-	transManager.debugTurnCrashesOff();
+	//transManager.debugTurnCrashesOff();
 
 	if (argc == 2 && strcmp(argv[1], "-c") == 0)
 	{

@@ -4,6 +4,8 @@
 #include <string.h>
 #include <stdio.h>
 
+int * threadStates;
+
 void * threadZeroWork(void * transManager)
 {
 	TransManager * trans = static_cast<TransManager *>(transManager);
@@ -13,7 +15,7 @@ void * threadZeroWork(void * transManager)
 	int rangeEnd = 9;
 	vector<int> diskLocationsUsed;
 
-	for (int i = 0; i < 5; i++, numberToAdd++)
+	for (int i = threadStates[0]; i < 5; i++, numberToAdd++)
 	{
 		for (int k = rangeBegin; k <= rangeEnd; k++)
 		{
@@ -45,7 +47,7 @@ void * threadOneWork(void * transManager)
 	int mod = 5;
 	vector<int> diskLocationsUsed;
 
-	for (int i = 0; i < 5; i++, numberToAdd += 10)
+	for (int i = threadStates[1]; i < 5; i++, numberToAdd += 10)
 	{
 		for (int k = 0; k < 50; k++)
 		{
@@ -87,7 +89,7 @@ void * threadTwoWork(void * transManager)
 	int threadNumber = 2;
 	vector<int> diskLocationsUsed;
 
-	for (int i = 0; i < 25; i++)
+	for (int i = threadStates[2]; i < 25; i++)
 	{
 		int subLocation = 2 * i;
 		int addLocation = (2 * i) + 1;
@@ -123,7 +125,7 @@ void * threadThreeWork(void * transManager)
 	int threadNumber = 3;
 	vector<int> diskLocationsUsed;
 
-	for (int i = 0; i < 50; i++)
+	for (int i = threadStates[3]; i < 50; i++)
 	{
 		diskLocationsUsed.push_back(i);
 

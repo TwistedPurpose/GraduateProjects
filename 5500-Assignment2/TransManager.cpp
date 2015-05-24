@@ -49,6 +49,8 @@ int* TransManager::recover()
 
 	if (log.doesLogExist())
 	{
+		cout << "Log exists, starting recovery" << endl;
+
 		globalTransactionCounter = log.getGlobalTransactionNumber();
 
 		for (int i = 0; i < numberOfThreads; i++)
@@ -87,13 +89,16 @@ int* TransManager::recover()
 				}
 			}
 
-			logFile.clear();
-			logFile.seekg(0, ios::beg);
+
 
 			// Perform Rollback
 			if (!currentTransactionCompleted)
 			{
+				cout << "Beginning rollback of:" + to_string(currentTransactionId) << endl;
 				vector<pair<int,int>> updates;
+
+				logFile.clear();
+				logFile.seekg(0, ios::beg);
 
 				while (getline(logFile, line))
 				{
@@ -123,6 +128,7 @@ int* TransManager::recover()
 	}
 	else
 	{
+		cout << "Log does not exist, performing reset" << endl;
 		reset();
 	}
 	return lastThreadTransactionsCompleted;

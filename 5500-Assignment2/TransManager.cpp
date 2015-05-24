@@ -73,6 +73,7 @@ int* TransManager::recover()
 
 				if (logItems[2].compare(to_string(i)) && commandType.compare("BEGIN") == 0)
 				{
+					cout << "BEGIN " << logItems[1] << " On thread " << i << endl;
 					int currentTransactionId = atoi(logItems[1].c_str());
 					currentTransactionCompleted = false;
 				}
@@ -81,6 +82,8 @@ int* TransManager::recover()
 					commandType.compare("ABORTED") == 0 || commandType.compare("NEVER_FINISHED") == 0))
 				{
 					currentTransactionCompleted = true;
+
+					cout << commandType << " " << logItems[1] << " On thread " << i << endl;
 
 					if (commandType.compare("COMMITTED") == 0 || commandType.compare("ABORTED") == 0)
 					{

@@ -71,7 +71,7 @@ int* TransManager::recover()
 
 				if (logItems[2].compare(to_string(i)) && commandType.compare("BEGIN") == 0)
 				{
-					int currentTransactionId = atoi(logItems[1].c_str);
+					int currentTransactionId = atoi(logItems[1].c_str());
 					currentTransactionCompleted = false;
 				}
 
@@ -108,7 +108,7 @@ int* TransManager::recover()
 
 					if (logItems[1].compare(to_string(currentTransactionId)) == 0 && commandType.compare("UPDATE"))
 					{
-						updates.push_back(pair<int, int>(atoi(logItems[2].c_str), atoi(logItems[3].c_str)));
+						updates.push_back(pair<int, int>(atoi(logItems[2].c_str()), atoi(logItems[3].c_str())));
 					}
 				}
 

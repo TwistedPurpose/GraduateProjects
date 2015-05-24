@@ -102,5 +102,3 @@ void Log::writeToLog(string message)
 	logFile << message + "\n";
 	logFile.close();
 }
-
-void Log::

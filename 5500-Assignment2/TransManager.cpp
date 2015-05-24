@@ -98,6 +98,8 @@ int* TransManager::recover()
 						
 					}
 				}
+
+				cout << "end of loop" << endl;
 			}
 
 			// Perform Rollback

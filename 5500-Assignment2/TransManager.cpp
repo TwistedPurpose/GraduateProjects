@@ -85,7 +85,7 @@ int* TransManager::recover()
 				//(commandType.compare("COMMITTED") == 0 ||
 				//	commandType.compare("ABORTED") == 0 || commandType.compare("NEVER_FINISHED") == 0)
 				//	&&
-				if (logItems[1].compare(to_string(currentTransactionId)) == 0)
+				if (atoi(logItems[1].c_str()) == currentTransactionId)
 				{
 					currentTransactionCompleted = true;
 

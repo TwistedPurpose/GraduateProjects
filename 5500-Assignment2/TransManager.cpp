@@ -58,7 +58,6 @@ int* TransManager::recover()
 			ifstream logFile("LOG");
 			string line;
 			int currentTransactionId = -1;
-			int threadTransactionId = 0;
 			bool currentTransactionCompleted = true;
 
 			while (getline(logFile, line))
@@ -78,7 +77,6 @@ int* TransManager::recover()
 				{
 					
 					currentTransactionId = atoi(logItems[1].c_str());
-					threadTransactionId = atoi(logItems[3].c_str());
 					currentTransactionCompleted = false;
 
 				} else if ((commandType.compare("COMMITTED") == 0 ||
@@ -89,7 +87,7 @@ int* TransManager::recover()
 
 					if (commandType.compare("COMMITTED") == 0 || commandType.compare("ABORTED") == 0)
 					{
-						lastThreadTransactionsCompleted[i] = threadTransactionId;
+						lastThreadTransactionsCompleted[i] = lastThreadTransactionsCompleted[i] + 1;
 					}
 				}
 			}

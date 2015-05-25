@@ -98,19 +98,24 @@ int* TransManager::recover()
 				}
 			}
 
+			logFile.close();
+
 			// Perform Rollback
 			if (!currentTransactionCompleted)
 			{
 				cout << "Beginning rollback of:" + to_string(currentTransactionId) << endl;
 				vector<pair<int,int>> updates;
 
-				logFile.clear();
-				logFile.seekg(0, ios::beg);
+				ifstream rolebackLogFile("LOG");
+				string rollbackLine;
 
-				while (getline(logFile, line))
+				//logFile.clear();
+				//logFile.seekg(0, ios::beg);
+
+				while (getline(rolebackLogFile, rollbackLine))
 				{
 					string buffer;
-					stringstream ss(line);
+					stringstream ss(rollbackLine);
 					vector<string> logItems;
 
 					while (ss >> buffer)
@@ -132,7 +137,7 @@ int* TransManager::recover()
 				log.neverFinish(currentTransactionId);
 			}
 
-			logFile.close();
+			
 		}
 	}
 	else

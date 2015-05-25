@@ -79,8 +79,6 @@ int* TransManager::recover()
 					
 					currentTransactionId = atoi(logItems[1].c_str());
 					currentTransactionCompleted = false;
-					//cout << line << endl;
-					//cout <<  "Current Transaction ID " << currentTransactionId << endl;
 				}
 
 				if ((commandType.compare("COMMITTED") == 0 ||
@@ -125,6 +123,7 @@ int* TransManager::recover()
 
 					if (logItems[1].compare(to_string(currentTransactionId)) == 0 && commandType.compare("UPDATE"))
 					{
+						cout << line << endl;
 						updates.push_back(pair<int, int>(atoi(logItems[2].c_str()), atoi(logItems[3].c_str())));
 					}
 				}

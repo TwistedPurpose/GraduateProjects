@@ -9,10 +9,10 @@ int * threadStates;
 void * threadZeroWork(void * transManager)
 {
 	TransManager * trans = static_cast<TransManager *>(transManager);
-	int numberToAdd = 1;
 	int threadNumber = 0;
-	int rangeBegin = 0;
-	int rangeEnd = 9;
+	int numberToAdd = 1 + threadStates[0];
+	int rangeBegin = 0 + (threadStates[0] * 10);
+	int rangeEnd = 9 + (threadStates[0] * 10);
 	vector<int> diskLocationsUsed;
 
 	for (int i = threadStates[0]; i < 5; i++, numberToAdd++)

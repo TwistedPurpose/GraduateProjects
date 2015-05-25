@@ -55,7 +55,6 @@ int* TransManager::recover()
 
 		for (int i = 0; i < numberOfThreads; i++)
 		{
-			//cout << "Starting recover for thread: " << i << endl;
 			ifstream logFile("LOG");
 			string line;
 			int currentTransactionId = -1;
@@ -79,15 +78,12 @@ int* TransManager::recover()
 					
 					currentTransactionId = atoi(logItems[1].c_str());
 					currentTransactionCompleted = false;
-				}
 
-				if ((commandType.compare("COMMITTED") == 0 ||
+				} else if ((commandType.compare("COMMITTED") == 0 ||
 					commandType.compare("ABORTED") == 0 || commandType.compare("NEVER_FINISHED") == 0)
 					&& atoi(logItems[1].c_str()) == currentTransactionId)
 				{
 					currentTransactionCompleted = true;
-
-					//cout << line << endl;
 
 					if (commandType.compare("COMMITTED") == 0 || commandType.compare("ABORTED") == 0)
 					{
@@ -101,14 +97,10 @@ int* TransManager::recover()
 			// Perform Rollback
 			if (!currentTransactionCompleted)
 			{
-				cout << "Beginning rollback of:" + to_string(currentTransactionId) << endl;
 				vector<pair<int,int>> updates;
 
 				ifstream rolebackLogFile("LOG");
 				string rollbackLine;
-
-				//logFile.clear();
-				//logFile.seekg(0, ios::beg);
 
 				while (getline(rolebackLogFile, rollbackLine))
 				{
@@ -135,8 +127,6 @@ int* TransManager::recover()
 
 				log.neverFinish(currentTransactionId);
 			}
-
-			
 		}
 	}
 	else

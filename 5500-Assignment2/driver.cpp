@@ -181,14 +181,14 @@ int main(int argc, char* argv[])
 	//Spin off threads
 	//pthread_create(&threadZero, NULL, threadZeroWork, &transManager);
 	//pthread_create(&threadOne, NULL, threadOneWork, &transManager);
-	pthread_create(&threadTwo, NULL, threadTwoWork, &transManager);
-	//pthread_create(&threadThree, NULL, threadThreeWork, &transManager);
+	//pthread_create(&threadTwo, NULL, threadTwoWork, &transManager);
+	pthread_create(&threadThree, NULL, threadThreeWork, &transManager);
 
 	//Wait for threads to come back
 	//pthread_join(threadZero, NULL);
 	//pthread_join(threadOne, NULL);
-	pthread_join(threadTwo, NULL);
-	//pthread_join(threadThree, NULL);
+	//pthread_join(threadTwo, NULL);
+	pthread_join(threadThree, NULL);
 
 	//Delete this later
 	transManager.debugPrintDiskContents();

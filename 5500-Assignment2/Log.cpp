@@ -72,7 +72,7 @@ int Log::getGlobalTransactionNumber()
 
 		if (logItems[0].compare("BEGIN") == 0)
 		{
-			globalTransactionNumber = stoi(logItems[1].c_str());
+			globalTransactionNumber = atoi(logItems[1].c_str());
 		}
 	}
 	logFile.close();
@@ -101,4 +101,13 @@ void Log::writeToLog(string message)
 	}
 	logFile << message << endl;
 	logFile.close();
+}
+
+string Log::to_string(int i)
+{
+	stringstream convert;
+
+	convert << i;
+
+	return convert.str();
 }

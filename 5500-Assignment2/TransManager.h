@@ -103,8 +103,8 @@ class TransManager
 
     // TODO: Add your own data members and private functions here.
 
-	map<int, vector<int>> heldLocks;
-	map<int, vector<pair<int, int>>> backups;
+	map<int, vector<int> > heldLocks;
+	map<int, vector<pair<int, int> > > backups;
 	pthread_mutex_t globalTransactionCounterLock;
 	pthread_mutex_t * diskLocks;
 	int numberOfThreads;

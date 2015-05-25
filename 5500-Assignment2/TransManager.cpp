@@ -49,8 +49,6 @@ int* TransManager::recover()
 
 	if (log.doesLogExist())
 	{
-		cout << "Log exists, starting recovery" << endl;
-
 		globalTransactionCounter = log.getGlobalTransactionNumber();
 
 		for (int i = 0; i < numberOfThreads; i++)
@@ -73,7 +71,7 @@ int* TransManager::recover()
 
 				string commandType = logItems[0];
 
-				if (commandType.compare("BEGIN") == 0 && logItems[2].compare(to_string(i)) == 0)
+				if (commandType.compare("BEGIN") == 0 && logItems[2].compare(log.to_string(i)) == 0)
 				{
 					
 					currentTransactionId = atoi(logItems[1].c_str());
@@ -97,7 +95,7 @@ int* TransManager::recover()
 			// Perform Rollback
 			if (!currentTransactionCompleted)
 			{
-				vector<pair<int,int>> updates;
+				vector<pair<int,int> > updates;
 
 				ifstream rolebackLogFile("LOG");
 				string rollbackLine;
@@ -113,13 +111,13 @@ int* TransManager::recover()
 
 					string commandType = logItems[0];
 
-					if (logItems[1].compare(to_string(currentTransactionId)) == 0 && commandType.compare("UPDATE") == 0)
+					if (logItems[1].compare(log.to_string(currentTransactionId)) == 0 && commandType.compare("UPDATE") == 0)
 					{
 						updates.push_back(pair<int, int>(atoi(logItems[2].c_str()), atoi(logItems[3].c_str())));
 					}
 				}
 
-				for (vector<pair<int, int>>::reverse_iterator it = updates.rbegin(); it != updates.rend(); it++)
+				for (vector<pair<int, int> >::reverse_iterator it = updates.rbegin(); it != updates.rend(); it++)
 				{
 					putValue(currentTransactionId, (*it).first, (*it).second);
 				}
@@ -251,7 +249,7 @@ void TransManager::releaseDiskLocks(int id)
 
 void TransManager::createBackup(int transactionId, vector<int> locations)
 {
-	vector<pair<int, int>> backupValues;
+	vector<pair<int, int> > backupValues;
 	for (vector<int>::iterator it = locations.begin(); it != locations.end(); it++)
 	{
 		pair<int, int> locationValuePair(*it, getValue(*it));
@@ -262,8 +260,8 @@ void TransManager::createBackup(int transactionId, vector<int> locations)
 
 void TransManager::restoreBackup(int transactionId)
 {
-	vector<pair<int, int>> backupValues = backups[transactionId];
-	for (vector<pair<int, int>>::iterator it = backupValues.begin(); it != backupValues.end(); it++)
+	vector<pair<int, int> > backupValues = backups[transactionId];
+	for (vector<pair<int, int> >::iterator it = backupValues.begin(); it != backupValues.end(); it++)
 	{
 		pair<int, int> val = *it;
 		disk.writeToDisk(val.first, val.second);

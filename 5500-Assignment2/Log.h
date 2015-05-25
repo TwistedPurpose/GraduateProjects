@@ -33,6 +33,8 @@ public:
 	void abort(int transactionId);
 	void neverFinish(int transactionId);
 	int getGlobalTransactionNumber();
+
+	string to_string(int i);
 };
 
 #endif // LOG_H

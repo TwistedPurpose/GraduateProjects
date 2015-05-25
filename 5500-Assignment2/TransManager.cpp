@@ -123,7 +123,7 @@ int* TransManager::recover()
 
 					if (logItems[1].compare(to_string(currentTransactionId)) == 0 && commandType.compare("UPDATE"))
 					{
-						cout << line << endl;
+						cout << rollbackLine << endl;
 						updates.push_back(pair<int, int>(atoi(logItems[2].c_str()), atoi(logItems[3].c_str())));
 					}
 				}

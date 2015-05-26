@@ -109,7 +109,6 @@ int* TransManager::recover()
 	}
 	else
 	{
-		cout << "Log does not exist, performing reset" << endl;
 		reset();
 	}
 	return lastThreadTransactionsCompleted;

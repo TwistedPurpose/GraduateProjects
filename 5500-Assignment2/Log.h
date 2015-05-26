@@ -33,6 +33,7 @@ public:
 	void abort(int transactionId);
 	void neverFinish(int transactionId);
 	int getGlobalTransactionNumber();
+	vector<pair<int, int> > getRollbackChanges(int transactionId);
 
 	string to_string(int i);
 };

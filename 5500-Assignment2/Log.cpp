@@ -80,6 +80,33 @@ int Log::getGlobalTransactionNumber()
 	return globalTransactionNumber;
 }
 
+vector<pair<int, int> > Log::getRollbackChanges(int transactionId)
+{
+	vector<pair<int, int> > updates;
+	ifstream rolebackLogFile("LOG");
+	string rollbackLine;
+
+	while (getline(rolebackLogFile, rollbackLine))
+	{
+		string buffer;
+		stringstream ss(rollbackLine);
+		vector<string> logItems;
+
+		while (ss >> buffer)
+			logItems.push_back(buffer);
+
+		string commandType = logItems[0];
+
+		if (logItems[1].compare(to_string(transactionId)) == 0 && commandType.compare("UPDATE") == 0)
+		{
+			updates.push_back(pair<int, int>(atoi(logItems[2].c_str()), atoi(logItems[3].c_str())));
+		}
+	}
+
+	rolebackLogFile.close();
+	return updates;
+}
+
 void Log::lockLog()
 {
 	pthread_mutex_lock(&logLock);

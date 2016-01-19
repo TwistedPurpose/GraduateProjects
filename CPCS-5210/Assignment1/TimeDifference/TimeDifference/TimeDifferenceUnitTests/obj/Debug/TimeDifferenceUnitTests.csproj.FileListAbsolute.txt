@@ -1,0 +1,9 @@
+C:\Users\Twisted Purpose\Downloads\TimeDifference\TimeDifference\TimeDifferenceUnitTests\bin\Debug\TimeDifferenceUnitTests.dll
+C:\Users\Twisted Purpose\Downloads\TimeDifference\TimeDifference\TimeDifferenceUnitTests\bin\Debug\TimeDifferenceUnitTests.pdb
+C:\Users\Twisted Purpose\Downloads\TimeDifference\TimeDifference\TimeDifferenceUnitTests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\Twisted Purpose\Downloads\TimeDifference\TimeDifference\TimeDifferenceUnitTests\bin\Debug\TimeDifference.exe
+C:\Users\Twisted Purpose\Downloads\TimeDifference\TimeDifference\TimeDifferenceUnitTests\bin\Debug\TimeDifference.pdb
+C:\Users\Twisted Purpose\Downloads\TimeDifference\TimeDifference\TimeDifferenceUnitTests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.xml
+C:\Users\Twisted Purpose\Downloads\TimeDifference\TimeDifference\TimeDifferenceUnitTests\obj\Debug\TimeDifferenceUnitTests.csprojResolveAssemblyReference.cache
+C:\Users\Twisted Purpose\Downloads\TimeDifference\TimeDifference\TimeDifferenceUnitTests\obj\Debug\TimeDifferenceUnitTests.dll
+C:\Users\Twisted Purpose\Downloads\TimeDifference\TimeDifference\TimeDifferenceUnitTests\obj\Debug\TimeDifferenceUnitTests.pdb

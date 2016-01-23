@@ -175,8 +175,6 @@ class Player:
             s, oppMove, aReturn, bReturn = opponent.minValueAB(nextBoard, ply-1, turn, a, b)
 
             if s >= b:
-                #print "Pruned on max. Move:", m," Ply:", ply, " Beta:", b, " score:",s
-                #print board
                 score = b
                 move = m
                 break
@@ -208,8 +206,6 @@ class Player:
             s, oppMove, aReturn, bReturn = opponent.maxValueAB(nextBoard, ply-1, turn, a, b)
 
             if s <= a:
-                #print "Pruned on min. Move:", m," Ply:", ply, " Alpha:", a, " score:",s
-                #print board
                 score = a
                 move = m
                 break
@@ -295,19 +291,5 @@ class SuperSoren(Player):
         #score = Player.score( self, board )
         
         return score
-
-
-
-
-class MancalaGuru(Player):
-    """ Defines a player that knows how to evaluate a Mancala gameboard
-        intelligently """
-
-    def score(self, board):
-        """ Evaluate the Mancala board for this player """
-        # Currently this function just calls Player's score
-        # function.  You should replace the line below with your own code
-        # for evaluating the board
-        return Player.score( self, board )
 
 

@@ -208,7 +208,7 @@ def main():
     #p1 = SuperSoren(1,2,5)
 	p1 = Player(1,0)
 	#p2 = MancalaGuru(2,2,5)
-	p2 = SuperSoren(2,3,5)
+	p2 = SuperSoren(2,3,10)
 	
 	startGame(p1, p2)
 

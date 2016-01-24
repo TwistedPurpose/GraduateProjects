@@ -1,6 +1,6 @@
 # File: Player.py
-# Author: 
-# Date: 
+# Author: Soren Ludwig
+# Date: 1/23/16
 # Defines a simple artificially intelligent player agent
 # You will define the alpha-beta pruning search algorithm
 # You will also define the score function in the MancalaPlayer class,
@@ -147,7 +147,6 @@ class Player:
             opponent = Player(self.opp, self.type, self.ply)
             s, oppMove, aReturn, bReturn = opponent.minValueAB(nextBoard,ply-1,turn,a,b)
 
-
             if s > score:
                 move = m
                 score = s
@@ -198,9 +197,7 @@ class Player:
         for m in board.legalMoves( self ):
             if ply == 0:
                 return (turn.score( board ), m, a, b)
-            # make a new player to play the other side
             opponent = Player(self.opp, self.type, self.ply)
-            # Copy the board so that we don't ruin it
             nextBoard = deepcopy(board)
             nextBoard.makeMove( self, m )
             s, oppMove, aReturn, bReturn = opponent.maxValueAB(nextBoard, ply-1, turn, a, b)
@@ -239,12 +236,7 @@ class Player:
             print "chose move", move, " with value", val
             return move
         elif self.type == self.CUSTOM:
-            # TODO: Implement a custom player
-            # You should fill this in with a call to your best move choosing
-            # function.  You may use whatever search algorithm and scoring
-            # algorithm you like.  Remember that your player must make
-            # each move in about 10 seconds or less.
-            val, move = None, None
+            val, move = self.alphaBetaMove( board, 10)
             print "chose move", move, " with value", val
             return move
         else:
@@ -252,8 +244,7 @@ class Player:
             return -1
 
 
-# Note, you should change the name of this player to be a custom name
-# that identifies you or your team.
+
 class SuperSoren(Player):
     """ Defines a player that knows how to evaluate a Mancala gameboard
         intelligently """
@@ -288,7 +279,6 @@ class SuperSoren(Player):
         score = 0
 
         score = SuperSoren.zeroCounting(self, board)
-        #score = Player.score( self, board )
         
         return score
 

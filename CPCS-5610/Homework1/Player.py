@@ -150,8 +150,7 @@ class Player:
             if s > score:
                 move = m
                 score = s
-
-            a = max(a,score)
+                a = score
 
         return score, move
         

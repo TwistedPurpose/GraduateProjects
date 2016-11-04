@@ -423,6 +423,92 @@ bool ReadBinaryObj(char         *filename,
 
 // ASCII OBJ
 
+bool ReadAsciiObj(const char *filename, vector<Vertex> &vertices) {
+	// read 'object' file (Alias/Wavefront .obj format); return true if successful;
+	// polygons are assumed simple (ie, no holes and not self-intersecting);
+	// some file attributes are not supported by this implementation;
+	// obj format indexes vertices from 1
+	vector<vec3> points, normals;
+	vector<vec2> textures;
+	FILE *in = fopen(filename, "r");
+	if (!in)
+		return false;
+	vec2 t;
+	vec3 v;
+	int group = 0;
+	static const int LineLim = 1000, WordLim = 100;
+	char line[LineLim], word[WordLim];
+	for (int lineNum = 0;; lineNum++) {
+		if (feof(in))                            // hit end of file
+			break;
+		fgets(line, LineLim, in);               // \ line continuation not supported
+		if (strlen(line) >= LineLim-1) {         // getline reads LineLim-1 max
+			printf("line %d too long", lineNum);
+			return false;
+		}
+		char *ptr = line;
+		if (!ReadWord(ptr, word, WordLim))
+			continue;
+		else if (*word == '#')
+			continue;
+		else if (!_stricmp(word, "g"))
+			// this implementation: group field significant only if integer
+			// .obj format, however, supported arbitrary string identifier
+			sscanf(ptr, "%d", &group);
+		else if (!_stricmp(word, "v")) {         // read vertex coordinates
+			if (sscanf(ptr, "%g%g%g", &v.x, &v.y, &v.z) != 3) {
+				printf("bad line %d in object file", lineNum);
+				return false;
+			}
+			points.push_back(vec3(v.x, v.y, v.z));
+		}
+		else if (!_stricmp(word, "vn")) {        // read vertex normal
+			if (sscanf(ptr, "%g%g%g", &v.x, &v.y, &v.z) != 3) {
+				printf("bad line %d in object file", lineNum);
+				return false;
+			}
+			normals.push_back(vec3(v.x, v.y, v.z));
+		}
+		else if (!_stricmp(word, "vt")) {        // read vertex texture
+			if (sscanf(ptr, "%g%g", &t.x, &t.y) != 2) {
+				printf("bad line in object file");
+				return false;
+			}
+			textures.push_back(vec2(t.x, t.y));
+		}
+		else if (!_stricmp(word, "f")) {         // read triangle or polygon
+			int num = 0;
+			while (ReadWord(ptr, word, WordLim)) { // read arbitrary # face vid/tid/nid        
+				// set texture and normal pointers to preceding /
+				char *tPtr = strchr(word+1, '/');    // pointer to /, or null if not found
+				char *nPtr = tPtr? strchr(tPtr+1, '/') : NULL;
+				// use of / is optional (ie, '3' is same as '3/3/3')
+				// convert to vid, tid, nid indices (vertex, texture, normal)
+				int vid = atoi(word);
+				int tid = tPtr && *++tPtr != '/'? atoi(tPtr) : vid;
+				int nid = nPtr && *++nPtr != 0? atoi(nPtr) : vid;
+				// standard .obj is indexed from 1, mesh indexes from 0
+				vid--;
+				tid--;
+				nid--;
+			//	printf("v(%i): (%i, %i, %i)%s", num, vid, nid, tid, num == 2? "\n" : ", "); num++;
+				if (vid < 0 || tid < 0 || nid < 0) { // atoi = 0 is conversion failure
+					printf("bad format on line %d\n", lineNum);
+					return false;
+				}
+				vertices.push_back(Vertex(points[vid], normals[nid], textures[tid]));
+			}
+		}
+		else if (*word == 0 || *word== '\n')                     // skip blank line
+			continue;
+		else {                                     // unrecognized attribute
+			// printf("unsupported attribute in object file: %s", word);
+			continue; // return false;
+		}
+	} // end read til end of file
+	return true;
+} // end ReadAsciiObj
+
 bool ReadAsciiObj(char          *filename,
 				  vector<vec3>	&vertices,
 				  vector<int3>	&triangles,

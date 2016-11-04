@@ -12,6 +12,15 @@
 
 using std::vector;
 
+class Vertex {
+public:
+	vec3 point;
+	vec3 normal;
+	vec2 uv;
+	Vertex() { }
+	Vertex(vec3 &p, vec3 &n, vec2 &t) : point(p), normal(n), uv(t) { }
+};
+
 bool ReadSTL(	   char		    *filename,
 				   vector<vec3>	&vertices,
 				   vector<int3>	&triangles,
@@ -36,12 +45,16 @@ bool ReadAsciiObj(char          *filename,
 				  vector<vec2>	*vertexTextures = NULL,
 				  vector<int>	*triangleGroups = NULL);
 
+bool ReadAsciiObj(const char *filename, vector<Vertex> &vertices);
+	// for use with glDrawArrays (not glDrawElements)
+	// permits differnt uv/normal for a particular vertex location
+
 void Normalize(vector<vec3> &vertices, float scale = 1);
 	// translate and apply uniform scale so that vertices fit in -1,1 in X,Y and 0,1 in Z
 
 void SetVertexNormals(vector<vec3> &vertices,
-				vector<int3> &triangles,
-				vector<vec3> &normals);
+					  vector<int3> &triangles,
+					  vector<vec3> &normals);
 	// compute/recompute vertex normals as the average of surrounding triangle normals
 
 #endif

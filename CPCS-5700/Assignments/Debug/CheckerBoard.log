@@ -1,4 +1,4 @@
 ﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (CheckerBoard.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  ShadeMesh.cpp
+  TextureMeshStub.cpp
   CheckerBoard.vcxproj -> D:\Documents\GraduateProjects\CPCS-5700\Assignments\Debug\GraphicsHomework.exe
   CheckerBoard.vcxproj -> D:\Documents\GraduateProjects\CPCS-5700\Assignments\Debug\GraphicsHomework.pdb (Full PDB)

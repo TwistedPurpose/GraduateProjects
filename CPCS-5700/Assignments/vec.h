@@ -16,9 +16,9 @@
 #  define M_PI  3.14159265358979323846
 #endif
 
-#  include <glew.h>
-#  include <freeglut.h>
-#  include <freeglut_ext.h>
+#  include "glew.h"
+#  include "freeglut.h"
+#  include "freeglut_ext.h"
 
 const GLfloat  DivideByZeroTolerance = GLfloat(1.0e-07);
 const GLfloat  DegreesToRadians = (float) M_PI / 180.0f;

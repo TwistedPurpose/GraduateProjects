@@ -7,10 +7,9 @@
 
 #include "GLSL.h"
 
-//****** Support
+// Support
 
-GLuint InitShader(const char *vertexShader, const char *fragmentShader, const char *geometryShader)
-{
+GLuint InitShader(const char *vertexShader, const char *fragmentShader, const char *geometryShader) {
 	GLint status = GL_FALSE;
 	int id = GLSL::LinkProgramViaCode(vertexShader, fragmentShader, geometryShader);
 	if (id)
@@ -26,8 +25,7 @@ GLuint InitShader(const char *vertexShader, const char *fragmentShader, const ch
 	return id;
 }
 
-int Errors()
-{
+int Errors() {
     char buf[1000];
     int nErrors = 0;
     buf[0] = 0;
@@ -42,11 +40,9 @@ int Errors()
     return nErrors;
 }
 
+// Print OpenGL, GLSL Details
 
-//****** Print OpenGL, GLSL Details
-
-void GLSL::PrintVersionInfo()
-{
+void GLSL::PrintVersionInfo() {
     const GLubyte *renderer    = glGetString(GL_RENDERER);
     const GLubyte *vendor      = glGetString(GL_VENDOR);
     const GLubyte *version     = glGetString(GL_VERSION);
@@ -61,8 +57,7 @@ void GLSL::PrintVersionInfo()
  // printf("GL version (integer): %d.%d\n", major, minor);
 }
 
-void GLSL::PrintExtensions()
-{
+void GLSL::PrintExtensions() {
     const GLubyte *extensions = glGetString(GL_EXTENSIONS);
     char *skip = "(, \t\n", buf[100];
     printf("\nGL extensions:\n");
@@ -77,8 +72,7 @@ void GLSL::PrintExtensions()
 	}
 }
 
-void GLSL::PrintProgramLog(int programID)
-{
+void GLSL::PrintProgramLog(int programID) {
     GLint logLen;
     glGetProgramiv(programID, GL_INFO_LOG_LENGTH, &logLen);
     if (logLen > 0) {
@@ -90,8 +84,7 @@ void GLSL::PrintProgramLog(int programID)
     }
 }
 
-void GLSL::PrintProgramAttributes(int programID)
-{
+void GLSL::PrintProgramAttributes(int programID) {
     GLint maxLength, nAttribs;
     glGetProgramiv(programID, GL_ACTIVE_ATTRIBUTES, &nAttribs);
     glGetProgramiv(programID, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &maxLength);
@@ -106,8 +99,7 @@ void GLSL::PrintProgramAttributes(int programID)
     delete [] name;
 }
 
-void GLSL::PrintProgramUniforms(int programID)
-{
+void GLSL::PrintProgramUniforms(int programID) {
     GLenum type;
     GLchar name[201];
     GLint nUniforms, length, size;
@@ -119,27 +111,25 @@ void GLSL::PrintProgramUniforms(int programID)
     }
 }
 
+// Compilation
 
-//****** Compilation
-
-int GLSL::CompileShaderViaFile(const char *filename, GLint type)
-{
-		char *buf;
-		FILE* fp = fopen(filename, "r");
-		if (fp == NULL)
-			return 0;
-		fseek(fp, 0L, SEEK_END);
-		long size = ftell(fp);
-		fseek(fp, 0L, SEEK_SET);
-		buf = new char[size+1];
-		fread(buf, 1, size, fp);
-		buf[size] = '\0';
-		fclose(fp);
-		return CompileShaderViaCode(buf, type);
+int GLSL::CompileShaderViaFile(const char *filename, GLint type) {
+	FILE* fp = fopen(filename, "r");
+	if (fp == NULL)
+		return 0;
+	char buf[10000];
+	for (char *c = buf;; c++) {
+		*c = fgetc(fp);
+		if (*c == EOF) {
+			*c = NULL;
+			break;
+		}
+	}
+	fclose(fp);
+	return CompileShaderViaCode(buf, type);
 }
 
-int GLSL::CompileShaderViaCode(const char *code, GLint type)
-{
+int GLSL::CompileShaderViaCode(const char *code, GLint type) {
     GLuint shader = glCreateShader(type);
 	if (!shader) {
 		Errors();
@@ -170,11 +160,9 @@ int GLSL::CompileShaderViaCode(const char *code, GLint type)
     return shader;
 }
 
+// Linking
 
-//****** Linking
-
-int GLSL::LinkProgramViaFile(const char *vertexShaderFile, const char *fragmentShaderFile)
-{
+int GLSL::LinkProgramViaFile(const char *vertexShaderFile, const char *fragmentShaderFile) {
 	int vshader = CompileShaderViaFile(vertexShaderFile, GL_VERTEX_SHADER);
 	int fshader = CompileShaderViaFile(fragmentShaderFile, GL_FRAGMENT_SHADER);
 	return LinkProgram(vshader, fshader);
@@ -182,8 +170,7 @@ int GLSL::LinkProgramViaFile(const char *vertexShaderFile, const char *fragmentS
 
 int GLSL::LinkProgramViaCode(const char *vertexShaderCode,
 	                         const char *fragmentShaderCode,
-							 const char *geometryShaderCode)
-{
+							 const char *geometryShaderCode) {
 	int vshader = CompileShaderViaCode(vertexShaderCode, GL_VERTEX_SHADER);
 	int fshader = CompileShaderViaCode(fragmentShaderCode, GL_FRAGMENT_SHADER);
 	int gshader = -1;
@@ -192,8 +179,7 @@ int GLSL::LinkProgramViaCode(const char *vertexShaderCode,
 	return LinkProgram(vshader, fshader, gshader);
 }
 
-int GLSL::LinkProgram(int vshader, int fshader, int gshader)
-{
+int GLSL::LinkProgram(int vshader, int fshader, int gshader) {
     int programID = 0;
     // create shader program
     if (vshader && fshader)
@@ -214,117 +200,138 @@ int GLSL::LinkProgram(int vshader, int fshader, int gshader)
     return programID;
 }
 
-int GLSL::CurrentShader()
-{
+int GLSL::CurrentShader() {
 	int shader = 0;
 	glGetIntegerv(GL_CURRENT_PROGRAM, &shader);
 	return shader;
 }
 
+bool Error(const char *name) {
+#ifdef _DEBUG
+	printf("can't find shader variable %s\n", name);
+#endif
+	return false;
+}
 
-//****** Uniform Access
+// Uniform Access
 
-bool GLSL::SetUniform(int shader, const char *name, int val)
-{
+bool GLSL::SetUniform(int shader, const char *name, int val) {
 	GLint id = glGetUniformLocation(shader, name);
 	if (id < 0)
-		return false;
+		return Error(name);
 	glUniform1i(id, val);
 	return true;
 }
 
-bool GLSL::SetUniformv(int shader, const char *name, int count, int *v)
-{
+bool GLSL::SetUniformv(int shader, const char *name, int count, int *v) {
 	GLint id = glGetUniformLocation(shader, name);
 	if (id < 0)
-		return false;
+		return Error(name);
 	glUniform1iv(id, count, v);
 	return true;
 }
 
-bool GLSL::SetUniform(int shader, const char *name, float val)
-{
+bool GLSL::SetUniformv(int shader, const char *name, int count, float *v) {
 	GLint id = glGetUniformLocation(shader, name);
 	if (id < 0)
-		return false;
+		return Error(name);
+	glUniform1fv(id, count, v);
+	return true;
+}
+
+bool GLSL::SetUniform(int shader, const char *name, float val) {
+	GLint id = glGetUniformLocation(shader, name);
+	if (id < 0)
+		return Error(name);
 	glUniform1f(id, val);
 	return true;
 }
 
-bool GLSL::SetUniform(int shader, const char *name, vec3 v)
-{
+bool GLSL::SetUniform(int shader, const char *name, vec2 v) {
 	GLint id = glGetUniformLocation(shader, name);
 	if (id < 0)
-		return false;
+		return Error(name);
+	glUniform2f(id, v.x, v.y);
+	return true;
+}
+
+bool GLSL::SetUniform(int shader, const char *name, vec3 v) {
+	GLint id = glGetUniformLocation(shader, name);
+	if (id < 0)
+		return Error(name);
 	glUniform3f(id, v.x, v.y, v.z);
 	return true;
 }
 
-bool GLSL::SetUniform(int shader, const char *name, vec3 *v)
-{
+bool GLSL::SetUniform(int shader, const char *name, vec3 *v) {
 	GLint id = glGetUniformLocation(shader, name);
 	if (id < 0)
-		return false;
+		return Error(name);
 	glUniform3fv(id, 1, (float *) v);
 	return true;
 }
 
-bool GLSL::SetUniform(int shader, const char *name, vec4 *v)
-{
+bool GLSL::SetUniform(int shader, const char *name, vec4 *v) {
 	GLint id = glGetUniformLocation(shader, name);
 	if (id < 0)
-		return false;
+		return Error(name);
 	glUniform4fv(id, 1, (float *) v);
 	return true;
 }
 
-bool GLSL::SetUniform3(int shader, const char *name, float *v)
-{
+bool GLSL::SetUniform3(int shader, const char *name, float *v) {
 	GLint id = glGetUniformLocation(shader, name);
 	if (id < 0)
-		return false;
+		return Error(name);
 	glUniform3fv(id, 1, v);
 	return true;
 }
 
-bool GLSL::SetUniform3v(int shader, const char *name, int count, float *v)
-{
+bool GLSL::SetUniform3v(int shader, const char *name, int count, float *v) {
 	GLint id = glGetUniformLocation(shader, name);
 	if (id < 0)
-		return false;
+		return Error(name);
 	glUniform3fv(id, count, v);
 	return true;
 }
 
-bool GLSL::SetUniform(int shader, const char *name, mat4 m)
-{
+bool GLSL::SetUniform4v(int shader, const char *name, int count, float *v) {
 	GLint id = glGetUniformLocation(shader, name);
 	if (id < 0)
-		return false;
+		return Error(name);
+	glUniform4fv(id, count, v);
+	return true;
+}
+
+bool GLSL::SetUniform(int shader, const char *name, mat4 m) {
+	GLint id = glGetUniformLocation(shader, name);
+	if (id < 0)
+		return Error(name);
 	glUniformMatrix4fv(id, 1, true, (float *) &m[0][0]);
 	return true;
 }
 
+// Attribute Access
 
-//****** Attribute Access
-
-void GLSL::DisableVertexAttribute(int shader, const char *name)
-{
+void GLSL::DisableVertexAttribute(int shader, const char *name) {
 	GLint id = glGetAttribLocation(shader, name);
 	if (id >= 0)
 		glDisableVertexAttribArray(id);
+	else
+		Error(name);
 }
 
-int GLSL::EnableVertexAttribute(int shader, const char *name)
-{
+int GLSL::EnableVertexAttribute(int shader, const char *name) {
 	GLint id = glGetAttribLocation(shader, name);
 	if (id >= 0)
 		glEnableVertexAttribArray(id);
+	else
+		Error(name);
 	return id;
 }
 
-void GLSL::VertexAttribPointer(int shader, const char *name, GLint ncomponents, GLenum datatype, GLboolean normalized, GLsizei stride, const GLvoid *pointer)
-{
+void GLSL::VertexAttribPointer(int shader, const char *name, GLint ncomponents, GLenum datatype,
+							   GLboolean normalized, GLsizei stride, const GLvoid *pointer) {
 	GLuint id = GLSL::EnableVertexAttribute(shader, name);
     glVertexAttribPointer(id, ncomponents, datatype, normalized, stride, pointer);
 }

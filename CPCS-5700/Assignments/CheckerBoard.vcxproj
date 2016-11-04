@@ -19,12 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Draw.cpp" />
     <ClCompile Include="GLSL.cpp" />
     <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="ShadeMesh.cpp" />
     <ClCompile Include="TestGL.cpp" />
+    <ClCompile Include="TextureCandleMesh.cpp" />
+    <ClCompile Include="Widget.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Draw.h" />
     <ClInclude Include="freeglut.h" />
     <ClInclude Include="freeglut_ext.h" />
     <ClInclude Include="freeglut_std.h" />
@@ -35,6 +38,7 @@
     <ClInclude Include="mat.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="vec.h" />
+    <ClInclude Include="Widget.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="freeglut.dll" />

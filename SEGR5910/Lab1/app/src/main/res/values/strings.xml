@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Number Guess</string>
+<string name="action_settings">Settings</string>
+    <string name="guess_message">Make a guess</string>
+    <string name="button_guess">Guess</string>
+    <string name="winning_guess_message"> It took %d turns.</string>
+</resources>

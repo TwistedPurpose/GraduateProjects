@@ -1,12 +1,15 @@
-package edu.seattleu.elarson.moviedatabase;
+package com.example.twistedpurpose.lab3;
 
 /**
- * A movie object that contains a movie's title, genre, url
+ * A movie object that contains a movie's title, genre, and url.
  */
 
 class Movie {
+    // Title of the movie
     private String mTitle;
+    // Genre of the movie
     private String mGenre;
+    // String of url for where to find more information about the movie
     private String mUrl;
 
     // Constructor that takes a title, genre, url

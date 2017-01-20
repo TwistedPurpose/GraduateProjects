@@ -1,4 +1,4 @@
-package edu.seattleu.elarson.moviedatabase;
+package com.example.twistedpurpose.lab3;
 
 import java.util.ArrayList;
 
@@ -8,8 +8,10 @@ import java.util.ArrayList;
 
 public class MovieList {
 
+    // A singleton of the movie list object
     private static MovieList sMovieList = null;
 
+    // An array of all the movies
     private ArrayList<Movie> mMovies;
 
     // Private constructor for a list of preset movies
@@ -31,6 +33,7 @@ public class MovieList {
         return sMovieList;
     }
 
+    // An array list of all the movies
     public ArrayList<Movie> getMovies (){
         return mMovies;
     }

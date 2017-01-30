@@ -1,4 +1,4 @@
-package com.example.twistedpurpose.lab3;
+package com.example.twistedpurpose.movieviewer;
 
 import java.util.ArrayList;
 

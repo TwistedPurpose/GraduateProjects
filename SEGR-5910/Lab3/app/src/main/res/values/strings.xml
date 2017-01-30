@@ -2,12 +2,8 @@
 <resources>
 
     <string name="app_name">MovieDatabase</string>
-    <string name="action_settings">Settings</string>
     <string name="prev_button_text">Prev</string>
     <string name="next_button_text">Next</string>
-    <string name="movie_state">movieswow</string>
     <string name="view_button_text">View</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

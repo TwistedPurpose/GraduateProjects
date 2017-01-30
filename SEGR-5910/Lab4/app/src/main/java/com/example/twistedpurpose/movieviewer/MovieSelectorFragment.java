@@ -1,14 +1,17 @@
-package com.example.twistedpurpose.lab3;
+package com.example.twistedpurpose.movieviewer;
 
 
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.view.Menu;
 
 import java.util.List;
 
@@ -41,6 +44,7 @@ public class MovieSelectorFragment extends Fragment {
      * Creates a new MovieSelector Fragment
      * Used to view movie titles, genres, and act as a gateway for viewing
      * online content for a movie
+     *
      * @return A new instance of fragment MovieSelectorFragment.
      */
     public static MovieSelectorFragment newInstance() {
@@ -50,13 +54,39 @@ public class MovieSelectorFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setHasOptionsMenu(true);
         // Saves the instance so data doesn't reset on rotation
         setRetainInstance(true);
+
     }
 
-    /*
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.movie_menu, menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_item_edit:
+                if (mListener != null) {
+                    mListener.onMovieEdit(getMovieIndex());
+                }
+                return true;
+            case R.id.menu_item_web:
+                if (mListener != null) {
+                    mListener.onMovieView(mMovies.get(getMovieIndex()).getUrl());
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /**
+     * When the view is created, set the buttons, listeners
+     * and movie info on the panel
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,11 +98,11 @@ public class MovieSelectorFragment extends Fragment {
         mMovies = MovieList.get().getMovies();
 
         // Gets the TextView objects for title and genre for later modifications
-        mMovieTitle = (TextView)v.findViewById(R.id.textMovieTitle);
-        mGenre = (TextView)v.findViewById(R.id.textMovieGenre);
+        mMovieTitle = (TextView) v.findViewById(R.id.textMovieTitle);
+        mGenre = (TextView) v.findViewById(R.id.textMovieGenre);
 
         // Setup up the Next button listener on the interface
-        Button nextButton = (Button)v.findViewById(R.id.nextButton);
+        Button nextButton = (Button) v.findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +114,7 @@ public class MovieSelectorFragment extends Fragment {
         });
 
         // Setup up the Previous button listener on the interface
-        Button prevButton = (Button)v.findViewById(R.id.prevButton);
+        Button prevButton = (Button) v.findViewById(R.id.prevButton);
         prevButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,13 +126,13 @@ public class MovieSelectorFragment extends Fragment {
         });
 
         // Setup up the View button listener on the interface
-        Button viewButton = (Button)v.findViewById(R.id.viewButton);
+        Button viewButton = (Button) v.findViewById(R.id.viewButton);
         viewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
                     mListener.onMovieView(mMovies.get(getMovieIndex()).getUrl());
-                }
+            }
             }
         });
 
@@ -115,7 +145,7 @@ public class MovieSelectorFragment extends Fragment {
     /*
         Gets the index of the currently viewed
      */
-    private int getMovieIndex(){
+    private int getMovieIndex() {
         return Math.abs(mCurrentIndex % (mMovies.size()));
     }
 
@@ -134,7 +164,7 @@ public class MovieSelectorFragment extends Fragment {
     }
 
     /*
-        When this fragment is attached the OnMovieListener will be initalized
+        When this fragment is attached the OnMovieListener will be initialized
         This is used to create a view of the movie url resolution
      */
     @Override
@@ -153,7 +183,21 @@ public class MovieSelectorFragment extends Fragment {
     }
 
 
+    /**
+     * Interface for when user views the movie and edits
+     */
     public interface OnMovieViewListener {
         void onMovieView(String url);
+        void onMovieEdit(int index);
+    }
+
+    /**
+     * When the activity resumes, refresh the screen by setting the movie
+     * Information to the current info
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        setMovieInfo();
     }
 }

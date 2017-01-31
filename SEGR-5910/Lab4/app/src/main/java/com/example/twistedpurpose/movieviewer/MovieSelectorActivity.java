@@ -53,7 +53,7 @@ public class MovieSelectorActivity extends SingleFragmentActivity
      */
     @Override
     public boolean onCreateOptionsMenu (Menu menu){
-        getMenuInflater().inflate(R.menu.movie_menu, menu);
+        //getMenuInflater().inflate(R.menu.movie_menu, menu);
         return true;
     }
 }

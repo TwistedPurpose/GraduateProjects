@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">MovieDatabase</string>
+    <string name="app_name">Sorens Awesome Movie DB</string>
     <string name="prev_button_text">Prev</string>
     <string name="next_button_text">Next</string>
     <string name="view_button_text">View</string>
@@ -9,9 +9,9 @@
     <string name="menu_web">Web</string>
     <string name="movieTitle">Title</string>
 
-    <string name="movie_genre">Genre</string>
-    <string name="movie_url">URL</string>
+    <string name="movie_genre">Genre:</string>
+    <string name="movie_url">URL:</string>
     <string name="movie_rating">Rating</string>
-    <string name="movie_watched">Has Watched</string>
+    <string name="movie_watched">Has Watched Movie:</string>
 
 </resources>

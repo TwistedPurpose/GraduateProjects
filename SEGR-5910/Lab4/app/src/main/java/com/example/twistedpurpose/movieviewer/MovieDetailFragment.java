@@ -53,6 +53,7 @@ public class MovieDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             movieIndex = getArguments().getInt(MOVIE_INDEX);
         }

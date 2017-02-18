@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Init Tracker</string>
+    <string name="app_name">Initiative Tracker</string>
     <string name="next_button_text">Next</string>
     <string name="roll_button_text">Roll</string>
     <string name="add_button_text">Add</string>

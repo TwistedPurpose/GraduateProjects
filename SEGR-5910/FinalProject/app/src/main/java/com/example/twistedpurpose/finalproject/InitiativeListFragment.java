@@ -1,6 +1,7 @@
 package com.example.twistedpurpose.finalproject;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -10,26 +11,33 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CursorAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link InitiativeListFragment.OnFragmentInteractionListener} interface
+ * {@link InitiativeListFragment.OnCharacterListListener} interface
  * to handle interaction events.
  * Use the {@link InitiativeListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class InitiativeListFragment extends Fragment {
 
-    private ArrayList<Character> mCharacterList;
 
-    private OnFragmentInteractionListener mListener;
+    private InitiativeTrackerDBHelper.CharacterCursor mCursor;
+
+    private OnCharacterListListener mListener;
 
     public InitiativeListFragment() {
         // Required empty public constructor
@@ -41,7 +49,6 @@ public class InitiativeListFragment extends Fragment {
      *
      * @return A new instance of fragment InitiativeListFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static InitiativeListFragment newInstance() {
         InitiativeListFragment fragment = new InitiativeListFragment();
         return fragment;
@@ -50,9 +57,6 @@ public class InitiativeListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mCharacterList = CharacterList.get().getCharacters();
-
-
 
         if (getArguments() != null) {
         }
@@ -64,20 +68,52 @@ public class InitiativeListFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_initiative_list, container, false);
 
-        final ListView listview = (ListView) inflater.inflate(R.id.character_listView, container, false);
+        getActivity().deleteDatabase("characters.db");
+
+        Context context = getActivity();
+
+        // 1. Create a new InitiativeTrackerDBHelper
+        InitiativeTrackerDBHelper dbHelper = new InitiativeTrackerDBHelper(context);
+
+        dbHelper.addCharacter(new Character("Mike",2));
+        dbHelper.addCharacter(new Character("Soren",4));
+        dbHelper.addCharacter(new Character("Stravis",-1));
+        dbHelper.addCharacter(new Character("Dragon",6));
+
+        // 2. Query the characters and obtain a cursor (store in mCursor).
+        mCursor = dbHelper.queryCharacters();
+
+        // Find ListView to populate
+        ListView characterListView = (ListView) v.findViewById(R.id.character_listView);
+        // Setup cursor adapter using cursor from last step
+        CharacterCursorAdapter adapter = new CharacterCursorAdapter(context, mCursor);
+        // Attach cursor adapter to the ListView
+        characterListView.setAdapter(adapter);
+
+        Button rollButton = (Button) v.findViewById(R.id.rollBtn);
+        rollButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InitiativeTrackerDBHelper dbHelper = new InitiativeTrackerDBHelper(getContext());
+                dbHelper.
+                InitiativeRoller.rollInitiative(new InitiativeTrackerDBHelper(getContext()));
+                Toast.makeText(getContext(),"Roll initiative!", Toast.LENGTH_LONG).show();
+            }
+        });
 
         return v;
     }
 
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
+        if (context instanceof OnCharacterListListener) {
+            mListener = (OnCharacterListListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
     }
 
     @Override
@@ -96,8 +132,40 @@ public class InitiativeListFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    public interface OnCharacterListListener {
+        void onAddCharacter();
+    }
+
+    /**
+     * A character cursor adaptor for adding characters
+     * to a list
+     */
+    private static class CharacterCursorAdapter extends CursorAdapter {
+
+        private InitiativeTrackerDBHelper.CharacterCursor mCharacterCursor;
+
+        public CharacterCursorAdapter(Context context, InitiativeTrackerDBHelper.CharacterCursor cursor) {
+            super(context, cursor, 0);
+            mCharacterCursor = cursor;
+        }
+
+        @Override
+        public View newView(Context context, Cursor cursor, ViewGroup parent) {
+            // Use a layout inflater to get a row view
+            LayoutInflater inflater = (LayoutInflater) context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            return inflater.inflate(R.layout.character_listview, parent, false);
+        }
+
+        @Override
+        public void bindView(View view, Context context, Cursor cursor) {
+            TextView characterName = (TextView) view.findViewById(R.id.name);
+            TextView characterMod = (TextView) view.findViewById(R.id.mod);
+            TextView characterInit = (TextView) view.findViewById(R.id.init);
+
+            characterName.setText(mCharacterCursor.getCharacter().getName());
+            characterMod.setText(Integer.toString(mCharacterCursor.getCharacter().getModifier()));
+            characterInit.setText(Integer.toString(mCharacterCursor.getCharacter().getTotalInitiative()));
+        }
     }
 }

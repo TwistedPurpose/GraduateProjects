@@ -34,8 +34,9 @@ import java.util.List;
  */
 public class InitiativeListFragment extends Fragment {
 
-
     private InitiativeTrackerDBHelper.CharacterCursor mCursor;
+
+    private CharacterCursorAdapter adapter;
 
     private OnCharacterListListener mListener;
 
@@ -57,8 +58,8 @@ public class InitiativeListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
         }
     }
 
@@ -68,17 +69,17 @@ public class InitiativeListFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_initiative_list, container, false);
 
-        getActivity().deleteDatabase("characters.db");
+        //getActivity().deleteDatabase("characters.db");
 
         Context context = getActivity();
 
         // 1. Create a new InitiativeTrackerDBHelper
         InitiativeTrackerDBHelper dbHelper = new InitiativeTrackerDBHelper(context);
 
-        dbHelper.addCharacter(new Character("Mike",2));
-        dbHelper.addCharacter(new Character("Soren",4));
-        dbHelper.addCharacter(new Character("Stravis",-1));
-        dbHelper.addCharacter(new Character("Dragon",6));
+//        dbHelper.addCharacter(new Character("Mike",2));
+//        dbHelper.addCharacter(new Character("Soren",4));
+//        dbHelper.addCharacter(new Character("Stravis",-1));
+//        dbHelper.addCharacter(new Character("Dragon",6));
 
         // 2. Query the characters and obtain a cursor (store in mCursor).
         mCursor = dbHelper.queryCharacters();
@@ -86,7 +87,7 @@ public class InitiativeListFragment extends Fragment {
         // Find ListView to populate
         ListView characterListView = (ListView) v.findViewById(R.id.character_listView);
         // Setup cursor adapter using cursor from last step
-        CharacterCursorAdapter adapter = new CharacterCursorAdapter(context, mCursor);
+        adapter = new CharacterCursorAdapter(context, mCursor);
         // Attach cursor adapter to the ListView
         characterListView.setAdapter(adapter);
 
@@ -95,9 +96,25 @@ public class InitiativeListFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 InitiativeTrackerDBHelper dbHelper = new InitiativeTrackerDBHelper(getContext());
-                dbHelper.
-                InitiativeRoller.rollInitiative(new InitiativeTrackerDBHelper(getContext()));
-                Toast.makeText(getContext(),"Roll initiative!", Toast.LENGTH_LONG).show();
+                List<Character> characterList = dbHelper.getCharacters();
+
+                InitiativeRoller.rollInitiative(characterList);
+
+                for (Character c : characterList) {
+                    dbHelper.updateCharacter(c);
+                }
+
+                mCursor.requery();
+                adapter.notifyDataSetChanged();
+                Toast.makeText(getContext(), "Roll initiative!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Button addButton = (Button) v.findViewById(R.id.addBtn);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
             }
         });
 

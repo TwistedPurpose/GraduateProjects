@@ -3,4 +3,7 @@
     <string name="next_button_text">Next</string>
     <string name="roll_button_text">Roll</string>
     <string name="add_button_text">Add</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -101,24 +101,6 @@ public class InitiativeTrackerDBHelper extends SQLiteOpenHelper {
                 row, whereClause, null);
     }
 
-    // Updates the character in the database.
-    public void updateCharacters(List<Character> characters) {
-
-        for(Character character : characters){
-            // Fetch content row specific to the character being passed in
-            ContentValues row = getCharacterRow(character);
-
-            // Set the where clause to id of character to be updated
-            String whereClause = Characters._ID + "=" +
-                    String.valueOf(character.getId());
-
-            // Update the database with the character object
-            getWritableDatabase().update(
-                    Characters.TABLE_NAME,
-                    row, whereClause, null);
-        }
-    }
-
     // Returns a cursor that has a list for all characters.
     public CharacterCursor queryCharacters() {
 
@@ -143,7 +125,7 @@ public class InitiativeTrackerDBHelper extends SQLiteOpenHelper {
     // Queries the database for the character with the corresponding id.  Returns the character
     // or null if the character does not exist in the database.
     public List<Character> getCharacters() {
-        Character character;
+        List<Character> characterList = new ArrayList<>();
 
         // Fetch a character equal to the id passed into the function
         // to get a single character
@@ -168,19 +150,18 @@ public class InitiativeTrackerDBHelper extends SQLiteOpenHelper {
         // Set the cursor to the searched for character
         characterCursor.moveToFirst();
 
-        List<Character> characterList = new ArrayList<>();
-
         while (!characterCursor.isAfterLast()) {
-            character = characterCursor.getCharacter();
-        }
-        // Fetch the character from the location of the cursor
 
+            // Fetch the character from the location of the cursor
+            characterList.add(characterCursor.getCharacter());
+            characterCursor.moveToNext();
+        }
 
         // Close out the cursor for cleanup
         characterCursor.close();
 
         // Send back character to be consumed.
-        return character;
+        return characterList;
     }
 
     // Queries the database for the character with the corresponding id.  Returns the character

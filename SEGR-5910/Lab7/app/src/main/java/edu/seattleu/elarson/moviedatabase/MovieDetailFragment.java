@@ -2,6 +2,7 @@ package edu.seattleu.elarson.moviedatabase;
 
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +19,9 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * View and edit movie details.  Will update movie title on movie list frame.
+ */
 public class MovieDetailFragment extends Fragment
 implements PickUrlDialogFragment.OnPickUrlDialogListener{
 
@@ -43,9 +47,14 @@ implements PickUrlDialogFragment.OnPickUrlDialogListener{
         return fragment;
     }
 
+    /**
+     * Sets the url in movie details when the user selects a url from the dialog
+     * @param url - url to be set in movie details from dialog
+     */
     @Override
     public void selectUrl(String url) {
         if (urlEditText != null) {
+            // Set the text view for the url in movie details
             urlEditText.setText(url);
         }
     }
@@ -188,6 +197,26 @@ implements PickUrlDialogFragment.OnPickUrlDialogListener{
                 {
                     mListener.onMovieUpdate();
                 }
+            }
+        });
+
+
+        /**
+         * When pick url button is selected, a dialog will appear with url options.
+         * When one is selected, the url text view will show the new URL
+         */
+        Button urlPickButton = (Button) v.findViewById(R.id.pickUrlButton);
+        urlPickButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Setup for a new fragment
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+                // Create a new instance of a url picker dialog
+                PickUrlDialogFragment dialog = PickUrlDialogFragment.newInstance();
+
+                // Show the new dialog on the screen
+                dialog.show(ft, "dialog");
             }
         });
 

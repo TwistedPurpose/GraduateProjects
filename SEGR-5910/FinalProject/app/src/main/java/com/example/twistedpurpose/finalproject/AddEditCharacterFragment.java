@@ -7,18 +7,19 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toolbar;
 
 
-public class AddCharacterFragment extends Fragment {
+public class AddEditCharacterFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";;
+    public static final String ARG_PARAM1 = "param1";
 
 
     private String mParam1;
 
     private OnFragmentInteractionListener mListener;
 
-    public AddCharacterFragment() {
+    public AddEditCharacterFragment() {
         // Required empty public constructor
     }
 
@@ -26,14 +27,13 @@ public class AddCharacterFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @return A new instance of fragment AddCharacterFragment.
+     * @return A new instance of fragment AddEditCharacterFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AddCharacterFragment newInstance(String param1) {
-        AddCharacterFragment fragment = new AddCharacterFragment();
+    public static AddEditCharacterFragment newInstance() {
+        AddEditCharacterFragment fragment = new AddEditCharacterFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
+        //args.putInt(ARG_PARAM1, id);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,25 +50,27 @@ public class AddCharacterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_character, container, false);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        View v = inflater.inflate(R.layout.fragment_add_character, container, false);
+//        Toolbar toolbar = (Toolbar) v.findViewById(R.id.my_awesome_toolbar);
+//        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //What to do on back clicked
+//            }
+//        });
+        return v;
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+//        if (context instanceof OnFragmentInteractionListener) {
+//            mListener = (OnFragmentInteractionListener) context;
+//        } else {
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
     }
 
     @Override

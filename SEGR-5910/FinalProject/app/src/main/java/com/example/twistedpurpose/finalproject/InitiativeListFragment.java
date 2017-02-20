@@ -1,6 +1,7 @@
 package com.example.twistedpurpose.finalproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -76,10 +77,10 @@ public class InitiativeListFragment extends Fragment {
         // 1. Create a new InitiativeTrackerDBHelper
         InitiativeTrackerDBHelper dbHelper = new InitiativeTrackerDBHelper(context);
 
-//        dbHelper.addCharacter(new Character("Mike",2));
-//        dbHelper.addCharacter(new Character("Soren",4));
-//        dbHelper.addCharacter(new Character("Stravis",-1));
-//        dbHelper.addCharacter(new Character("Dragon",6));
+        dbHelper.addCharacter(new Character("Mike",2));
+        dbHelper.addCharacter(new Character("Soren",4));
+        dbHelper.addCharacter(new Character("Stravis",-1));
+        dbHelper.addCharacter(new Character("Dragon",6));
 
         // 2. Query the characters and obtain a cursor (store in mCursor).
         mCursor = dbHelper.queryCharacters();
@@ -114,7 +115,9 @@ public class InitiativeListFragment extends Fragment {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                if(mListener != null) {
+                    mListener.onAddCharacter();
+                }
             }
         });
 

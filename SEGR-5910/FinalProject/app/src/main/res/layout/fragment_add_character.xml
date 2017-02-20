@@ -2,21 +2,38 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.example.twistedpurpose.finalproject.AddCharacterFragment">
+             tools:context="com.example.twistedpurpose.finalproject.AddEditCharacterFragment">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <TextView
+            android:labelFor="@+id/character_name_text_edit"
             android:layout_width="match_parent"
-            android:layout_height=""
-            android:text="Name"/>
+            android:layout_height="wrap_content"
+            android:text="@string/character_name_text"/>
+
+        <EditText
+            android:id="@+id/character_name_text_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:labelFor="@+id/mod_picker"
+            android:text="@string/pick_mod_text"/>
+
+        <NumberPicker
+            android:id="@+id/mod_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></NumberPicker>
 
 
     </LinearLayout>
-
-
 
 
 </FrameLayout>

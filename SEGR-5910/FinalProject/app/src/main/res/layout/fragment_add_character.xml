@@ -24,13 +24,24 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:labelFor="@+id/mod_picker"
+            android:labelFor="@+id/modEditText"
             android:text="@string/pick_mod_text"/>
 
-        <NumberPicker
-            android:id="@+id/mod_picker"
+        <EditText
+            android:id="@+id/modEditText"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></NumberPicker>
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:inputType="phone"/>
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_save"
+            android:layout_below="@+id/modEditText"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
 
 
     </LinearLayout>

@@ -86,7 +86,6 @@
       <sourceFolder url="file://D:/temp/Lab7/app/generated/res/resValues/androidTest/debug" type="java-test-resource" />
       <excludeFolder url="file://D:/temp/Lab7/app/intermediates/assets" />
       <excludeFolder url="file://D:/temp/Lab7/app/intermediates/blame" />
-      <excludeFolder url="file://D:/temp/Lab7/app/intermediates/builds" />
       <excludeFolder url="file://D:/temp/Lab7/app/intermediates/classes" />
       <excludeFolder url="file://D:/temp/Lab7/app/intermediates/dependency-cache" />
       <excludeFolder url="file://D:/temp/Lab7/app/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/jars" />

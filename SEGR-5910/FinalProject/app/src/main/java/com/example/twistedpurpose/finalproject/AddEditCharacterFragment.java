@@ -4,9 +4,15 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.NumberPicker;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 
@@ -14,10 +20,11 @@ public class AddEditCharacterFragment extends Fragment {
 
     public static final String ARG_PARAM1 = "param1";
 
+    private InitiativeTrackerDBHelper mHelper;
 
     private String mParam1;
 
-    private OnFragmentInteractionListener mListener;
+    private Character mCharacter;
 
     public AddEditCharacterFragment() {
         // Required empty public constructor
@@ -51,26 +58,70 @@ public class AddEditCharacterFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_add_character, container, false);
-//        Toolbar toolbar = (Toolbar) v.findViewById(R.id.my_awesome_toolbar);
-//        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
-//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //What to do on back clicked
-//            }
-//        });
+
+        mHelper = new InitiativeTrackerDBHelper(getActivity());
+
+        mCharacter = mHelper.addCharacter();
+
+        EditText characterNameEditText = (EditText) v.findViewById(R.id.character_name_text_edit);
+        characterNameEditText.setText(mCharacter.getName());
+        characterNameEditText.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence c, int start, int before, int count) {
+                mCharacter.setName(c.toString());
+            }
+
+            public void beforeTextChanged(CharSequence c, int start, int before, int after) {
+            }
+
+            public void afterTextChanged(Editable c) {
+            }
+        });
+
+        EditText modifierPicker =
+                (EditText) v.findViewById(R.id.modEditText);
+
+        modifierPicker.setText(Integer.toString(mCharacter.getModifier()));
+
+        modifierPicker.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence c, int start, int before, int count) {
+                mCharacter.setModifier(Integer.parseInt(c.toString()));
+            }
+
+            public void beforeTextChanged(CharSequence c, int start, int before, int after) {
+            }
+
+            public void afterTextChanged(Editable c) {
+            }
+        });
+
+        Button saveButton = (Button) v.findViewById(R.id.saveButton);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mHelper != null)
+                {
+                    mHelper.updateCharacter(mCharacter);
+                    Toast.makeText(getActivity(), "Update complete!", Toast.LENGTH_LONG).show();
+                    mListener.onCharacterSave();
+                }
+
+            }
+        });
+
         return v;
     }
+
+    private OnCharacterSave mListener;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
+        if (context instanceof OnCharacterSave) {
+            mListener = (OnCharacterSave) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
     }
 
     @Override
@@ -79,18 +130,7 @@ public class AddEditCharacterFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    public interface OnCharacterSave {
+        public void onCharacterSave();
     }
 }

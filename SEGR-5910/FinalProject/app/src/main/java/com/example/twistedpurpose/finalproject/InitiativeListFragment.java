@@ -52,8 +52,7 @@ public class InitiativeListFragment extends Fragment {
      * @return A new instance of fragment InitiativeListFragment.
      */
     public static InitiativeListFragment newInstance() {
-        InitiativeListFragment fragment = new InitiativeListFragment();
-        return fragment;
+        return new InitiativeListFragment();
     }
 
     @Override
@@ -105,8 +104,7 @@ public class InitiativeListFragment extends Fragment {
                     dbHelper.updateCharacter(c);
                 }
 
-                mCursor.requery();
-                adapter.notifyDataSetChanged();
+                updateInitiativeList();
                 Toast.makeText(getContext(), "Roll initiative!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -124,6 +122,13 @@ public class InitiativeListFragment extends Fragment {
         return v;
     }
 
+    public void updateInitiativeList(){
+        if(mCursor != null && adapter != null){
+            mCursor.requery();
+            adapter.notifyDataSetChanged();
+        }
+
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -153,7 +158,7 @@ public class InitiativeListFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnCharacterListListener {
-        void onAddCharacter();
+        public void onAddCharacter();
     }
 
     /**

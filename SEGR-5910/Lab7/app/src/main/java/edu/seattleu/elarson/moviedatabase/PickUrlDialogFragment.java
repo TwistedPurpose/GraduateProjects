@@ -27,6 +27,7 @@ public class PickUrlDialogFragment extends DialogFragment {
     /**
      * Setup and create dialog box for picking urls of canned list of top
      * viewed movie websites
+     *
      * @param savedInstanceState saved instance of the page
      * @return created dialog
      */
@@ -45,13 +46,22 @@ public class PickUrlDialogFragment extends DialogFragment {
         // send it back to the movie list
         builder.setItems(urlList, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
-                Toast.makeText(getContext(), urlList[item]+"", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), urlList[item] + "", Toast.LENGTH_SHORT).show();
                 FragmentManager fm = getFragmentManager();
 
-                // Get the container for the movie list
-                MovieDetailFragment movieDetailFragment = (MovieDetailFragment)
-                        fm.findFragmentById(R.id.fragmentContainer);
-                movieDetailFragment.selectUrl(urlList[item]+"");
+                // If in tablet view, use a different id for finding the fragment
+                if (fm.findFragmentById(R.id.detailFragmentContainer) != null) {
+                    MovieDetailFragment movieDetailFragment = (MovieDetailFragment)
+                            fm.findFragmentById(R.id.detailFragmentContainer);
+                    movieDetailFragment.selectUrl(urlList[item] + "");
+                } else {
+                    // in the the phone, get the list with a different fragment id
+                    MovieDetailFragment movieDetailFragment = (MovieDetailFragment)
+                            fm.findFragmentById(R.id.fragmentContainer);
+                    movieDetailFragment.selectUrl(urlList[item] + "");
+
+                }
+
             }
         });
 

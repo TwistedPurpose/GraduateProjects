@@ -77,10 +77,10 @@ public class InitiativeListFragment extends Fragment {
         // 1. Create a new InitiativeTrackerDBHelper
         InitiativeTrackerDBHelper dbHelper = new InitiativeTrackerDBHelper(context);
 
-        dbHelper.addCharacter(new Character("Mike",2));
-        dbHelper.addCharacter(new Character("Soren",4));
-        dbHelper.addCharacter(new Character("Stravis",-1));
-        dbHelper.addCharacter(new Character("Dragon",6));
+//        dbHelper.addCharacter(new Character("Mike",2));
+//        dbHelper.addCharacter(new Character("Soren",4));
+//        dbHelper.addCharacter(new Character("Stravis",-1));
+//        dbHelper.addCharacter(new Character("Dragon",6));
 
         // 2. Query the characters and obtain a cursor (store in mCursor).
         mCursor = dbHelper.queryCharacters();

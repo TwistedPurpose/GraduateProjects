@@ -5,8 +5,9 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 
-import com.example.twistedpurpose.lab8.R;
-
+/**
+ * Music service that plays the Sons of Chaos midi
+ */
 public class MusicService extends Service {
     public MusicService() {
     }
@@ -23,7 +24,7 @@ public class MusicService extends Service {
         stopMediaPlayer();
     }
 
-    public void stopMediaPlayer() {
+    private void stopMediaPlayer() {
         if (mPlayer != null) {
             mPlayer.release();
             mPlayer = null;
@@ -32,18 +33,21 @@ public class MusicService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
         stopMediaPlayer();
+
         mPlayer = MediaPlayer.create(this, R.raw.son_of_chaos);
-        mPlayer.setOnCompletionListener(new
-                                                MediaPlayer.OnCompletionListener() {
-                                                    @Override
-                                                    public void onCompletion(MediaPlayer mp) {
-                                                        stopMediaPlayer();
-                                                        stopSelf();
-                                                    }
-                                                }
-        );
+        mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+
+                stopMediaPlayer();
+                stopSelf();
+            }
+        });
+
         mPlayer.start();
+
         return START_NOT_STICKY;
     }
 }

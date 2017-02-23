@@ -2,4 +2,6 @@
     <string name="app_name">Lab8</string>
     <string name="play_btn">Play</string>
     <string name="stop_btn">Stop</string>
+    <string name="time_zone_notification_title">Time Zone Changed</string>
+    <string name="time_zone_notification_message">The time zone has changed, playing sick beats!</string>
 </resources>

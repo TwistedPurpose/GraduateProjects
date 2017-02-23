@@ -188,6 +188,7 @@ public class InitiativeListFragment extends Fragment {
             TextView characterMod = (TextView) view.findViewById(R.id.mod);
             TextView characterInit = (TextView) view.findViewById(R.id.init);
 
+            //Put into Character logic to get integer values of initiative and modifier
             characterName.setText(mCharacterCursor.getCharacter().getName());
             characterMod.setText(Integer.toString(mCharacterCursor.getCharacter().getModifier()));
             characterInit.setText(Integer.toString(mCharacterCursor.getCharacter().getTotalInitiative()));

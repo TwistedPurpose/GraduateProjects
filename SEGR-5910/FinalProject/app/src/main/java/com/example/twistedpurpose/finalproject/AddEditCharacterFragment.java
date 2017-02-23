@@ -80,6 +80,8 @@ public class AddEditCharacterFragment extends Fragment {
         EditText modifierPicker =
                 (EditText) v.findViewById(R.id.modEditText);
 
+        //Break out into function that gets modifier from string
+        //Inside of Character
         modifierPicker.setText(Integer.toString(mCharacter.getModifier()));
 
         modifierPicker.addTextChangedListener(new TextWatcher() {

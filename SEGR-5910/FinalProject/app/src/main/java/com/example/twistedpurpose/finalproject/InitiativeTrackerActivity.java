@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class InitiativeTrackerActivity extends SingleFragmentActivity
-    implements InitiativeListFragment.OnCharacterListListener, AddEditCharacterFragment.OnCharacterSave {
+    implements InitiativeListFragment.OnCharacterListListener {
 
     @Override
     protected Fragment createFragment() {
@@ -20,15 +20,4 @@ public class InitiativeTrackerActivity extends SingleFragmentActivity
         startActivity(intent);
     }
 
-    @Override
-    public void onCharacterSave() {
-        FragmentManager fm = getFragmentManager();
-
-        // Get the container for the character list
-        InitiativeListFragment initiativeListFragment = (InitiativeListFragment)
-                fm.findFragmentById(R.id.fragmentContainer);
-
-        // Update the UI
-        initiativeListFragment.updateInitiativeList();
-    }
 }

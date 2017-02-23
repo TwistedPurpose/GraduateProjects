@@ -16,13 +16,7 @@ public class AddEditCharacterActivity extends SingleFragmentActivity
 
     @Override
     public void onCharacterSave() {
-        FragmentManager fm = getFragmentManager();
-
-        // Get the container for the character list
-        InitiativeListFragment initiativeListFragment = (InitiativeListFragment)
-                fm.findFragmentById(R.id.fragmentContainer);
-
-        // Update the UI
-        initiativeListFragment.updateInitiativeList();
+        Intent intent = new Intent(this,InitiativeTrackerActivity.class);
+        startActivity(intent);
     }
 }

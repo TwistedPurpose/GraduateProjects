@@ -1,0 +1,21 @@
+﻿** Highlights
+     Tables that will be rebuilt
+       None
+     Clustered indexes that will be dropped
+       None
+     Clustered indexes that will be created
+       None
+     Possible data issues
+       None
+
+** User actions
+     Create
+       [GMPlanner] (User)
+       [dbo].[Campaign] (Table)
+       [dbo].[History] (Table)
+       [dbo].[FK_Campaign_ToHistory] (Foreign Key)
+
+** Supporting actions
+
+The object [GMPlanner] already exists in database with a different definition and will not be altered.
+

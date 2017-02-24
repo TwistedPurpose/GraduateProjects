@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="GameMasterPlannerDBEntities-Web.config Connection String" description="GameMasterPlannerDBEntities Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/; &#xD;&#xA;          provider=System.Data.SqlClient; &#xD;&#xA;          provider connection string=&quot;&#xD;&#xA;          Data Source=TWISTEDPURPOSE\SQLEXPRESS;&#xD;&#xA;          Initial Catalog=GameMasterPlannerDB;&#xD;&#xA;          Integrated Security=True;&#xD;&#xA;          MultipleActiveResultSets=True;&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\Documents\\School\ Work\\Graduate\ School\\GraduateProject\\GameMasterPlanning\\GameMasterPlanner\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='GameMasterPlannerDBEntities']/@connectionString" />
+  </parameter>
+</parameters>

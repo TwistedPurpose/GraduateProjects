@@ -1,0 +1,9 @@
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GMPlannerDacPac\bin\Release\GMPlannerDacPac.dacpac
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GMPlannerDacPac\bin\Release\GMPlannerDacPac.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GMPlannerDacPac\bin\Release\GMPlannerDacPac.pdb
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GMPlannerDacPac\obj\Release\Model.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GMPlannerDacPac\obj\Release\refactor.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GMPlannerDacPac\obj\Release\postdeploy.sql
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GMPlannerDacPac\obj\Release\predeploy.sql
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GMPlannerDacPac\obj\Release\GMPlannerDacPac.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GMPlannerDacPac\obj\Release\GMPlannerDacPac.pdb

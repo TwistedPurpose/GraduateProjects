@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "Hub";
+}
+
+<div style="height:100%; width:100%;">
+    <div id="map" style="height:500px; width:500px;"></div>
+</div>
+
+<script>
+      var map;
+      function initMap() {
+          map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 8
+        });
+      }
+</script>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBLS0MX9AwHUlg0Zkvodyp3sjDPdrrB9c&callback=initMap"
+        async defer></script>

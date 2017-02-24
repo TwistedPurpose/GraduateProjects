@@ -1,0 +1,150 @@
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\roslyn\csc.exe
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\roslyn\System.Collections.Immutable.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\roslyn\System.Reflection.Metadata.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\roslyn\vbc.exe
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\roslyn\VBCSCompiler.exe
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\roslyn\VBCSCompiler.exe.config
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\GameMasterPlanner.dll.config
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\GameMasterPlanner.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\GameMasterPlanner.pdb
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\Microsoft.Web.Infrastructure.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\Newtonsoft.Json.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\System.Net.Http.Formatting.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\System.Web.Helpers.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\System.Web.Http.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\System.Web.Http.WebHost.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\System.Web.Mvc.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\System.Web.Razor.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\System.Web.Webpages.Deployment.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\System.Web.Webpages.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\System.Web.Webpages.Razor.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\System.Web.Razor.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\System.Web.Webpages.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\System.Web.Webpages.Deployment.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\System.Web.Webpages.Razor.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\System.Web.Helpers.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\System.Web.Mvc.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\Newtonsoft.Json.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\System.Net.Http.Formatting.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\System.Web.Http.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\System.Web.Http.WebHost.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\obj\Debug\GameMasterPlanner.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\obj\Debug\GameMasterPlanner.pdb
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\obj\Debug\GameMasterPlanner.csprojResolveAssemblyReference.cache
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\Antlr3.Runtime.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\System.Web.Optimization.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\WebGrease.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\Antlr3.Runtime.pdb
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanner\bin\System.Web.Optimization.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\roslyn\csc.exe
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\roslyn\System.Collections.Immutable.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\roslyn\System.Reflection.Metadata.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\roslyn\vbc.exe
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\roslyn\VBCSCompiler.exe
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\roslyn\VBCSCompiler.exe.config
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\GameMasterPlanner.dll.config
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\GameMasterPlanner.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\GameMasterPlanner.pdb
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\Antlr3.Runtime.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\Microsoft.Web.Infrastructure.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\Newtonsoft.Json.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\System.Net.Http.Formatting.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\System.Web.Helpers.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\System.Web.Http.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\System.Web.Http.WebHost.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\System.Web.Mvc.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\System.Web.Optimization.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\System.Web.Razor.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\System.Web.Webpages.Deployment.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\System.Web.Webpages.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\System.Web.Webpages.Razor.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\WebGrease.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\Antlr3.Runtime.pdb
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\System.Web.Optimization.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\System.Web.Razor.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\System.Web.Webpages.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\System.Web.Webpages.Deployment.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\System.Web.Webpages.Razor.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\System.Web.Helpers.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\System.Web.Mvc.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\Newtonsoft.Json.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\System.Net.Http.Formatting.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\System.Web.Http.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\System.Web.Http.WebHost.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\obj\Debug\GameMasterPlanner.csprojResolveAssemblyReference.cache
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\obj\Debug\GameMasterPlanner.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\obj\Debug\GameMasterPlanner.pdb
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\DataAccess.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\EntityFramework.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\EntityFramework.SqlServer.dll
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\DataAccess.pdb
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\EntityFramework.xml
+D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\GameMasterPlanner\bin\EntityFramework.SqlServer.xml
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\roslyn\csc.exe
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\roslyn\System.Collections.Immutable.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\roslyn\System.Reflection.Metadata.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\roslyn\vbc.exe
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\roslyn\VBCSCompiler.exe
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\roslyn\VBCSCompiler.exe.config
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\GameMasterPlanner.dll.config
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\GameMasterPlanner.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\GameMasterPlanner.pdb
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\Antlr3.Runtime.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\DataAccess.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\EntityFramework.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\EntityFramework.SqlServer.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\Microsoft.Web.Infrastructure.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\Newtonsoft.Json.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\System.Net.Http.Formatting.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\System.Web.Helpers.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\System.Web.Http.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\System.Web.Http.WebHost.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\System.Web.Mvc.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\System.Web.Optimization.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\System.Web.Razor.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\System.Web.Webpages.Deployment.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\System.Web.Webpages.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\System.Web.Webpages.Razor.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\WebGrease.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\DataAccess.pdb
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\Antlr3.Runtime.pdb
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\EntityFramework.xml
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\EntityFramework.SqlServer.xml
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\System.Web.Optimization.xml
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\System.Web.Razor.xml
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\System.Web.Webpages.xml
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\System.Web.Webpages.Deployment.xml
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\System.Web.Webpages.Razor.xml
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\System.Web.Helpers.xml
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\System.Web.Mvc.xml
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\Newtonsoft.Json.xml
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\System.Net.Http.Formatting.xml
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\System.Web.Http.xml
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\System.Web.Http.WebHost.xml
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\obj\Debug\GameMasterPlanner.csprojResolveAssemblyReference.cache
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\obj\Debug\GameMasterPlanner.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\obj\Debug\GameMasterPlanner.pdb

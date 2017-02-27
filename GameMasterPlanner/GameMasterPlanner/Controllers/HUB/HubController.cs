@@ -11,11 +11,11 @@ namespace GameMasterPlanner.Controllers.HUB
         // GET: Hub
         //public ActionResult Index()
         //{
-        //    return View("Hub");
+        //    return View();
         //}
         public ActionResult Index(int id)
         {
-            return View("Hub");
+            return View();
         }
 
 

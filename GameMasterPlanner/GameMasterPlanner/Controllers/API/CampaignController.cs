@@ -11,19 +11,6 @@ namespace GameMasterPlanner.Controllers.API
 {
     public class CampaignController : ApiController
     {
-        private List<CampaignViewModel> campaignList = new List<CampaignViewModel>
-        {
-            new CampaignViewModel()
-            {
-                Name = "Dr. Larson and The Mystery of the Green Tomb",
-                History = "A fricken sweet history"
-            },
-            new CampaignViewModel()
-            {
-                Name = "Dr. Larson and The Longest Knight",
-                History = "Such facts"
-            }
-        };
 
         public HttpResponseMessage Get()
         {

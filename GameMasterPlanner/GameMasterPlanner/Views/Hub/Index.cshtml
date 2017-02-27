@@ -1,0 +1,135 @@
+﻿
+@{
+    ViewBag.Title = "Hub";
+}
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBLS0MX9AwHUlg0Zkvodyp3sjDPdrrB9c"></script>
+@Scripts.Render("~/bundles/maps")
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-8 map">
+            <div class="google-map-canvas" id="map">
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+
+            <div class="row">
+                <div class="col-xs-4">
+                    <button class="btn btn-default">Set Map</button>
+                </div>
+
+                <div class="col-xs-4">
+                    <button class="btn btn-default">Character Library</button>
+                </div>
+
+                <div class="col-xs-4">
+                    <button class="btn btn-default">Session Library</button>
+                </div>
+            </div>
+
+            @*<h2>Contact Us</h2>
+
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-xs-3">
+                        <input class="form-control" id="firstName" name="firstName" placeholder="First Name" required="" type="text">
+                    </div>
+                    <div class="col-xs-3">
+                        <input class="form-control" id="middleName" name="firstName" placeholder="Middle Name" required="" type="text">
+                    </div>
+                    <div class="col-xs-4">
+                        <input class="form-control" id="lastName" name="lastName" placeholder="Last Name" required="" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-5">
+                        <input class="form-control" name="email" placeholder="Email" required="" type="email">
+                    </div>
+                    <div class="col-xs-5">
+                        <input class="form-control" name="phone" placeholder="Phone" required="" type="email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-10">
+                        <input class="form-control" placeholder="Website URL" required="" type="homepage">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-10">
+                        <button class="btn btn-primary pull-right">Submit</button>
+                    </div>
+                </div>
+            </form>
+            <hr>
+            <div class="row">
+                <div class="col-xs-6">
+                    <h2>Hong Kong</h2>
+                    <address>
+                        <strong>HK Business Address</strong><br>
+                        100 Business Address<br>
+                        Kowloon<br>
+                        Hong Kong<br>
+                        Hong Kong<br>
+                        Zip Code N/A<br>
+                        <abbr title="Phone">P:</abbr> 01234 567 890
+                    </address>
+                </div>
+                <div class="col-xs-6">
+                    <h2>Shenzhen, P.R.C.</h2>
+                    <address>
+                        <strong>SZ Business Address</strong><br>
+                        100 Business Address<br>
+                        Futian District<br>
+                        <br>
+                        Shenzhen, Guangdong<br>
+                        518000<br>
+                        <abbr title="Phone">P:</abbr> 01234 567 890
+                    </address>
+                </div><!--/col-6-->
+            </div><!--/row-->
+        </div><!--/col-5-->*@
+        
+    </div>
+</div>
+
+
+@*<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="map"></div>
+        </div>
+        
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <button class="btn btn-default">Set Map</button>
+        </div>
+
+        <div class="col-md-4">
+            <button class="btn btn-default">Character Library</button>
+        </div>
+
+        <div class="col-md-4">
+            <button class="btn btn-default">Session Library</button>
+        </div>
+    </div>
+</div>*@
+
+
+
+<script>
+    var map;
+    map = new GMaps({
+        div: '#map',
+        lat: 52.4801,
+        lng: -1.8835,
+        width: '100%',
+        height: '500px',
+        zoom: 7
+    });
+</script>
+
+

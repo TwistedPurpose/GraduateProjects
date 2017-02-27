@@ -8,7 +8,11 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/knockout")
 
-    
+    <script>
+        var baseURL = @Html.Raw(HttpUtility.JavaScriptStringEncode(Url.Content("~"), true));
+    </script>
+
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
@@ -29,6 +33,17 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Campaign List</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Main Hub</a></li>
+                            <li><a href="#">Character Library</a></li>
+                            <li><a href="#">Session Library</a></li>
+                            <li><a href="#">Location Library</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -38,8 +53,5 @@
         @RenderBody()
     </div>
 
-    @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/Scripts/knockout-3.4.1.js"></script>*@
 </body>
 </html>

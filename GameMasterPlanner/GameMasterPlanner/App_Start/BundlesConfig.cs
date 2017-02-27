@@ -20,18 +20,24 @@ namespace GameMasterPlanner.App_Start
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                   "~/Scripts/bootstrap.js",
+                 "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
-          "~/Scripts/knockout-3.4.1.js"));
+                "~/Scripts/knockout-3.4.1.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/campaign").Include(
-"~/Scripts/ViewModels/Campaign.js"));
+                "~/Scripts/ViewModels/Campaign.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/maps").Include(
+                "~/Scripts/gmaps.js"));
+
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+
         }
     }
 }

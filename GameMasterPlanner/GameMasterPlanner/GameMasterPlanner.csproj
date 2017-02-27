@@ -133,6 +133,7 @@
     <None Include="Properties\PublishProfiles\GameMasterPlanner - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\Local Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\gmaps.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\knockout-3.4.1.debug.js" />
@@ -164,7 +165,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Hub\Hub.cshtml" />
+    <Content Include="Views\Hub\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -176,7 +177,7 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClassLibrary1\DataAccess.csproj">
+    <ProjectReference Include="..\DataAccess\DataAccess.csproj">
       <Project>{3e33c797-56ce-450f-86d1-5f581bd86daa}</Project>
       <Name>DataAccess</Name>
     </ProjectReference>

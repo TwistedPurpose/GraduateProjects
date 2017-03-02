@@ -64,6 +64,10 @@
     <Build Include="Tables\Campaign.sql" />
     <Build Include="Tables\History.sql" />
     <Build Include="UserSetup.sql" />
+    <Build Include="Tables\Session.sql" />
+    <Build Include="Tables\Map.sql" />
+    <Build Include="Tables\Locations.sql" />
+    <Build Include="Tables\Character.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="PostScripts\Script.PostDeployment1.sql" />

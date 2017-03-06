@@ -68,11 +68,17 @@
     <Build Include="Tables\Map.sql" />
     <Build Include="Tables\Locations.sql" />
     <Build Include="Tables\Character.sql" />
+    <Build Include="Tables\Items.sql" />
+    <Build Include="Tables\CharacterSessions.sql" />
+    <Build Include="Tables\CampaignSessions.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="PostScripts\Script.PostDeployment1.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GMPlannerDacPac.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="GMPlannerDacPac.refactorlog" />
   </ItemGroup>
 </Project>

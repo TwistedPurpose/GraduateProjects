@@ -9,6 +9,8 @@ import java.util.List;
  */
 
 public class InitiativeRoller {
+
+
     public static List<Character> rollInitiative(List<Character> characterList){
         for(Character c : characterList) {
             // Add function to roll dice

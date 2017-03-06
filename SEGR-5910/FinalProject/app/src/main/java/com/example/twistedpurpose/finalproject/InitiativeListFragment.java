@@ -97,7 +97,7 @@ public class InitiativeListFragment extends Fragment {
             }
         });
 
-        Button addButton = (Button) v.findViewById(R.id.addBtn);
+        Button addButton = (Button) v.findViewById(R.id.addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,7 +115,6 @@ public class InitiativeListFragment extends Fragment {
             mCursor.requery();
             adapter.notifyDataSetChanged();
         }
-
     }
 
     @Override
@@ -135,16 +134,6 @@ public class InitiativeListFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnCharacterListListener {
         public void onAddCharacter();
     }
@@ -173,11 +162,13 @@ public class InitiativeListFragment extends Fragment {
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
             TextView characterName = (TextView) view.findViewById(R.id.name);
+            TextView initRoll = (TextView) view.findViewById(R.id.initRoll);
             TextView characterMod = (TextView) view.findViewById(R.id.mod);
             TextView characterInit = (TextView) view.findViewById(R.id.init);
 
             //Put into Character logic to get integer values of initiative and modifier
             characterName.setText(mCharacterCursor.getCharacter().getName());
+            initRoll.setText(Integer.toString(mCharacterCursor.getCharacter().getInitiative()));
             characterMod.setText(Integer.toString(mCharacterCursor.getCharacter().getModifier()));
             characterInit.setText(Integer.toString(mCharacterCursor.getCharacter().getTotalInitiative()));
         }

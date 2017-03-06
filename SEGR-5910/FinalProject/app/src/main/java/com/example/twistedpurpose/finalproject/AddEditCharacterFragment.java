@@ -1,20 +1,16 @@
 package com.example.twistedpurpose.finalproject;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.NumberPicker;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 
 public class AddEditCharacterFragment extends Fragment {
@@ -44,7 +40,7 @@ public class AddEditCharacterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_add_character, container, false);
+        View v = inflater.inflate(R.layout.fragment_add_edit_character, container, false);
 
         mHelper = new InitiativeTrackerDBHelper(getActivity());
 
@@ -66,8 +62,6 @@ public class AddEditCharacterFragment extends Fragment {
 
         EditText modifierPicker =
                 (EditText) v.findViewById(R.id.modEditText);
-
-//        modifierPicker.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
         //Break out into function that gets modifier from string
         //Inside of Character
@@ -113,12 +107,12 @@ public class AddEditCharacterFragment extends Fragment {
         });
 
         Button deleteButton = (Button) v.findViewById(R.id.deleteButton);
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(mHelper != null)
                 {
-                    mHelper.deleteCharacter(mCharacter);
+                    //mHelper.deleteCharacter(mCharacter);
                     Toast.makeText(getActivity(), "Deleted character!", Toast.LENGTH_LONG).show();
                     mListener.onCharacterSave();
                 }

@@ -4,7 +4,11 @@
     <string name="roll_button_text">Roll</string>
     <string name="add_button_text">Add</string>
     <string name="pick_mod_text">Pick Init Modifier</string>
-    <string name="character_name_text">Character Name</string>
+    <string name="character_name_text">Name</string>
     <string name="button_save">Save</string>
     <string name="deleteButtonText">Delete</string>
+    <string name="menu_add">Add Character</string>
+    <string name="character_mod_text">Modifier</string>
+    <string name="character_roll_text">Dice Roll</string>
+    <string name="character_total_init_text">Total</string>
 </resources>

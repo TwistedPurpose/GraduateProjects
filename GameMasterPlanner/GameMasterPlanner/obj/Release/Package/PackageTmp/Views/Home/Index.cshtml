@@ -2,31 +2,36 @@
     ViewBag.Title = "Index";
 }
 
-<div>
-    <div>
-        <textarea data-bind="value:newCampaginName"></textarea>
-        <textarea data-bind="value:newCampaginHistory"></textarea>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Campaign Name</th>
+                        <th>History</th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach:campaignList">
+                    <tr>
+                        <td><a data-bind="attr: { href: hubURL, value: name }" class="btn btn-default">View</a></td>
+                        <td data-bind="text: name"></td>
+                        <td data-bind="text:history"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-        <button data-bind="click:addCampagin">Add Campaign</button>
+
+        <div class="col-md-4">
+            <textarea data-bind="value:newCampaginName"></textarea>
+            <textarea data-bind="value:newCampaginHistory"></textarea>
+
+            <button data-bind="click:addCampagin" class="btn btn-default">Add Campaign</button>
+        </div>
     </div>
-
-
-    <table>
-        <thead>
-            <tr>
-                <th>Campaign Name</th>
-                <th>History</th>
-            </tr>
-        </thead>
-        <tbody data-bind="foreach:campaignList">
-            <tr>
-                <td data-bind="text:name"></td>
-                <td data-bind="text:history"></td>
-            </tr>
-        </tbody>
-
-    </table>
-
-
+    
 </div>
+
 @Scripts.Render("~/bundles/campaign")

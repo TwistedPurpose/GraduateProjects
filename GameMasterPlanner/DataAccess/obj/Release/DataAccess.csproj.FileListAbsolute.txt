@@ -8,3 +8,13 @@ D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\Clas
 D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\ClassLibrary1\obj\Release\DataAccess.csprojResolveAssemblyReference.cache
 D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\ClassLibrary1\obj\Release\DataAccess.dll
 D:\Documents\School Work\Graduate School\GraduateProject\GameMasterPlanning\ClassLibrary1\obj\Release\DataAccess.pdb
+D:\Documents\GraduateProjects\GameMasterPlanner\DataAccess\bin\Release\DataAccess.dll.config
+D:\Documents\GraduateProjects\GameMasterPlanner\DataAccess\bin\Release\DataAccess.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\DataAccess\bin\Release\DataAccess.pdb
+D:\Documents\GraduateProjects\GameMasterPlanner\DataAccess\bin\Release\EntityFramework.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\DataAccess\bin\Release\EntityFramework.SqlServer.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\DataAccess\bin\Release\EntityFramework.xml
+D:\Documents\GraduateProjects\GameMasterPlanner\DataAccess\bin\Release\EntityFramework.SqlServer.xml
+D:\Documents\GraduateProjects\GameMasterPlanner\DataAccess\obj\Release\DataAccess.csprojResolveAssemblyReference.cache
+D:\Documents\GraduateProjects\GameMasterPlanner\DataAccess\obj\Release\DataAccess.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\DataAccess\obj\Release\DataAccess.pdb

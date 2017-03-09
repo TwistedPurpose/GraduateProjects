@@ -11,7 +11,10 @@ public class AddEditCharacterActivity extends SingleFragmentActivity
 
     @Override
     protected Fragment createFragment() {
-        return AddEditCharacterFragment.newInstance();
+        Intent intent = getIntent();
+
+        long id = intent.getLongExtra(AddEditCharacterFragment.CHARACTER_ROW_ID, -1);
+        return AddEditCharacterFragment.newInstance(id);
     }
 
     @Override

@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 public class AddEditCharacterFragment extends Fragment {
 
+    public final static String CHARACTER_ROW_ID = "id";
+
     private InitiativeTrackerDBHelper mHelper;
 
     private Character mCharacter;
@@ -23,10 +25,10 @@ public class AddEditCharacterFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static AddEditCharacterFragment newInstance() {
+    public static AddEditCharacterFragment newInstance(long id) {
         AddEditCharacterFragment fragment = new AddEditCharacterFragment();
         Bundle args = new Bundle();
-
+        args.putLong(CHARACTER_ROW_ID, id);
         fragment.setArguments(args);
         return fragment;
     }
@@ -34,6 +36,18 @@ public class AddEditCharacterFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        long id = 0;
+        if (getArguments() != null) {
+            id = getArguments().getLong(CHARACTER_ROW_ID, -1);
+        }
+
+        mHelper = new InitiativeTrackerDBHelper(getActivity());
+        if (id == -1) {
+            mCharacter = mHelper.addCharacter();
+        } else {
+            mCharacter = mHelper.getCharacter(id);
+        }
     }
 
     @Override
@@ -42,9 +56,9 @@ public class AddEditCharacterFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_add_edit_character, container, false);
 
-        mHelper = new InitiativeTrackerDBHelper(getActivity());
+        //mHelper = new InitiativeTrackerDBHelper(getActivity());
 
-        mCharacter = mHelper.addCharacter();
+        //mCharacter = mHelper.addCharacter();
 
         EditText characterNameEditText = (EditText) v.findViewById(R.id.character_name_text_edit);
         characterNameEditText.setText(mCharacter.getName());

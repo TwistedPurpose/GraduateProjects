@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
@@ -79,6 +80,16 @@ public class InitiativeListFragment extends Fragment {
         // 5. Attach cursor adapter to the ListView
         characterListView.setAdapter(adapter);
 
+        characterListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (mListener != null) {
+                    mListener.onUpdateCharacter(id);
+                }
+            }
+        });
+
         Button rollButton = (Button) v.findViewById(R.id.rollBtn);
         rollButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,6 +147,7 @@ public class InitiativeListFragment extends Fragment {
 
     public interface OnCharacterListListener {
         public void onAddCharacter();
+        public void onUpdateCharacter(long id);
     }
 
     /**

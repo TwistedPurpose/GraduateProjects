@@ -20,4 +20,10 @@ public class InitiativeTrackerActivity extends SingleFragmentActivity
         startActivity(intent);
     }
 
+    @Override
+    public void onUpdateCharacter(long id) {
+        Intent intent = new Intent(this, AddEditCharacterActivity.class);
+        intent.putExtra(AddEditCharacterFragment.CHARACTER_ROW_ID,id);
+        startActivity(intent);
+    }
 }

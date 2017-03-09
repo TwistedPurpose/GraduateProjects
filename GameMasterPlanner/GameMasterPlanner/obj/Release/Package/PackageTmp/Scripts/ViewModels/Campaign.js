@@ -1,7 +1,12 @@
 ﻿class Campaign {
-    constructor(name, history) {
+    constructor(id, name, history) {
         this.name = name;
         this.history = history;
+        this.id = id;
+        this.hubURL = ko.computed(function () {
+            return baseURL + 'Hub/Index/' + id;
+        }, this);
+            
     }
 }
 
@@ -9,7 +14,7 @@ class CampaignList {
     constructor(data) {
         let list = [];
         data.forEach(function (campaign) {
-            list.push(new Campaign(campaign.Name, campaign.History));
+            list.push(new Campaign(campaign.Id, campaign.Name, campaign.History));
         });
         this.campaignList = ko.observableArray(list);
 
@@ -18,20 +23,22 @@ class CampaignList {
     }
 
     addCampagin() {
-        let data = new Campaign(this.newCampaginName(), this.newCampaginHistory());
-        this.campaignList.push(data);
-        let list = [];
-        $.post(window.location.href + 'api/Campaign', data, function (returnedData) {
+        let data = new Campaign(-1, this.newCampaginName(), this.newCampaginHistory());
+        
+        this.campaignList.removeAll();
+        var list = this.campaignList;
+        
+        $.post(baseURL + 'api/Campaign', data, function (returnedData) {
             returnedData.forEach(function (campaign) {
-                list.push(new Campaign(campaign.Name, campaign.History));
+                list.push(new Campaign(campaign.Id, campaign.Name, campaign.History));
             });
-
         });
 
+        this.campaignList = list;
     }
 }
 
-$.getJSON(window.location.href + 'api/Campaign', function (data) {
+$.getJSON(baseURL + 'api/Campaign', function (data) {
     var campaginList = new CampaignList(data);
     ko.applyBindings(campaginList);
 });

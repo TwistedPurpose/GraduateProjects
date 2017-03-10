@@ -56,10 +56,6 @@ public class AddEditCharacterFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_add_edit_character, container, false);
 
-        //mHelper = new InitiativeTrackerDBHelper(getActivity());
-
-        //mCharacter = mHelper.addCharacter();
-
         EditText characterNameEditText = (EditText) v.findViewById(R.id.character_name_text_edit);
         characterNameEditText.setText(mCharacter.getName());
         characterNameEditText.addTextChangedListener(new TextWatcher() {
@@ -94,7 +90,7 @@ public class AddEditCharacterFragment extends Fragment {
                 try {
                     mod = Integer.parseInt(c.toString());
                 } catch (NumberFormatException e) {
-                    Toast.makeText(getContext(), "Invalid init mod!", Toast.LENGTH_SHORT).show();
+
                 }
                 mCharacter.setModifier(mod);
             }
@@ -112,9 +108,13 @@ public class AddEditCharacterFragment extends Fragment {
             public void onClick(View v) {
                 if(mHelper != null)
                 {
-                    mHelper.updateCharacter(mCharacter);
-                    Toast.makeText(getActivity(), "Update complete!", Toast.LENGTH_LONG).show();
-                    mListener.onCharacterSave();
+                    if (mCharacter.getName() != null && mCharacter.getName() != ""){
+                        mHelper.updateCharacter(mCharacter);
+                        Toast.makeText(getActivity(), "Update complete!", Toast.LENGTH_LONG).show();
+                        mListener.onCharacterSave();
+                    } else {
+                        Toast.makeText(getActivity(), "Invalid Name", Toast.LENGTH_LONG).show();
+                    }
                 }
 
             }
@@ -126,7 +126,7 @@ public class AddEditCharacterFragment extends Fragment {
             public void onClick(View v) {
                 if(mHelper != null)
                 {
-                    //mHelper.deleteCharacter(mCharacter);
+                    mHelper.deleteCharacter(mCharacter);
                     Toast.makeText(getActivity(), "Deleted character!", Toast.LENGTH_LONG).show();
                     mListener.onCharacterSave();
                 }

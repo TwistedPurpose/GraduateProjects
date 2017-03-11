@@ -1,7 +1,5 @@
 package com.example.twistedpurpose.finalproject;
 
-import java.util.Comparator;
-
 /**
  * Created by Twisted Purpose on 2/16/2017.
  */
@@ -12,7 +10,7 @@ public class Character {
     private int mModifier;
     private int mInitiative;
 
-    private boolean mHasSpotlight;
+    private boolean mInSpotlight;
 
     public Character() {
         mName = "";
@@ -42,8 +40,8 @@ public class Character {
         return mInitiative;
     }
 
-    public boolean isHasSpotlight() {
-        return mHasSpotlight;
+    public boolean isInSpotlight() {
+        return mInSpotlight;
     }
 
     public int getTotalInitiative() {
@@ -66,7 +64,7 @@ public class Character {
         mInitiative = initiative;
     }
 
-    public void setHasSpotlight(boolean hasSpotlight) {
-        mHasSpotlight = hasSpotlight;
+    public void setInSpotlight(boolean inSpotlight) {
+        mInSpotlight = inSpotlight;
     }
 }

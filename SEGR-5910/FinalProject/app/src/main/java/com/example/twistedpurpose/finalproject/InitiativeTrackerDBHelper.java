@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,16 +19,6 @@ public class InitiativeTrackerDBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "characters.db";
     private static final int DATABASE_VERSION = 1;
-
-    public void deleteCharacter(Character character) {
-        // Fetch the database to insert to
-        // Set the where clause to id of character to be updated
-        String whereClause = Characters._ID + "= ?";
-        String[] whereArgs = {String.valueOf(character.getId())};
-
-        // Update the database with the character object
-        getWritableDatabase().delete(Characters.TABLE_NAME, whereClause, whereArgs);
-    }
 
     private static final class Characters implements BaseColumns {
         private Characters() {}
@@ -67,6 +56,10 @@ public class InitiativeTrackerDBHelper extends SQLiteOpenHelper {
         //Create a new Character object
         Character character = new Character();
 
+        if(getCharacters().size() == 0) {
+            character.setInSpotlight(true);
+        }
+
         // Gets the associated row with the character
         ContentValues row = getCharacterRow(character);
 
@@ -76,6 +69,8 @@ public class InitiativeTrackerDBHelper extends SQLiteOpenHelper {
         // Inserts in thew new character
         long id = db.insert(Characters.TABLE_NAME, null, row);
         character.setId(id);
+
+        //updateNextCharacter(false);
 
         return character;
     }
@@ -94,6 +89,8 @@ public class InitiativeTrackerDBHelper extends SQLiteOpenHelper {
         getWritableDatabase().update(
                 Characters.TABLE_NAME,
                 row, whereClause, null);
+
+        //updateNextCharacter(false);
     }
 
     // Returns a cursor that has a list for all characters.
@@ -112,6 +109,7 @@ public class InitiativeTrackerDBHelper extends SQLiteOpenHelper {
                 null, // having
                 "TotalInit desc", // order by
                 null);
+
 
         // return the cursor for the all movies query
         return new CharacterCursor(cursor);
@@ -193,8 +191,6 @@ public class InitiativeTrackerDBHelper extends SQLiteOpenHelper {
         return character;
     }
 
-
-
     /**
      * Sets up a DB row for character updates and modification
      * @param character Movie to be filled into ContentsValue
@@ -206,9 +202,49 @@ public class InitiativeTrackerDBHelper extends SQLiteOpenHelper {
         cv.put(Characters.NAME, character.getName());
         cv.put(Characters.MODIFIER, character.getModifier());
         cv.put(Characters.INITIATIVE, character.getInitiative());
-        cv.put(Characters.HAS_SPOTLIGHT, character.isHasSpotlight());
+        cv.put(Characters.HAS_SPOTLIGHT, character.isInSpotlight());
 
         return cv;
+    }
+
+    public void deleteCharacter(Character character) {
+        if (character.isInSpotlight()) {
+            updateNextCharacter(false);
+        }
+
+        // Fetch the database to insert to
+        // Set the where clause to id of character to be updated
+        String whereClause = Characters._ID + "= ?";
+        String[] whereArgs = {String.valueOf(character.getId())};
+
+        // Update the database with the character object
+        getWritableDatabase().delete(Characters.TABLE_NAME, whereClause, whereArgs);
+    }
+
+    public void updateNextCharacter(boolean setAsFirst) {
+        List<Character> characters = getCharacters();
+
+        if(characters.size() > 0) {
+            Character current = null;
+            Character next = characters.get(0);
+
+            for (Character c: characters) {
+                if (c.isInSpotlight()) {
+                    current = c;
+                } else if (current != null && !setAsFirst) {
+                    next = c;
+                    break;
+                }
+            }
+
+            if (current != null && next != null) {
+                current.setInSpotlight(false);
+                next.setInSpotlight(true);
+
+                updateCharacter(current);
+                updateCharacter(next);
+            }
+        }
     }
 
     /**
@@ -235,11 +271,7 @@ public class InitiativeTrackerDBHelper extends SQLiteOpenHelper {
             character.setName(getString(getColumnIndex(Characters.NAME)));
             character.setModifier(getInt(getColumnIndex(Characters.MODIFIER)));
             character.setInitiative(getInt(getColumnIndex(Characters.INITIATIVE)));
-
-            int d = getColumnIndex(Characters.HAS_SPOTLIGHT);
-
-            int i = getInt(d);
-            //character.setHasSpotlight( > 0);
+            character.setInSpotlight(getInt(getColumnIndex(Characters.HAS_SPOTLIGHT)) != 0);
 
             return character;
         }

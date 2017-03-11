@@ -21,6 +21,8 @@ public class AddEditCharacterFragment extends Fragment {
 
     private Character mCharacter;
 
+    private OnCharacterSave mListener;
+
     public AddEditCharacterFragment() {
         // Required empty public constructor
     }
@@ -137,7 +139,6 @@ public class AddEditCharacterFragment extends Fragment {
         return v;
     }
 
-    private OnCharacterSave mListener;
 
     @Override
     public void onAttach(Context context) {

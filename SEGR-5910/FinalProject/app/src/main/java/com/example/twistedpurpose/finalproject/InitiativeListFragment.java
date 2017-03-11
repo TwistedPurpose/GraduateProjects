@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,8 @@ import java.util.List;
 public class InitiativeListFragment extends Fragment {
 
     private InitiativeTrackerDBHelper.CharacterCursor mCursor;
+
+    private int currentlyActingCharacter = 0;
 
     private CharacterCursorAdapter adapter;
 
@@ -103,7 +106,10 @@ public class InitiativeListFragment extends Fragment {
                     dbHelper.updateCharacter(c);
                 }
 
+                dbHelper.updateNextCharacter(true);
+
                 updateInitiativeList();
+
                 Toast.makeText(getContext(), "Roll initiative!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -115,6 +121,16 @@ public class InitiativeListFragment extends Fragment {
                 if(mListener != null) {
                     mListener.onAddCharacter();
                 }
+            }
+        });
+
+        Button nextButton = (Button) v.findViewById(R.id.nextBtn);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InitiativeTrackerDBHelper dbHelper = new InitiativeTrackerDBHelper(getContext());
+                dbHelper.updateNextCharacter(false);
+                updateInitiativeList();
             }
         });
 
@@ -178,11 +194,20 @@ public class InitiativeListFragment extends Fragment {
             TextView characterMod = (TextView) view.findViewById(R.id.mod);
             TextView characterInit = (TextView) view.findViewById(R.id.init);
 
+            Character character = mCharacterCursor.getCharacter();
+
             //Put into Character logic to get integer values of initiative and modifier
-            characterName.setText(mCharacterCursor.getCharacter().getName());
-            initRoll.setText(Integer.toString(mCharacterCursor.getCharacter().getInitiative()));
-            characterMod.setText(Integer.toString(mCharacterCursor.getCharacter().getModifier()));
-            characterInit.setText(Integer.toString(mCharacterCursor.getCharacter().getTotalInitiative()));
+            characterName.setText(character.getName());
+            initRoll.setText(Integer.toString(character.getInitiative()));
+            characterMod.setText(Integer.toString(character.getModifier()));
+            characterInit.setText(Integer.toString(character.getTotalInitiative()));
+
+            TableRow row = (TableRow) view.findViewById(R.id.row);
+            if (character.isInSpotlight()){
+                row.setBackgroundResource(android.R.color.darker_gray);
+            } else {
+                row.setBackgroundResource(android.R.color.white);
+            }
         }
     }
 }

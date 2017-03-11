@@ -11,6 +11,7 @@
         android:layout_height="match_parent">
 
         <TableRow
+            android:id="@+id/row"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:gravity="center_horizontal">

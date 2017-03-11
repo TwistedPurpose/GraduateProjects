@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.CursorWrapper;
+import android.database.MatrixCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
@@ -70,7 +71,7 @@ public class InitiativeTrackerDBHelper extends SQLiteOpenHelper {
         long id = db.insert(Characters.TABLE_NAME, null, row);
         character.setId(id);
 
-        //updateNextCharacter(false);
+        db.close();
 
         return character;
     }
@@ -89,30 +90,31 @@ public class InitiativeTrackerDBHelper extends SQLiteOpenHelper {
         getWritableDatabase().update(
                 Characters.TABLE_NAME,
                 row, whereClause, null);
-
-        //updateNextCharacter(false);
     }
 
     // Returns a cursor that has a list for all characters.
-    public CharacterCursor queryCharacters() {
+    public CharacterCursor getCharacterCursor() {
 
-        // Setup a query to fetch all movies in table
-        Cursor cursor = getReadableDatabase().query(
-                Characters.TABLE_NAME, // table name
-                new String[] {Characters._ID, Characters.NAME,
-                        Characters.MODIFIER,Characters.INITIATIVE, Characters.HAS_SPOTLIGHT,
-                        "("+ Characters.MODIFIER + "+" +Characters.INITIATIVE+") as TotalInit",
-                } , // columns (all)
-                null, // where (all rows)
-                null, // whereArgs
-                null, // group by
-                null, // having
-                "TotalInit desc", // order by
-                null);
+        String[] columns = new String[] { Characters._ID, Characters.NAME, Characters.MODIFIER,
+                Characters.INITIATIVE, Characters.HAS_SPOTLIGHT };
 
+        MatrixCursor matrixCursor = new MatrixCursor(columns);
+
+        List<Character> list = getCharacters();
+
+        for(Character c : list){
+            int spotlight = 0;
+
+            if (c.isInSpotlight()) {
+                spotlight = 1;
+            }
+
+            matrixCursor.addRow(new Object[] {c.getId(), c.getName(), c.getModifier(),
+                    c.getInitiative(), spotlight});
+        }
 
         // return the cursor for the all movies query
-        return new CharacterCursor(cursor);
+        return new CharacterCursor(matrixCursor);
     }
 
     // Queries the database for the character with the corresponding id.  Returns the character
@@ -120,25 +122,20 @@ public class InitiativeTrackerDBHelper extends SQLiteOpenHelper {
     public List<Character> getCharacters() {
         List<Character> characterList = new ArrayList<>();
 
-        // Fetch a character equal to the id passed into the function
-        // to get a single character
+        // Fetch a list of all characters
         Cursor cursor = getReadableDatabase().query(
                 Characters.TABLE_NAME, // table name
-                new String[] {Characters._ID, Characters.NAME,
-                        Characters.MODIFIER,Characters.INITIATIVE, Characters.HAS_SPOTLIGHT,
-                        "("+ Characters.MODIFIER + "+" +Characters.INITIATIVE+") as TotalInit",
-                } , // columns
+                null, // columns all
                 null, // where all
                 null, // whereArgs
                 null, // group by
                 null, // having
-                "TotalInit desc", // order by
+                null, // order by
                 null);
 
         // Pass the cursor into a character cursor
         CharacterCursor characterCursor =
                 new CharacterCursor(cursor);
-
 
         // Set the cursor to the searched for character
         characterCursor.moveToFirst();
@@ -152,6 +149,8 @@ public class InitiativeTrackerDBHelper extends SQLiteOpenHelper {
 
         // Close out the cursor for cleanup
         characterCursor.close();
+
+        InitiativeRoller.sortInInitiativeOrder(characterList);
 
         // Send back character to be consumed.
         return characterList;

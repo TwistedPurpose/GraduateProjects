@@ -24,6 +24,18 @@ public class Character {
         mInitiative = 0;
     }
 
+    public String getModifierAsString() {
+        return Integer.toString(getModifier());
+    }
+
+    public String getTotalInitiativeAsString() {
+        return Integer.toString(getTotalInitiative());
+    }
+
+    public String getInitativeAsString() {
+        return Integer.toString(getInitiative());
+    }
+
     public long getId() {
         return mId;
     }

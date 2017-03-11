@@ -2,6 +2,10 @@ package com.example.twistedpurpose.finalproject;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -36,6 +40,13 @@ public class InitiativeListFragment extends Fragment {
 
     private OnCharacterListListener mListener;
 
+    private SensorEventListener mSensorListener;
+    private SensorManager mSensorManager;
+
+    private float mAccel; // acceleration apart from gravity
+    private float mAccelCurrent; // current acceleration including gravity
+    private float mAccelLast; // last acceleration including gravity
+
     public InitiativeListFragment() {
         // Required empty public constructor
     }
@@ -61,27 +72,42 @@ public class InitiativeListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_initiative_list, container, false);
 
         //getActivity().deleteDatabase("characters.db");
 
-        Context context = getActivity();
+        setUpCharacterList(v);
 
-        // 1. Create a new InitiativeTrackerDBHelper
-        InitiativeTrackerDBHelper dbHelper = new InitiativeTrackerDBHelper(context);
+        mSensorListener = new SensorEventListener() {
 
-        // 2. Query the characters and obtain a cursor (store in mCursor).
-        mCursor = dbHelper.queryCharacters();
+            @Override
+            public void onSensorChanged(SensorEvent event) {
+                float x = event.values[0];
+                float y = event.values[1];
+                float z = event.values[2];
+                mAccelLast = mAccelCurrent;
+                mAccelCurrent = (float) Math.sqrt((double) (x*x + y*y + z*z));
+                float delta = mAccelCurrent - mAccelLast;
+                mAccel = mAccel * 0.9f + delta; // perform low-cut filter
+            }
 
-        // 3. Find ListView to populate
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+            }
+        };
+
+        mSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+        mSensorManager.registerListener(mSensorListener,
+                mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_NORMAL);
+        mAccel = 0.00f;
+        mAccelCurrent = SensorManager.GRAVITY_EARTH;
+        mAccelLast = SensorManager.GRAVITY_EARTH;
+
         ListView characterListView = (ListView) v.findViewById(R.id.character_listView);
-
-        // 4. Setup cursor adapter using cursor from last step
-        adapter = new CharacterCursorAdapter(context, mCursor);
-
-        // 5. Attach cursor adapter to the ListView
-        characterListView.setAdapter(adapter);
 
         characterListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -139,9 +165,37 @@ public class InitiativeListFragment extends Fragment {
 
     public void updateInitiativeList(){
         if(mCursor != null && adapter != null){
-            mCursor.requery();
-            adapter.notifyDataSetChanged();
+            updateCharacterAdapter();
         }
+    }
+
+    private void updateCharacterAdapter() {
+        setUpCharacterList(null);
+    }
+
+    private void setUpCharacterList(View view){
+        ListView characterListView;
+
+        Context context = getActivity();
+
+        // 1. Create a new InitiativeTrackerDBHelper
+        InitiativeTrackerDBHelper dbHelper = new InitiativeTrackerDBHelper(context);
+
+        // 2. Query the characters and obtain a cursor (store in mCursor).
+        mCursor = dbHelper.getCharacterCursor();
+
+        // 3. Find ListView to populate
+        if (view != null) {
+            characterListView = (ListView) view.findViewById(R.id.character_listView);
+        } else {
+            characterListView = (ListView) getActivity().findViewById(R.id.character_listView);
+        }
+
+        // 4. Setup cursor adapter using cursor from last step
+        adapter = new CharacterCursorAdapter(context, mCursor);
+
+        // 5. Attach cursor adapter to the ListView
+        characterListView.setAdapter(adapter);
     }
 
     @Override
@@ -164,6 +218,20 @@ public class InitiativeListFragment extends Fragment {
     public interface OnCharacterListListener {
         public void onAddCharacter();
         public void onUpdateCharacter(long id);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSensorManager.registerListener(mSensorListener,
+                mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    public void onPause() {
+        mSensorManager.unregisterListener(mSensorListener);
+        super.onPause();
     }
 
     /**
@@ -190,7 +258,7 @@ public class InitiativeListFragment extends Fragment {
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
             TextView characterName = (TextView) view.findViewById(R.id.name);
-            TextView initRoll = (TextView) view.findViewById(R.id.initRoll);
+            TextView characterInitRoll = (TextView) view.findViewById(R.id.initRoll);
             TextView characterMod = (TextView) view.findViewById(R.id.mod);
             TextView characterInit = (TextView) view.findViewById(R.id.init);
 
@@ -198,9 +266,9 @@ public class InitiativeListFragment extends Fragment {
 
             //Put into Character logic to get integer values of initiative and modifier
             characterName.setText(character.getName());
-            initRoll.setText(Integer.toString(character.getInitiative()));
-            characterMod.setText(Integer.toString(character.getModifier()));
-            characterInit.setText(Integer.toString(character.getTotalInitiative()));
+            characterInitRoll.setText(character.getInitativeAsString());
+            characterMod.setText(character.getModifierAsString());
+            characterInit.setText(character.getTotalInitiativeAsString());
 
             TableRow row = (TableRow) view.findViewById(R.id.row);
             if (character.isInSpotlight()){

@@ -1,15 +1,28 @@
 package com.example.twistedpurpose.finalproject;
 
-/**
- * Created by Twisted Purpose on 2/16/2017.
- */
 
+/**
+ * A class for characters
+ * Contains a character name, initiative modifier,
+ * and rolled initiative along with
+ * helper functions for calculating total initiative
+ * converting various
+ */
 public class Character {
+
+    //Database ID
     private long mId;
+
+    //Name of the character
     private String mName;
+
+    //Initiative modifier for characters
     private int mModifier;
+
+    //d20 roll for initiative
     private int mInitiative;
 
+    //Check for if a character is currently acting in combat
     private boolean mInSpotlight;
 
     public Character() {
@@ -24,15 +37,18 @@ public class Character {
         mInitiative = 0;
     }
 
+    //Fetches the modifier as a string... duh
     public String getModifierAsString() {
         return Integer.toString(getModifier());
     }
 
+    //Gets the sum initiative as a string also
     public String getTotalInitiativeAsString() {
         return Integer.toString(getTotalInitiative());
     }
 
-    public String getInitativeAsString() {
+    //Get the total initiative as a string
+    public String getInitiativeAsString() {
         return Integer.toString(getInitiative());
     }
 

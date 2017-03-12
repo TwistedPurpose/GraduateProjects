@@ -21,6 +21,7 @@ public class InitiativeTrackerDBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "characters.db";
     private static final int DATABASE_VERSION = 1;
 
+    // Column headers for Characters table
     private static final class Characters implements BaseColumns {
         private Characters() {}
         public static final String TABLE_NAME = "characters";
@@ -34,6 +35,10 @@ public class InitiativeTrackerDBHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    /**
+     * Set up initial db
+     * @param db - character database
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + Characters.TABLE_NAME + " ("
@@ -57,6 +62,8 @@ public class InitiativeTrackerDBHelper extends SQLiteOpenHelper {
         //Create a new Character object
         Character character = new Character();
 
+        // If there are no other characters, set this one to be
+        // in the spotlight
         if(getCharacters().size() == 0) {
             character.setInSpotlight(true);
         }
@@ -95,20 +102,25 @@ public class InitiativeTrackerDBHelper extends SQLiteOpenHelper {
     // Returns a cursor that has a list for all characters.
     public CharacterCursor getCharacterCursor() {
 
+        // Column headers for db to be added to matrix cursor for character list
         String[] columns = new String[] { Characters._ID, Characters.NAME, Characters.MODIFIER,
                 Characters.INITIATIVE, Characters.HAS_SPOTLIGHT };
 
+        //Initial setup for cursor for list view
         MatrixCursor matrixCursor = new MatrixCursor(columns);
 
+        //Get all characters
         List<Character> list = getCharacters();
 
         for(Character c : list){
             int spotlight = 0;
 
+            // if the character has spotlight, set spotlight on the cursor character
             if (c.isInSpotlight()) {
                 spotlight = 1;
             }
 
+            // Add the character to the cursor
             matrixCursor.addRow(new Object[] {c.getId(), c.getName(), c.getModifier(),
                     c.getInitiative(), spotlight});
         }
@@ -206,7 +218,13 @@ public class InitiativeTrackerDBHelper extends SQLiteOpenHelper {
         return cv;
     }
 
+    /**
+     * Deletes a character from the database based on character id
+     * @param character - Character to be delted from the database
+     */
     public void deleteCharacter(Character character) {
+        //If the character is in the spot light, set it to the next
+        //Character in the list
         if (character.isInSpotlight()) {
             updateNextCharacter(false);
         }
@@ -220,22 +238,37 @@ public class InitiativeTrackerDBHelper extends SQLiteOpenHelper {
         getWritableDatabase().delete(Characters.TABLE_NAME, whereClause, whereArgs);
     }
 
+    /**
+     * Set the highlight of the next character in combat,
+     * if character is the last in the list, set it to the top of the list
+     * @param setAsFirst - If the caller wishes to set the top of the list
+     *                      as highlighted, set to true, else false
+     */
     public void updateNextCharacter(boolean setAsFirst) {
+        //Get all the characters
         List<Character> characters = getCharacters();
 
+        // If the size is zero, don't do anything
         if(characters.size() > 0) {
+            // Set next to the top if the caller
+            // wishes to set to top, or the list has wrapped
             Character current = null;
             Character next = characters.get(0);
 
             for (Character c: characters) {
+                //Set the current spotlighted character
                 if (c.isInSpotlight()) {
                     current = c;
                 } else if (current != null && !setAsFirst) {
+                    //If current is found, set the next one and break
                     next = c;
                     break;
                 }
             }
 
+            // If current and next are found
+            // Switch off spotlight on current, and turn on
+            // for next
             if (current != null && next != null) {
                 current.setInSpotlight(false);
                 next.setInSpotlight(true);

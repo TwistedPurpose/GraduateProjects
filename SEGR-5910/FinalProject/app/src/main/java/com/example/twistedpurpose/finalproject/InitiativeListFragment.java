@@ -8,7 +8,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,24 +23,26 @@ import java.util.List;
 
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link InitiativeListFragment.OnCharacterListListener} interface
- * to handle interaction events.
- * Use the {@link InitiativeListFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Primary fragment for the application
+ * Manages rolling, adding characters, editing characters, highing the next
+ * character
  */
 public class InitiativeListFragment extends Fragment {
 
+    //Database cursor for application
     private InitiativeTrackerDBHelper.CharacterCursor mCursor;
 
+    //Adaptor for list view of characters
     private CharacterCursorAdapter adapter;
 
+    //For communicating intent to edit/add activity
     private OnCharacterListListener mListener;
 
+    // Sensor and manager for phone shaking to roll initiative
     private SensorEventListener mSensorListener;
     private SensorManager mSensorManager;
 
+    //Shake information, be sure to shake violently
     private static final float SHAKE_THRESHOLD = 50f; // m/S**2
     private static final int MIN_TIME_BETWEEN_SHAKES_MILLISECS = 1000;
     private long mLastShakeTime;
@@ -52,7 +53,7 @@ public class InitiativeListFragment extends Fragment {
 
     /**
      * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
+     * InitiativeListFragment using the provided parameters.
      *
      * @return A new instance of fragment InitiativeListFragment.
      */
@@ -64,6 +65,7 @@ public class InitiativeListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (adapter != null) {
+            //Update dataset when fragment is created
             adapter.notifyDataSetChanged();
         }
     }
@@ -75,10 +77,10 @@ public class InitiativeListFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_initiative_list, container, false);
 
-        //getActivity().deleteDatabase("characters.db");
-
+        // Sets up the character list in the view
         setUpCharacterList(v);
 
+        // Sensor checks for violent shaking, just don't throw your device
         mSensorListener = new SensorEventListener() {
 
             @Override
@@ -109,6 +111,7 @@ public class InitiativeListFragment extends Fragment {
             }
         };
 
+        //Sets sensor and sensor manager for shaking
         mSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
         mSensorManager.registerListener(mSensorListener,
                 mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
@@ -126,6 +129,8 @@ public class InitiativeListFragment extends Fragment {
             }
         });
 
+        // When the Roll button is pressed, roll initiative for all characters
+        // And update the list
         Button rollButton = (Button) v.findViewById(R.id.rollBtn);
         rollButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +139,7 @@ public class InitiativeListFragment extends Fragment {
             }
         });
 
+        //When add is pressed, switch to new character activity
         Button addButton = (Button) v.findViewById(R.id.addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,6 +150,8 @@ public class InitiativeListFragment extends Fragment {
             }
         });
 
+        //When next button is pressed, update in db the highlighted character
+        //And update the UI with the next highlighted character below the current one
         Button nextButton = (Button) v.findViewById(R.id.nextBtn);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,18 +165,27 @@ public class InitiativeListFragment extends Fragment {
         return v;
     }
 
+    /**
+     * A private helper method for rolling initiative on all the characters
+     * and sorting
+     */
     private void rollInitiative(){
         InitiativeTrackerDBHelper dbHelper = new InitiativeTrackerDBHelper(getContext());
+        //Get all characters
         List<Character> characterList = dbHelper.getCharacters();
 
+        //Roll initiative for all the characters (d20 roll)
         InitiativeRoller.rollInitiative(characterList);
 
+        //Update each character in the list
         for (Character c : characterList) {
             dbHelper.updateCharacter(c);
         }
 
+        //Set the top character in initiative as highlighted
         dbHelper.updateNextCharacter(true);
 
+        //Refresh the screen
         updateInitiativeList();
 
         Toast.makeText(getContext(), "Roll initiative!", Toast.LENGTH_SHORT).show();
@@ -176,14 +193,21 @@ public class InitiativeListFragment extends Fragment {
 
     public void updateInitiativeList(){
         if(mCursor != null && adapter != null){
+            //When coming back from edit/add/delete update the list
             updateCharacterAdapter();
         }
     }
 
+    //Helper method for better code readability and reduces
+    //Sets up character adapter when a change has been made
     private void updateCharacterAdapter() {
         setUpCharacterList(null);
     }
 
+    /**
+     * Helper function for setting up the character ListView with characters
+     * @param view - If not null, first time setup, otherwise update adapter
+     */
     private void setUpCharacterList(View view){
         ListView characterListView;
 
@@ -226,6 +250,10 @@ public class InitiativeListFragment extends Fragment {
         mListener = null;
     }
 
+    /**
+     * Interface for sending intent messages to edit
+     * or add a character
+     */
     public interface OnCharacterListListener {
         public void onAddCharacter();
         public void onUpdateCharacter(long id);
@@ -234,6 +262,7 @@ public class InitiativeListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         mSensorManager.registerListener(mSensorListener,
                 mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_NORMAL);
@@ -268,20 +297,26 @@ public class InitiativeListFragment extends Fragment {
 
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
+            //Get textviews to be updated
             TextView characterName = (TextView) view.findViewById(R.id.name);
             TextView characterInitRoll = (TextView) view.findViewById(R.id.initRoll);
             TextView characterMod = (TextView) view.findViewById(R.id.mod);
             TextView characterInit = (TextView) view.findViewById(R.id.init);
 
+            //For setting color if character has spotlight
+            TableRow row = (TableRow) view.findViewById(R.id.row);
+
+            //Get all the character to show data
             Character character = mCharacterCursor.getCharacter();
 
-            //Put into Character logic to get integer values of initiative and modifier
+            //Set text values in textviews
             characterName.setText(character.getName());
-            characterInitRoll.setText(character.getInitativeAsString());
+            characterInitRoll.setText(character.getInitiativeAsString());
             characterMod.setText(character.getModifierAsString());
             characterInit.setText(character.getTotalInitiativeAsString());
 
-            TableRow row = (TableRow) view.findViewById(R.id.row);
+            // If character has spotlight, set to gray
+            // Else set to white
             if (character.isInSpotlight()){
                 row.setBackgroundResource(android.R.color.darker_gray);
             } else {

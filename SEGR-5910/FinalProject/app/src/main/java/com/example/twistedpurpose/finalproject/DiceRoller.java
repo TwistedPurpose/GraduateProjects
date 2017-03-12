@@ -1,9 +1,14 @@
 package com.example.twistedpurpose.finalproject;
 
-/**
- * Created by Twisted Purpose on 3/3/2017.
- */
 
+/**
+ * Mechanism for rolling dice
+ * There is a function for every standard polyhedron
+ * for d20 games.
+ *
+ * Most of these are unused since there was no plan in implementing them
+ * They are simply here by the request of my professor.
+ */
 public class DiceRoller {
     public static int rollD4(){
         return (int)(Math.random() * 4 + 1);

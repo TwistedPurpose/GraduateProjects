@@ -6,7 +6,7 @@ import java.util.List;
 
 
 /**
- * Helper class for rolling initiative and sorting characters by ininitative
+ * Helper class for rolling initiative and sorting characters by initiative
  */
 public class InitiativeRoller {
 
@@ -16,6 +16,8 @@ public class InitiativeRoller {
      * @return - The list of characters in sorted order
      */
     public static List<Character> rollInitiative(List<Character> characterList){
+
+        // Roll init for all characters
         for(Character c : characterList) {
             c.setInitiative(DiceRoller.rollD20());
         }
@@ -23,19 +25,28 @@ public class InitiativeRoller {
         return characterList;
     }
 
+    /**
+     * Sorts a character list based on total initiative
+     * @param list - List to be sorted
+     */
     public static void sortInInitiativeOrder(List<Character> list) {
 
+        //Do a sort!
         Collections.sort(list, new Comparator<Character>() {
 
             @Override
             public int compare(Character o1, Character o2) {
                 int difference = 0;
 
+                //If they total inits are different, get the difference
                 if (o2.getTotalInitiative() - o1.getTotalInitiative() != 0) {
                     difference =  o2.getTotalInitiative() - o1.getTotalInitiative();
                 } else if (o2.getModifier() - o1.getModifier() != 0){
+                    // If the total init is the same, use the modifier
                     difference = o2.getModifier() - o1.getModifier();
                 } else {
+                    //If the total init and the modifier are the same
+                    //Do a roll off, the higher roller wins!
                     int characterOneRoll = 0;
                     int characterTwoRoll = 0;
 

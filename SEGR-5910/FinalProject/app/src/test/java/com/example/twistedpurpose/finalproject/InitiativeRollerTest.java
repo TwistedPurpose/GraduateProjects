@@ -119,7 +119,7 @@ public class InitiativeRollerTest {
         Character c2 = new Character("Soren",10);
 
         c1.setInitiative(1);
-        c1.setInitiative(5);
+        c2.setInitiative(5);
 
         characterList.add(c1);
         characterList.add(c2);
@@ -130,5 +130,52 @@ public class InitiativeRollerTest {
         //Assert
         assertTrue(characterList.get(0).getName().equals("Soren"));
         assertTrue(characterList.get(1).getName().equals("Mike"));
+    }
+
+    @Test
+    public void InitiativeRollerTest_sortInInitiativeOrder_DifferentModifier() throws Exception {
+        //Arrange
+        List<Character> characterList = new ArrayList<>();
+
+        Character c1 = new Character("Mike",-5);
+        Character c2 = new Character("Soren",10);
+
+        c1.setInitiative(20);
+        c2.setInitiative(5);
+
+        characterList.add(c1);
+        characterList.add(c2);
+
+        //Act
+        InitiativeRoller.sortInInitiativeOrder(characterList);
+
+        //Assert
+        assertTrue(characterList.get(0).getName().equals("Soren"));
+        assertTrue(characterList.get(1).getName().equals("Mike"));
+    }
+
+    @Test
+    public void InitiativeRollerTest_sortInInitiativeOrder_RollOff() throws Exception {
+        //Arrange
+        List<Character> characterList = new ArrayList<>();
+
+        Character c1 = new Character("Mike",10);
+        Character c2 = new Character("Soren",10);
+
+        c1.setInitiative(10);
+        c2.setInitiative(10);
+
+        characterList.add(c1);
+        characterList.add(c2);
+
+        //Act
+        InitiativeRoller.sortInInitiativeOrder(characterList);
+
+        //Assert
+        if(characterList.get(0).getName().equals("Soren")) {
+            assertTrue(characterList.get(1).getName().equals("Mike"));
+        } else {
+            assertTrue(characterList.get(1).getName().equals("Soren"));
+        }
     }
 }

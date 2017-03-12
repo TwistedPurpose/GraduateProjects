@@ -21,11 +21,11 @@ public class InitiativeRoller {
         if (characterList != null) {
             // Roll init for all characters
             for (Character c : characterList) {
+
                 c.setInitiative(DiceRoller.rollD20());
+
             }
-
         }
-
         return characterList;
     }
 

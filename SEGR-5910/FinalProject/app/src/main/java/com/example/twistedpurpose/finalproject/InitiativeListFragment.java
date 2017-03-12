@@ -8,6 +8,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,8 +35,6 @@ public class InitiativeListFragment extends Fragment {
 
     private InitiativeTrackerDBHelper.CharacterCursor mCursor;
 
-    private int currentlyActingCharacter = 0;
-
     private CharacterCursorAdapter adapter;
 
     private OnCharacterListListener mListener;
@@ -43,9 +42,9 @@ public class InitiativeListFragment extends Fragment {
     private SensorEventListener mSensorListener;
     private SensorManager mSensorManager;
 
-    private float mAccel; // acceleration apart from gravity
-    private float mAccelCurrent; // current acceleration including gravity
-    private float mAccelLast; // last acceleration including gravity
+    private static final float SHAKE_THRESHOLD = 50f; // m/S**2
+    private static final int MIN_TIME_BETWEEN_SHAKES_MILLISECS = 1000;
+    private long mLastShakeTime;
 
     public InitiativeListFragment() {
         // Required empty public constructor
@@ -84,13 +83,24 @@ public class InitiativeListFragment extends Fragment {
 
             @Override
             public void onSensorChanged(SensorEvent event) {
-                float x = event.values[0];
-                float y = event.values[1];
-                float z = event.values[2];
-                mAccelLast = mAccelCurrent;
-                mAccelCurrent = (float) Math.sqrt((double) (x*x + y*y + z*z));
-                float delta = mAccelCurrent - mAccelLast;
-                mAccel = mAccel * 0.9f + delta; // perform low-cut filter
+                if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+                    long curTime = System.currentTimeMillis();
+                    if ((curTime - mLastShakeTime) > MIN_TIME_BETWEEN_SHAKES_MILLISECS) {
+
+                        float x = event.values[0];
+                        float y = event.values[1];
+                        float z = event.values[2];
+
+                        double acceleration = Math.sqrt(Math.pow(x, 2) +
+                                Math.pow(y, 2) +
+                                Math.pow(z, 2)) - SensorManager.GRAVITY_EARTH;
+
+                        if (acceleration > SHAKE_THRESHOLD) {
+                            mLastShakeTime = curTime;
+                            rollInitiative();
+                        }
+                    }
+                }
             }
 
             @Override
@@ -103,9 +113,6 @@ public class InitiativeListFragment extends Fragment {
         mSensorManager.registerListener(mSensorListener,
                 mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_NORMAL);
-        mAccel = 0.00f;
-        mAccelCurrent = SensorManager.GRAVITY_EARTH;
-        mAccelLast = SensorManager.GRAVITY_EARTH;
 
         ListView characterListView = (ListView) v.findViewById(R.id.character_listView);
 
@@ -123,20 +130,7 @@ public class InitiativeListFragment extends Fragment {
         rollButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                InitiativeTrackerDBHelper dbHelper = new InitiativeTrackerDBHelper(getContext());
-                List<Character> characterList = dbHelper.getCharacters();
-
-                InitiativeRoller.rollInitiative(characterList);
-
-                for (Character c : characterList) {
-                    dbHelper.updateCharacter(c);
-                }
-
-                dbHelper.updateNextCharacter(true);
-
-                updateInitiativeList();
-
-                Toast.makeText(getContext(), "Roll initiative!", Toast.LENGTH_SHORT).show();
+                rollInitiative();
             }
         });
 
@@ -161,6 +155,23 @@ public class InitiativeListFragment extends Fragment {
         });
 
         return v;
+    }
+
+    private void rollInitiative(){
+        InitiativeTrackerDBHelper dbHelper = new InitiativeTrackerDBHelper(getContext());
+        List<Character> characterList = dbHelper.getCharacters();
+
+        InitiativeRoller.rollInitiative(characterList);
+
+        for (Character c : characterList) {
+            dbHelper.updateCharacter(c);
+        }
+
+        dbHelper.updateNextCharacter(true);
+
+        updateInitiativeList();
+
+        Toast.makeText(getContext(), "Roll initiative!", Toast.LENGTH_SHORT).show();
     }
 
     public void updateInitiativeList(){

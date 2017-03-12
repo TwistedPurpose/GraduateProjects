@@ -4,12 +4,17 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * Created by Twisted Purpose on 2/17/2017.
- */
 
+/**
+ * Helper class for rolling initiative and sorting characters by ininitative
+ */
 public class InitiativeRoller {
 
+    /**
+     * Rolls initiative for characters.
+     * @param characterList - List of characters to have initiative rolled for
+     * @return - The list of characters in sorted order
+     */
     public static List<Character> rollInitiative(List<Character> characterList){
         for(Character c : characterList) {
             c.setInitiative(DiceRoller.rollD20());
@@ -18,7 +23,7 @@ public class InitiativeRoller {
         return characterList;
     }
 
-    public static List<Character> sortInInitiativeOrder(List<Character> list) {
+    public static void sortInInitiativeOrder(List<Character> list) {
 
         Collections.sort(list, new Comparator<Character>() {
 
@@ -45,7 +50,5 @@ public class InitiativeRoller {
                 return difference;
             }
         });
-
-        return list;
     }
 }

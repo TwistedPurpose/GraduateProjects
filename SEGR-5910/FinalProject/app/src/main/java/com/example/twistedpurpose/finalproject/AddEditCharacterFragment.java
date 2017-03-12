@@ -3,6 +3,7 @@ package com.example.twistedpurpose.finalproject;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.health.PackageHealthStats;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -18,6 +19,8 @@ public class AddEditCharacterFragment extends Fragment {
     public final static String CHARACTER_ROW_ID = "id";
 
     private InitiativeTrackerDBHelper mHelper;
+
+    EditText modifierPicker;
 
     private Character mCharacter;
 
@@ -72,15 +75,14 @@ public class AddEditCharacterFragment extends Fragment {
             }
         });
 
-        EditText modifierPicker =
+        modifierPicker =
                 (EditText) v.findViewById(R.id.modEditText);
 
         //Break out into function that gets modifier from string
         //Inside of Character
 
         String modifierText = "";
-        if (mCharacter.getModifier() != 0)
-        {
+        if (mCharacter.getModifier() != 0) {
             modifierText = Integer.toString(mCharacter.getModifier());
         }
 
@@ -88,19 +90,23 @@ public class AddEditCharacterFragment extends Fragment {
 
         modifierPicker.addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence c, int start, int before, int count) {
-                int mod = 0;
-                try {
-                    mod = Integer.parseInt(c.toString());
-                } catch (NumberFormatException e) {
 
-                }
-                mCharacter.setModifier(mod);
             }
 
             public void beforeTextChanged(CharSequence c, int start, int before, int after) {
             }
 
             public void afterTextChanged(Editable c) {
+                int modNumber;
+                try {
+                    modNumber = Integer.parseInt(c.toString());
+
+                    mCharacter.setModifier(modNumber);
+
+                } catch (NumberFormatException e) {
+                    mCharacter.setModifier(0);
+                    modifierPicker.setText("0");
+                }
             }
         });
 
@@ -108,26 +114,43 @@ public class AddEditCharacterFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mHelper != null)
-                {
-                    if (mCharacter.getName() != null && mCharacter.getName() != ""){
+                if (mHelper != null) {
+                    if (mCharacter.getName() != null
+                            && mCharacter.getName() != ""
+                            && mCharacter.getModifier() <= 10
+                            && mCharacter.getModifier() >= -10) {
+
                         mHelper.updateCharacter(mCharacter);
-                        Toast.makeText(getActivity(), "Update complete!", Toast.LENGTH_LONG).show();
+
+                        Toast.makeText(getActivity(),
+                                "Update complete!", Toast.LENGTH_LONG).show();
+
                         mListener.onCharacterSave();
                     } else {
-                        Toast.makeText(getActivity(), "Invalid Name", Toast.LENGTH_LONG).show();
+                        if (mCharacter.getName() == "") {
+                            Toast.makeText(getActivity(),
+                                    "Invalid Name", Toast.LENGTH_LONG).show();
+                        }
+                        if (mCharacter.getModifier() > 10) {
+                            Toast.makeText(getActivity(),
+                                    "Modifier must be less than 10", Toast.LENGTH_LONG).show();
+                        }
+
+                        if (mCharacter.getModifier() < 10) {
+                            Toast.makeText(getActivity(),
+                                    "Modifier must be more than -10", Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
-
             }
         });
 
         Button deleteButton = (Button) v.findViewById(R.id.deleteButton);
+
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mHelper != null)
-                {
+                if (mHelper != null) {
                     mHelper.deleteCharacter(mCharacter);
                     Toast.makeText(getActivity(), "Deleted character!", Toast.LENGTH_LONG).show();
                     mListener.onCharacterSave();
@@ -138,7 +161,6 @@ public class AddEditCharacterFragment extends Fragment {
 
         return v;
     }
-
 
     @Override
     public void onAttach(Context context) {

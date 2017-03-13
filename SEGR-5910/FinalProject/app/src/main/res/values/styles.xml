@@ -8,4 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="CharacterTextTheme" parent="@android:style/TextAppearance.DeviceDefault">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="CharacterListHeader" parent="CharacterTextTheme">
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

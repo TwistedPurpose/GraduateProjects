@@ -13,7 +13,8 @@
             android:labelFor="@+id/character_name_text_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/character_name_text"/>
+            android:text="@string/character_name_text"
+            android:textAppearance="@style/CharacterListHeader"/>
 
         <EditText
             android:id="@+id/character_name_text_edit"
@@ -25,7 +26,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:labelFor="@+id/modEditText"
-            android:text="@string/pick_mod_text"/>
+            android:text="@string/pick_mod_text"
+            android:textAppearance="@style/CharacterListHeader"/>
 
         <EditText
             android:id="@+id/modEditText"
@@ -39,9 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/button_save"
-            android:layout_below="@+id/modEditText"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+            android:layout_below="@+id/modEditText"/>
 
         <Button
             android:id="@+id/deleteButton"

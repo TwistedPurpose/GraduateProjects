@@ -14,9 +14,8 @@ public class InitiativeRoller {
      * Rolls initiative for characters.
      *
      * @param characterList - List of characters to have initiative rolled for
-     * @return - The list of characters in sorted order
      */
-    public static List<Character> rollInitiative(List<Character> characterList) {
+    public static void rollInitiative(List<Character> characterList) {
 
         if (characterList != null) {
             // Roll init for all characters
@@ -26,7 +25,6 @@ public class InitiativeRoller {
 
             }
         }
-        return characterList;
     }
 
     /**
@@ -42,7 +40,7 @@ public class InitiativeRoller {
 
                 @Override
                 public int compare(Character o1, Character o2) {
-                    int difference = 0;
+                    int difference;
 
                     //If they total inits are different, get the difference
                     if (o2.getTotalInitiative() - o1.getTotalInitiative() != 0) {

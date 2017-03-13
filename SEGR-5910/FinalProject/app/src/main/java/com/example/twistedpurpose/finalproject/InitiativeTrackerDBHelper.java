@@ -12,10 +12,10 @@ import android.provider.BaseColumns;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Twisted Purpose on 2/17/2017.
- */
 
+/**
+ * Database service for interacting with the character database
+ */
 public class InitiativeTrackerDBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "characters.db";

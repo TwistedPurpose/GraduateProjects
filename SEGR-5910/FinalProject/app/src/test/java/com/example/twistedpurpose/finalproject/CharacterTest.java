@@ -7,9 +7,9 @@ import static org.junit.Assert.*;
 public class CharacterTest {
 
     @Test
-    public void Character_Character_EmptyConstructor() throws Exception {
+    public void Character_Character_EmptyConstructor() {
         //Arrange
-        Character c = null;
+        Character c;
 
         //Act
         c = new Character();
@@ -22,9 +22,9 @@ public class CharacterTest {
     }
 
     @Test
-    public void Character_Character_BasicConstructor() throws Exception {
+    public void Character_Character_BasicConstructor() {
         //Arrange
-        Character c = null;
+        Character c;
 
         //Act
         c = new Character("Soren",1);
@@ -37,9 +37,9 @@ public class CharacterTest {
     }
 
     @Test
-    public void Character_Character_NumberToString() throws Exception {
+    public void Character_Character_NumberToString() {
         //Arrange
-        Character c = null;
+        Character c;
 
         //Act
         c = new Character("Soren",1);

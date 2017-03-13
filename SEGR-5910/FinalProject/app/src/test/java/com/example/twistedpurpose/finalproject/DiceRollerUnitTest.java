@@ -6,9 +6,9 @@ import static org.junit.Assert.*;
 
 public class DiceRollerUnitTest {
     @Test
-    public void DiceRoller_rollD4_AverageTest() throws Exception {
+    public void DiceRoller_rollD4_AverageTest() {
         //Arrange
-        int roll = 0;
+        int roll;
 
         for (int i = 0; i < 100; i++){
             //Act
@@ -21,9 +21,9 @@ public class DiceRollerUnitTest {
     }
 
     @Test
-    public void DiceRoller_rollD6_AverageTest() throws Exception {
+    public void DiceRoller_rollD6_AverageTest() {
         //Arrange
-        int roll = 0;
+        int roll;
 
         for (int i = 0; i < 100; i++){
             //Act
@@ -36,9 +36,9 @@ public class DiceRollerUnitTest {
     }
 
     @Test
-    public void DiceRoller_rollD8_AverageTest() throws Exception {
+    public void DiceRoller_rollD8_AverageTest() {
         //Arrange
-        int roll = 0;
+        int roll;
 
         for (int i = 0; i < 100; i++){
             //Act
@@ -51,9 +51,9 @@ public class DiceRollerUnitTest {
     }
 
     @Test
-    public void DiceRoller_rollD10_AverageTest() throws Exception {
+    public void DiceRoller_rollD10_AverageTest() {
         //Arrange
-        int roll = 0;
+        int roll;
 
         for (int i = 0; i < 100; i++){
             //Act
@@ -66,9 +66,9 @@ public class DiceRollerUnitTest {
     }
 
     @Test
-    public void DiceRoller_rollD12_AverageTest() throws Exception {
+    public void DiceRoller_rollD12_AverageTest() {
         //Arrange
-        int roll = 0;
+        int roll;
 
         for (int i = 0; i < 100; i++){
             //Act
@@ -81,9 +81,9 @@ public class DiceRollerUnitTest {
     }
 
     @Test
-    public void DiceRoller_rollD20_AverageTest() throws Exception {
+    public void DiceRoller_rollD20_AverageTest() {
         //Arrange
-        int roll = 0;
+        int roll;
 
         for (int i = 0; i < 100; i++){
             //Act

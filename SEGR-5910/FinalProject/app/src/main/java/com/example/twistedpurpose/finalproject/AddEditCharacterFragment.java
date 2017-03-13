@@ -3,9 +3,9 @@ package com.example.twistedpurpose.finalproject;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.os.health.PackageHealthStats;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,6 +80,7 @@ public class AddEditCharacterFragment extends Fragment {
             // else get the character's information
             mCharacter = mHelper.getCharacter(id);
         }
+
     }
 
     /**
@@ -158,7 +159,8 @@ public class AddEditCharacterFragment extends Fragment {
             public void onClick(View v) {
                 if (mHelper != null) {
                     if (mCharacter.getName() != null
-                            && mCharacter.getName() != ""
+                            && !mCharacter.getName().equals("")
+                            && mCharacter.getName().length() <= 30
                             && mCharacter.getModifier() <= 10
                             && mCharacter.getModifier() >= -10) {
 
@@ -175,9 +177,13 @@ public class AddEditCharacterFragment extends Fragment {
                     } else {
                         // If character name is empty string, throw an
                         // error message to user
-                        if (mCharacter.getName() == "") {
+                        if (mCharacter.getName().equals("")
+                                ) {
                             Toast.makeText(getActivity(),
                                     "Invalid Name", Toast.LENGTH_LONG).show();
+                        } else if (mCharacter.getName().length() > 30) {
+                            Toast.makeText(getActivity(),
+                                    "Name is too long", Toast.LENGTH_LONG).show();
                         }
                         // Throw an error message if modifier is greater than 10
                         if (mCharacter.getModifier() > 10) {

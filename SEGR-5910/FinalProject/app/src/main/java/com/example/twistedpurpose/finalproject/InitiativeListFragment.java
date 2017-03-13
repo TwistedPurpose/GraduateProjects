@@ -65,7 +65,7 @@ public class InitiativeListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (adapter != null) {
-            //Update dataset when fragment is created
+            //Update data set when fragment is created
             adapter.notifyDataSetChanged();
         }
     }
@@ -320,7 +320,7 @@ public class InitiativeListFragment extends Fragment {
             if (character.isInSpotlight()){
                 row.setBackgroundResource(android.R.color.darker_gray);
             } else {
-                row.setBackgroundResource(android.R.color.white);
+                row.setBackgroundResource(android.R.color.transparent);
             }
         }
     }

@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class InitiativeRollerTest {
 
     @Test
-    public void InitiativeRollerTest_rollInitiative_NullTest() throws Exception {
+    public void InitiativeRollerTest_rollInitiative_NullTest() {
         //Arrange
         List<Character> characterList = null;
 
@@ -22,7 +22,7 @@ public class InitiativeRollerTest {
     }
 
     @Test
-    public void InitiativeRollerTest_rollInitiative_EmptyList() throws Exception {
+    public void InitiativeRollerTest_rollInitiative_EmptyList() {
         //Arrange
         List<Character> characterList = new ArrayList<>();
 
@@ -34,7 +34,7 @@ public class InitiativeRollerTest {
     }
 
     @Test
-    public void InitiativeRollerTest_rollInitiative_OneCharacter() throws Exception {
+    public void InitiativeRollerTest_rollInitiative_OneCharacter() {
         //Arrange
         List<Character> characterList = new ArrayList<>();
 
@@ -50,7 +50,7 @@ public class InitiativeRollerTest {
     }
 
     @Test
-    public void InitiativeRollerTest_rollInitiative_MultipleCharacters() throws Exception {
+    public void InitiativeRollerTest_rollInitiative_MultipleCharacters() {
         //Arrange
         List<Character> characterList = new ArrayList<>();
 
@@ -72,7 +72,7 @@ public class InitiativeRollerTest {
     }
 
     @Test
-    public void InitiativeRollerTest_sortInInitiativeOrder_EmptyList() throws Exception {
+    public void InitiativeRollerTest_sortInInitiativeOrder_EmptyList() {
         //Arrange
         List<Character> characterList = new ArrayList<>();
 
@@ -84,7 +84,7 @@ public class InitiativeRollerTest {
     }
 
     @Test
-    public void InitiativeRollerTest_sortInInitiativeOrder_NullTest() throws Exception {
+    public void InitiativeRollerTest_sortInInitiativeOrder_NullTest() {
         //Arrange
         List<Character> characterList = null;
 
@@ -96,7 +96,7 @@ public class InitiativeRollerTest {
     }
 
     @Test
-    public void InitiativeRollerTest_sortInInitiativeOrder_OneCharacter() throws Exception {
+    public void InitiativeRollerTest_sortInInitiativeOrder_OneCharacter() {
         //Arrange
         List<Character> characterList = new ArrayList<>();
 
@@ -111,7 +111,7 @@ public class InitiativeRollerTest {
     }
 
     @Test
-    public void InitiativeRollerTest_sortInInitiativeOrder_DifferentInitiative() throws Exception {
+    public void InitiativeRollerTest_sortInInitiativeOrder_DifferentInitiative() {
         //Arrange
         List<Character> characterList = new ArrayList<>();
 
@@ -133,7 +133,7 @@ public class InitiativeRollerTest {
     }
 
     @Test
-    public void InitiativeRollerTest_sortInInitiativeOrder_DifferentModifier() throws Exception {
+    public void InitiativeRollerTest_sortInInitiativeOrder_DifferentModifier() {
         //Arrange
         List<Character> characterList = new ArrayList<>();
 
@@ -155,7 +155,7 @@ public class InitiativeRollerTest {
     }
 
     @Test
-    public void InitiativeRollerTest_sortInInitiativeOrder_RollOff() throws Exception {
+    public void InitiativeRollerTest_sortInInitiativeOrder_RollOff() {
         //Arrange
         List<Character> characterList = new ArrayList<>();
 

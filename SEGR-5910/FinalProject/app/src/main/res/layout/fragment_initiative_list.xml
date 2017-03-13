@@ -27,41 +27,39 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:gravity="left"
-                        android:textSize="15dp"
+                        android:textAppearance="@style/CharacterListHeader"
                         android:text="@string/character_name_text"/>
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="left"
-                        android:textSize="15dp"
+                        android:textAppearance="@style/CharacterListHeader"
                         android:text="@string/character_roll_text"/>
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="left"
-                        android:textSize="15dp"
+                        android:textAppearance="@style/CharacterListHeader"
                         android:text="@string/character_mod_text"/>
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="left"
-                        android:textSize="15dp"
+                        android:textAppearance="@style/CharacterListHeader"
                         android:text="@string/character_total_init_text"/>
                 </TableRow>
 
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/character_listView"></ListView>
+
             </TableLayout>
             
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/character_listView"></ListView>
+
 
         </LinearLayout>
 

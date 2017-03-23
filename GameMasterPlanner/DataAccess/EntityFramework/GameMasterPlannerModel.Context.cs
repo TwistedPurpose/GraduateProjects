@@ -25,7 +25,14 @@ namespace DataAccess.EntityFramework
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
         public virtual DbSet<Campaign> Campaigns { get; set; }
+        public virtual DbSet<CampaignSession> CampaignSessions { get; set; }
+        public virtual DbSet<Character> Characters { get; set; }
         public virtual DbSet<History> Histories { get; set; }
+        public virtual DbSet<Item> Items { get; set; }
+        public virtual DbSet<Location> Locations { get; set; }
+        public virtual DbSet<Map> Maps { get; set; }
+        public virtual DbSet<Session> Sessions { get; set; }
     }
 }

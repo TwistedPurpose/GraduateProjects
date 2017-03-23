@@ -18,3 +18,12 @@ D:\Documents\GraduateProjects\GameMasterPlanner\ClassLibrary1\bin\Debug\EntityFr
 D:\Documents\GraduateProjects\GameMasterPlanner\ClassLibrary1\obj\Debug\DataAccess.csprojResolveAssemblyReference.cache
 D:\Documents\GraduateProjects\GameMasterPlanner\ClassLibrary1\obj\Debug\DataAccess.dll
 D:\Documents\GraduateProjects\GameMasterPlanner\ClassLibrary1\obj\Debug\DataAccess.pdb
+D:\Documents\GraduateProjects\GameMasterPlanner\DataAccess\bin\Debug\DataAccess.dll.config
+D:\Documents\GraduateProjects\GameMasterPlanner\DataAccess\bin\Debug\DataAccess.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\DataAccess\bin\Debug\DataAccess.pdb
+D:\Documents\GraduateProjects\GameMasterPlanner\DataAccess\bin\Debug\EntityFramework.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\DataAccess\bin\Debug\EntityFramework.SqlServer.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\DataAccess\bin\Debug\EntityFramework.xml
+D:\Documents\GraduateProjects\GameMasterPlanner\DataAccess\bin\Debug\EntityFramework.SqlServer.xml
+D:\Documents\GraduateProjects\GameMasterPlanner\DataAccess\obj\Debug\DataAccess.dll
+D:\Documents\GraduateProjects\GameMasterPlanner\DataAccess\obj\Debug\DataAccess.pdb

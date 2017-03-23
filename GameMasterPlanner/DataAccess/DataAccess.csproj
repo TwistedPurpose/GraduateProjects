@@ -54,6 +54,15 @@
     <Compile Include="EntityFramework\Campaign.cs">
       <DependentUpon>GameMasterPlannerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="EntityFramework\CampaignSession.cs">
+      <DependentUpon>GameMasterPlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Character.cs">
+      <DependentUpon>GameMasterPlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\C__RefactorLog.cs">
+      <DependentUpon>GameMasterPlannerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="EntityFramework\GameMasterPlannerModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -70,6 +79,18 @@
       <DependentUpon>GameMasterPlannerModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="EntityFramework\History.cs">
+      <DependentUpon>GameMasterPlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Item.cs">
+      <DependentUpon>GameMasterPlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Location.cs">
+      <DependentUpon>GameMasterPlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Map.cs">
+      <DependentUpon>GameMasterPlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Session.cs">
       <DependentUpon>GameMasterPlannerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CampaignViewModel.cs" />

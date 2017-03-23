@@ -14,10 +14,18 @@ namespace DataAccess.EntityFramework
     
     public partial class Campaign
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Campaign()
+        {
+            this.Sessions = new HashSet<Session>();
+        }
+    
         public int Id { get; set; }
         public string Name { get; set; }
         public Nullable<int> HistoryId { get; set; }
     
         public virtual History History { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Session> Sessions { get; set; }
     }
 }

@@ -5,6 +5,12 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="GameMasterPlannerDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__RefactorLog">
+          <Key>
+            <PropertyRef Name="OperationKey" />
+          </Key>
+          <Property Name="OperationKey" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
         <EntityType Name="Campaign">
           <Key>
             <PropertyRef Name="Id" />
@@ -13,6 +19,30 @@
           <Property Name="Name" Type="nvarchar" MaxLength="100" />
           <Property Name="HistoryId" Type="int" />
         </EntityType>
+        <EntityType Name="CampaignSessions">
+          <Key>
+            <PropertyRef Name="CampaignId" />
+            <PropertyRef Name="SessionId" />
+          </Key>
+          <Property Name="CampaignId" Type="int" Nullable="false" />
+          <Property Name="SessionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Character">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HistoryId" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CharacterSessions">
+          <Key>
+            <PropertyRef Name="CharacterId" />
+            <PropertyRef Name="SessionId" />
+          </Key>
+          <Property Name="CharacterId" Type="int" Nullable="false" />
+          <Property Name="SessionId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="History">
           <Key>
             <PropertyRef Name="Id" />
@@ -20,6 +50,42 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
         </EntityType>
+        <EntityType Name="Items">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Locations">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentMapId" Type="int" Nullable="false" />
+          <Property Name="ChildMapId" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="2000" />
+        </EntityType>
+        <EntityType Name="Map">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentMapId" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Session">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CampaignId" Type="int" />
+          <Property Name="BaseMapId" Type="int" />
+          <Property Name="SessionNumber" Type="int" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+        </EntityType>
         <Association Name="FK_Campaign_ToHistory">
           <End Role="History" Type="Self.History" Multiplicity="0..1" />
           <End Role="Campaign" Type="Self.Campaign" Multiplicity="*" />
@@ -32,38 +98,201 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Character_Session_CharacterId">
+          <End Role="Character" Type="Self.Character" Multiplicity="1" />
+          <End Role="CharacterSessions" Type="Self.CharacterSessions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Character">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CharacterSessions">
+              <PropertyRef Name="CharacterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Character_Session_SessionId">
+          <End Role="Session" Type="Self.Session" Multiplicity="1" />
+          <End Role="CharacterSessions" Type="Self.CharacterSessions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Session">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CharacterSessions">
+              <PropertyRef Name="SessionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Session_ToCampaign">
+          <End Role="Campaign" Type="Self.Campaign" Multiplicity="0..1" />
+          <End Role="Session" Type="Self.Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campaign">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="CampaignId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Session_ToMap">
+          <End Role="Map" Type="Self.Map" Multiplicity="0..1" />
+          <End Role="Session" Type="Self.Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Map">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="BaseMapId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="GameMasterPlannerDBModelStoreContainer">
+          <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Campaign" EntityType="Self.Campaign" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CampaignSessions" EntityType="Self.CampaignSessions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Character" EntityType="Self.Character" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CharacterSessions" EntityType="Self.CharacterSessions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="History" EntityType="Self.History" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Map" EntityType="Self.Map" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Session" EntityType="Self.Session" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Campaign_ToHistory" Association="Self.FK_Campaign_ToHistory">
             <End Role="History" EntitySet="History" />
             <End Role="Campaign" EntitySet="Campaign" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Character_Session_CharacterId" Association="Self.FK_Character_Session_CharacterId">
+            <End Role="Character" EntitySet="Character" />
+            <End Role="CharacterSessions" EntitySet="CharacterSessions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Character_Session_SessionId" Association="Self.FK_Character_Session_SessionId">
+            <End Role="Session" EntitySet="Session" />
+            <End Role="CharacterSessions" EntitySet="CharacterSessions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Session_ToCampaign" Association="Self.FK_Session_ToCampaign">
+            <End Role="Campaign" EntitySet="Campaign" />
+            <End Role="Session" EntitySet="Session" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Session_ToMap" Association="Self.FK_Session_ToMap">
+            <End Role="Map" EntitySet="Map" />
+            <End Role="Session" EntitySet="Session" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="GameMasterPlannerDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="GameMasterPlannerDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__RefactorLog" EntityType="GameMasterPlannerDBModel.C__RefactorLog" />
+          <EntitySet Name="Campaigns" EntityType="GameMasterPlannerDBModel.Campaign" />
+          <EntitySet Name="CampaignSessions" EntityType="GameMasterPlannerDBModel.CampaignSession" />
+          <EntitySet Name="Characters" EntityType="GameMasterPlannerDBModel.Character" />
+          <EntitySet Name="Histories" EntityType="GameMasterPlannerDBModel.History" />
+          <EntitySet Name="Items" EntityType="GameMasterPlannerDBModel.Item" />
+          <EntitySet Name="Locations" EntityType="GameMasterPlannerDBModel.Location" />
+          <EntitySet Name="Maps" EntityType="GameMasterPlannerDBModel.Map" />
+          <EntitySet Name="Sessions" EntityType="GameMasterPlannerDBModel.Session" />
+          <AssociationSet Name="FK_Campaign_ToHistory" Association="GameMasterPlannerDBModel.FK_Campaign_ToHistory">
+            <End Role="History" EntitySet="Histories" />
+            <End Role="Campaign" EntitySet="Campaigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Session_ToCampaign" Association="GameMasterPlannerDBModel.FK_Session_ToCampaign">
+            <End Role="Campaign" EntitySet="Campaigns" />
+            <End Role="Session" EntitySet="Sessions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Session_ToMap" Association="GameMasterPlannerDBModel.FK_Session_ToMap">
+            <End Role="Map" EntitySet="Maps" />
+            <End Role="Session" EntitySet="Sessions" />
+          </AssociationSet>
+          <AssociationSet Name="CharacterSessions" Association="GameMasterPlannerDBModel.CharacterSessions">
+            <End Role="Character" EntitySet="Characters" />
+            <End Role="Session" EntitySet="Sessions" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="C__RefactorLog">
+          <Key>
+            <PropertyRef Name="OperationKey" />
+          </Key>
+          <Property Name="OperationKey" Type="Guid" Nullable="false" />
+        </EntityType>
         <EntityType Name="Campaign">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="HistoryId" Type="Int32" />
-          <NavigationProperty Name="History" Relationship="Self.FK_Campaign_ToHistory" FromRole="Campaign" ToRole="History" />
+          <NavigationProperty Name="History" Relationship="GameMasterPlannerDBModel.FK_Campaign_ToHistory" FromRole="Campaign" ToRole="History" />
+          <NavigationProperty Name="Sessions" Relationship="GameMasterPlannerDBModel.FK_Session_ToCampaign" FromRole="Campaign" ToRole="Session" />
+        </EntityType>
+        <EntityType Name="CampaignSession">
+          <Key>
+            <PropertyRef Name="CampaignId" />
+            <PropertyRef Name="SessionId" />
+          </Key>
+          <Property Name="CampaignId" Type="Int32" Nullable="false" />
+          <Property Name="SessionId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Character">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HistoryId" Type="Int32" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Sessions" Relationship="GameMasterPlannerDBModel.CharacterSessions" FromRole="Character" ToRole="Session" />
         </EntityType>
         <EntityType Name="History">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Campaigns" Relationship="Self.FK_Campaign_ToHistory" FromRole="History" ToRole="Campaign" />
+          <NavigationProperty Name="Campaigns" Relationship="GameMasterPlannerDBModel.FK_Campaign_ToHistory" FromRole="History" ToRole="Campaign" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentMapId" Type="Int32" Nullable="false" />
+          <Property Name="ChildMapId" Type="Int32" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Map">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentMapId" Type="Int32" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Sessions" Relationship="GameMasterPlannerDBModel.FK_Session_ToMap" FromRole="Map" ToRole="Session" />
+        </EntityType>
+        <EntityType Name="Session">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CampaignId" Type="Int32" />
+          <Property Name="BaseMapId" Type="Int32" />
+          <Property Name="SessionNumber" Type="Int32" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Campaign" Relationship="GameMasterPlannerDBModel.FK_Session_ToCampaign" FromRole="Session" ToRole="Campaign" />
+          <NavigationProperty Name="Map" Relationship="GameMasterPlannerDBModel.FK_Session_ToMap" FromRole="Session" ToRole="Map" />
+          <NavigationProperty Name="Characters" Relationship="GameMasterPlannerDBModel.CharacterSessions" FromRole="Session" ToRole="Character" />
         </EntityType>
         <Association Name="FK_Campaign_ToHistory">
-          <End Role="History" Type="Self.History" Multiplicity="0..1" />
-          <End Role="Campaign" Type="Self.Campaign" Multiplicity="*" />
+          <End Type="GameMasterPlannerDBModel.History" Role="History" Multiplicity="0..1" />
+          <End Type="GameMasterPlannerDBModel.Campaign" Role="Campaign" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="History">
               <PropertyRef Name="Id" />
@@ -73,37 +302,129 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="GameMasterPlannerDBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Campaigns" EntityType="Self.Campaign" />
-          <EntitySet Name="Histories" EntityType="Self.History" />
-          <AssociationSet Name="FK_Campaign_ToHistory" Association="Self.FK_Campaign_ToHistory">
-            <End Role="History" EntitySet="Histories" />
-            <End Role="Campaign" EntitySet="Campaigns" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema>
+        <Association Name="FK_Session_ToCampaign">
+          <End Type="GameMasterPlannerDBModel.Campaign" Role="Campaign" Multiplicity="0..1" />
+          <End Type="GameMasterPlannerDBModel.Session" Role="Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campaign">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="CampaignId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Session_ToMap">
+          <End Type="GameMasterPlannerDBModel.Map" Role="Map" Multiplicity="0..1" />
+          <End Type="GameMasterPlannerDBModel.Session" Role="Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Map">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="BaseMapId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CharacterSessions">
+          <End Type="GameMasterPlannerDBModel.Character" Role="Character" Multiplicity="*" />
+          <End Type="GameMasterPlannerDBModel.Session" Role="Session" Multiplicity="*" />
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="GameMasterPlannerDBModelStoreContainer" CdmEntityContainer="GameMasterPlannerDBEntities">
+          <EntitySetMapping Name="C__RefactorLog">
+            <EntityTypeMapping TypeName="GameMasterPlannerDBModel.C__RefactorLog">
+              <MappingFragment StoreEntitySet="__RefactorLog">
+                <ScalarProperty Name="OperationKey" ColumnName="OperationKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Campaigns">
             <EntityTypeMapping TypeName="GameMasterPlannerDBModel.Campaign">
               <MappingFragment StoreEntitySet="Campaign">
+                <ScalarProperty Name="HistoryId" ColumnName="HistoryId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CampaignSessions">
+            <EntityTypeMapping TypeName="GameMasterPlannerDBModel.CampaignSession">
+              <MappingFragment StoreEntitySet="CampaignSessions">
+                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+                <ScalarProperty Name="CampaignId" ColumnName="CampaignId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Characters">
+            <EntityTypeMapping TypeName="GameMasterPlannerDBModel.Character">
+              <MappingFragment StoreEntitySet="Character">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="HistoryId" ColumnName="HistoryId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Histories">
             <EntityTypeMapping TypeName="GameMasterPlannerDBModel.History">
               <MappingFragment StoreEntitySet="History">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="GameMasterPlannerDBModel.Item">
+              <MappingFragment StoreEntitySet="Items">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="GameMasterPlannerDBModel.Location">
+              <MappingFragment StoreEntitySet="Locations">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ChildMapId" ColumnName="ChildMapId" />
+                <ScalarProperty Name="ParentMapId" ColumnName="ParentMapId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Maps">
+            <EntityTypeMapping TypeName="GameMasterPlannerDBModel.Map">
+              <MappingFragment StoreEntitySet="Map">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ParentMapId" ColumnName="ParentMapId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sessions">
+            <EntityTypeMapping TypeName="GameMasterPlannerDBModel.Session">
+              <MappingFragment StoreEntitySet="Session">
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="SessionNumber" ColumnName="SessionNumber" />
+                <ScalarProperty Name="BaseMapId" ColumnName="BaseMapId" />
+                <ScalarProperty Name="CampaignId" ColumnName="CampaignId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="CharacterSessions" TypeName="GameMasterPlannerDBModel.CharacterSessions" StoreEntitySet="CharacterSessions">
+            <EndProperty Name="Session">
+              <ScalarProperty Name="Id" ColumnName="SessionId" />
+            </EndProperty>
+            <EndProperty Name="Character">
+              <ScalarProperty Name="Id" ColumnName="CharacterId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

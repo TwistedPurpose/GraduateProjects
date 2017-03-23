@@ -1,0 +1,34 @@
+﻿** Highlights
+     Tables that will be rebuilt
+       None
+     Clustered indexes that will be dropped
+       None
+     Clustered indexes that will be created
+       None
+     Possible data issues
+       None
+
+** User actions
+     Create
+       [GMPlanner] (User)
+       Role Membership: <unnamed> (Role Membership)
+       Role Membership: <unnamed> (Role Membership)
+       [dbo].[Campaign] (Table)
+       [dbo].[CampaignSessions] (Table)
+       [dbo].[Character] (Table)
+       [dbo].[CharacterSessions] (Table)
+       [dbo].[History] (Table)
+       [dbo].[Items] (Table)
+       [dbo].[Locations] (Table)
+       [dbo].[Map] (Table)
+       [dbo].[Session] (Table)
+       [dbo].[FK_Campaign_ToHistory] (Foreign Key)
+       [dbo].[FK_Character_Session_CharacterId] (Foreign Key)
+       [dbo].[FK_Character_Session_SessionId] (Foreign Key)
+       [dbo].[FK_Session_ToMap] (Foreign Key)
+       [dbo].[FK_Session_ToCampaign] (Foreign Key)
+
+** Supporting actions
+
+The object [GMPlanner] already exists in database with a different definition and will not be altered.
+

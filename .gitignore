@@ -44,7 +44,4 @@ Temporary Items
 *.iso
 Ubuntu.vdi
 
-#Web.config
-#Web.Debug.config
-#Web.Release.config
-#App.config
+*.config

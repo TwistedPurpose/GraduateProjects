@@ -11,7 +11,12 @@ namespace DataAccess.Repositories
     public class SessionRepository
     {
 
-        public List<SessionViewModel> GetSessionList()
+        /// <summary>
+        /// Get all sessions for a campaign for a campagin id
+        /// </summary>
+        /// <param name="id">id of a campaign</param>
+        /// <returns>List of all sessions as view models</returns>
+        public List<SessionViewModel> GetSessionList(int id)
         {
 
             using (var db = new GameMasterPlannerDBEntities())

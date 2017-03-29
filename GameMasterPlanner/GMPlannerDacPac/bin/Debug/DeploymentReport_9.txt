@@ -1,0 +1,26 @@
+﻿** Highlights
+     Tables that will be rebuilt
+       [dbo].[Session]
+     Clustered indexes that will be dropped
+       None
+     Clustered indexes that will be created
+       None
+     Possible data issues
+       None
+
+** User actions
+     Table rebuild
+       [dbo].[Session] (Table)
+
+** Supporting actions
+     Drop
+       [dbo].[FK_Character_Session_SessionId] (Foreign Key)
+       [dbo].[FK_Session_ToMap] (Foreign Key)
+       [dbo].[FK_Session_ToCampaign] (Foreign Key)
+     Create
+       [dbo].[FK_Character_Session_SessionId] (Foreign Key)
+       [dbo].[FK_Session_ToMap] (Foreign Key)
+       [dbo].[FK_Session_ToCampaign] (Foreign Key)
+
+The column SessionNumber on table [dbo].[Session] must be changed from NULL to NOT NULL. If the table contains data, the ALTER script may not work. To avoid this issue, you must add values to this column for all rows or mark it as allowing NULL values, or enable the generation of smart-defaults as a deployment option.
+

@@ -4,7 +4,7 @@
         this.history = history;
         this.id = id;
         this.hubURL = ko.computed(function () {
-            return baseURL + 'Hub/Index/' + id;
+            return baseURL + 'Home/Hub?campaignId=' + id;
         }, this);
             
     }

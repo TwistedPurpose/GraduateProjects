@@ -94,8 +94,10 @@
       <DependentUpon>GameMasterPlannerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CampaignViewModel.cs" />
+    <Compile Include="Models\SessionViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CampaignRepository.cs" />
+    <Compile Include="Repositories\SessionRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

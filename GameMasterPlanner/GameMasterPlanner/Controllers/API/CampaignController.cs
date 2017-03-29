@@ -15,15 +15,15 @@ namespace GameMasterPlanner.Controllers.API
         public HttpResponseMessage Get()
         {
             var repro = new CampaignRepository();
-            var list = repro.getCampaignList();
+            var list = repro.GetCampaignList();
             return Request.CreateResponse(HttpStatusCode.OK, list);
         }
 
         public HttpResponseMessage Post(CampaignViewModel newCampaign)
         {
             var repro = new CampaignRepository();
-            repro.createCampaign(newCampaign);
-            var list = repro.getCampaignList();
+            repro.CreateCampaign(newCampaign);
+            var list = repro.GetCampaignList();
             return Request.CreateResponse(HttpStatusCode.OK, list);
         }
     }

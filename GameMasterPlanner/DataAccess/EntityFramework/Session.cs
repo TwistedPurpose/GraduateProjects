@@ -21,9 +21,10 @@ namespace DataAccess.EntityFramework
         }
     
         public int Id { get; set; }
+        public string Title { get; set; }
         public Nullable<int> CampaignId { get; set; }
         public Nullable<int> BaseMapId { get; set; }
-        public Nullable<int> SessionNumber { get; set; }
+        public int SessionNumber { get; set; }
         public string Notes { get; set; }
     
         public virtual Campaign Campaign { get; set; }

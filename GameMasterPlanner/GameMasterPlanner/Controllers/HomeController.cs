@@ -13,5 +13,10 @@ namespace GameMasterPlanner.Controllers
         {
             return View();
         }
+
+        public ActionResult Hub(int campaignId)
+        {
+            return View("Hub", new { campaignId });
+        }
     }
 }

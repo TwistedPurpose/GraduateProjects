@@ -36,7 +36,7 @@ namespace GameMasterPlanner.App_Start
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/NotesTextEdit.css"));
+                      "~/Content/hub.css"));
 
 
         }

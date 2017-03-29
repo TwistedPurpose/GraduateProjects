@@ -81,9 +81,10 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="40" />
           <Property Name="CampaignId" Type="int" />
           <Property Name="BaseMapId" Type="int" />
-          <Property Name="SessionNumber" Type="int" />
+          <Property Name="SessionNumber" Type="int" Nullable="false" />
           <Property Name="Notes" Type="nvarchar(max)" />
         </EntityType>
         <Association Name="FK_Campaign_ToHistory">
@@ -282,9 +283,10 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
           <Property Name="CampaignId" Type="Int32" />
           <Property Name="BaseMapId" Type="Int32" />
-          <Property Name="SessionNumber" Type="Int32" />
+          <Property Name="SessionNumber" Type="Int32" Nullable="false" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Campaign" Relationship="GameMasterPlannerDBModel.FK_Session_ToCampaign" FromRole="Session" ToRole="Campaign" />
           <NavigationProperty Name="Map" Relationship="GameMasterPlannerDBModel.FK_Session_ToMap" FromRole="Session" ToRole="Map" />
@@ -413,6 +415,7 @@
                 <ScalarProperty Name="SessionNumber" ColumnName="SessionNumber" />
                 <ScalarProperty Name="BaseMapId" ColumnName="BaseMapId" />
                 <ScalarProperty Name="CampaignId" ColumnName="CampaignId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -100,9 +100,10 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
     <Property Name="CampaignId" Type="Int32" />
     <Property Name="BaseMapId" Type="Int32" />
-    <Property Name="SessionNumber" Type="Int32" />
+    <Property Name="SessionNumber" Type="Int32" Nullable="false" />
     <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Campaign" Relationship="GameMasterPlannerDBModel.FK_Session_ToCampaign" FromRole="Session" ToRole="Campaign" />
     <NavigationProperty Name="Map" Relationship="GameMasterPlannerDBModel.FK_Session_ToMap" FromRole="Session" ToRole="Map" />

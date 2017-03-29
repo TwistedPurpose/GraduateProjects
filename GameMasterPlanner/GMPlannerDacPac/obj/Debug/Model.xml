@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<DataSchemaModel FileFormatVersion="1.2" SchemaVersion="2.9" DspName="Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider" CollationLcid="1033" CollationCaseSensitive="False" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+<DataSchemaModel FileFormatVersion="1.2" SchemaVersion="2.4" DspName="Microsoft.Data.Tools.Schema.Sql.SqlAzureV12DatabaseSchemaProvider" CollationLcid="1033" CollationCaseSensitive="False" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
 	<Header>
 		<CustomData Category="AnsiNulls">
 			<Metadata Name="AnsiNulls" Value="True" />
@@ -38,107 +38,6 @@
 			<Property Name="PageVerifyMode" Value="3" />
 			<Property Name="DefaultLanguage" Value="" />
 			<Property Name="DefaultFullTextLanguage" Value="" />
-			<Property Name="QueryStoreStaleQueryThreshold" Value="367" />
-			<Relationship Name="DefaultFilegroup">
-				<Entry>
-					<References ExternalSource="BuiltIns" Name="[PRIMARY]" />
-				</Entry>
-			</Relationship>
-		</Element>
-		<Element Type="SqlPrimaryKeyConstraint">
-			<Relationship Name="ColumnSpecifications">
-				<Entry>
-					<Element Type="SqlIndexedColumnSpecification">
-						<Relationship Name="Column">
-							<Entry>
-								<References Name="[dbo].[History].[Id]" />
-							</Entry>
-						</Relationship>
-					</Element>
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[History]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="6" />
-		</Element>
-		<Element Type="SqlPrimaryKeyConstraint">
-			<Relationship Name="ColumnSpecifications">
-				<Entry>
-					<Element Type="SqlIndexedColumnSpecification">
-						<Relationship Name="Column">
-							<Entry>
-								<References Name="[dbo].[Campaign].[Id]" />
-							</Entry>
-						</Relationship>
-					</Element>
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Campaign]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="7" />
-		</Element>
-		<Element Type="SqlPrimaryKeyConstraint">
-			<Relationship Name="ColumnSpecifications">
-				<Entry>
-					<Element Type="SqlIndexedColumnSpecification">
-						<Relationship Name="Column">
-							<Entry>
-								<References Name="[dbo].[Map].[Id]" />
-							</Entry>
-						</Relationship>
-					</Element>
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Map]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="8" />
-		</Element>
-		<Element Type="SqlPrimaryKeyConstraint">
-			<Relationship Name="ColumnSpecifications">
-				<Entry>
-					<Element Type="SqlIndexedColumnSpecification">
-						<Relationship Name="Column">
-							<Entry>
-								<References Name="[dbo].[Locations].[Id]" />
-							</Entry>
-						</Relationship>
-					</Element>
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Locations]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="9" />
-		</Element>
-		<Element Type="SqlPrimaryKeyConstraint">
-			<Relationship Name="ColumnSpecifications">
-				<Entry>
-					<Element Type="SqlIndexedColumnSpecification">
-						<Relationship Name="Column">
-							<Entry>
-								<References Name="[dbo].[Items].[Id]" />
-							</Entry>
-						</Relationship>
-					</Element>
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Items]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="10" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint">
 			<Relationship Name="ColumnSpecifications">
@@ -166,31 +65,102 @@
 					<References Name="[dbo].[CampaignSessions]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="11" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="3" />
 		</Element>
-		<Element Type="SqlRoleMembership">
-			<Relationship Name="Member">
+		<Element Type="SqlPrimaryKeyConstraint">
+			<Relationship Name="ColumnSpecifications">
 				<Entry>
-					<References Name="[GMPlanner]" Disambiguator="5" />
+					<Element Type="SqlIndexedColumnSpecification">
+						<Relationship Name="Column">
+							<Entry>
+								<References Name="[dbo].[Items].[Id]" />
+							</Entry>
+						</Relationship>
+					</Element>
 				</Entry>
 			</Relationship>
-			<Relationship Name="Role">
+			<Relationship Name="DefiningTable">
 				<Entry>
-					<References ExternalSource="BuiltIns" Name="[db_datareader]" />
+					<References Name="[dbo].[Items]" />
 				</Entry>
 			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="4" />
 		</Element>
-		<Element Type="SqlRoleMembership">
-			<Relationship Name="Member">
+		<Element Type="SqlPrimaryKeyConstraint">
+			<Relationship Name="ColumnSpecifications">
 				<Entry>
-					<References Name="[GMPlanner]" Disambiguator="5" />
+					<Element Type="SqlIndexedColumnSpecification">
+						<Relationship Name="Column">
+							<Entry>
+								<References Name="[dbo].[Locations].[Id]" />
+							</Entry>
+						</Relationship>
+					</Element>
 				</Entry>
 			</Relationship>
-			<Relationship Name="Role">
+			<Relationship Name="DefiningTable">
 				<Entry>
-					<References ExternalSource="BuiltIns" Name="[db_datawriter]" />
+					<References Name="[dbo].[Locations]" />
 				</Entry>
 			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="5" />
+		</Element>
+		<Element Type="SqlPrimaryKeyConstraint">
+			<Relationship Name="ColumnSpecifications">
+				<Entry>
+					<Element Type="SqlIndexedColumnSpecification">
+						<Relationship Name="Column">
+							<Entry>
+								<References Name="[dbo].[Map].[Id]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Map]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="6" />
+		</Element>
+		<Element Type="SqlPrimaryKeyConstraint">
+			<Relationship Name="ColumnSpecifications">
+				<Entry>
+					<Element Type="SqlIndexedColumnSpecification">
+						<Relationship Name="Column">
+							<Entry>
+								<References Name="[dbo].[History].[Id]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[History]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="7" />
+		</Element>
+		<Element Type="SqlPrimaryKeyConstraint">
+			<Relationship Name="ColumnSpecifications">
+				<Entry>
+					<Element Type="SqlIndexedColumnSpecification">
+						<Relationship Name="Column">
+							<Entry>
+								<References Name="[dbo].[Campaign].[Id]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Campaign]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="8" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[Campaign]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -210,7 +180,7 @@
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="7" />
+						<AttachedAnnotation Disambiguator="8" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -250,7 +220,7 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="12" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="9" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[CampaignSessions]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -293,7 +263,7 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="11" />
+			<AttachedAnnotation Disambiguator="3" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[Character]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -353,7 +323,7 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="13" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="10" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[CharacterSessions]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -396,9 +366,9 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="14" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="15" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="16" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="11" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="12" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="13" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[FK_Campaign_ToHistory]">
 			<Relationship Name="Columns">
@@ -421,7 +391,7 @@
 					<References Name="[dbo].[History]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="12" />
+			<AttachedAnnotation Disambiguator="9" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[FK_Character_Session_CharacterId]">
 			<Relationship Name="Columns">
@@ -444,7 +414,7 @@
 					<References Name="[dbo].[Character]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="14" />
+			<AttachedAnnotation Disambiguator="11" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[FK_Character_Session_SessionId]">
 			<Relationship Name="Columns">
@@ -467,7 +437,7 @@
 					<References Name="[dbo].[Session]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="15" />
+			<AttachedAnnotation Disambiguator="12" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[FK_Session_ToCampaign]">
 			<Relationship Name="Columns">
@@ -490,7 +460,7 @@
 					<References Name="[dbo].[Campaign]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="17" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="14" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[FK_Session_ToMap]">
 			<Relationship Name="Columns">
@@ -513,7 +483,7 @@
 					<References Name="[dbo].[Map]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="18" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="15" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[History]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -533,7 +503,7 @@
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="6" />
+						<AttachedAnnotation Disambiguator="7" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -577,7 +547,7 @@
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="10" />
+						<AttachedAnnotation Disambiguator="4" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -637,7 +607,7 @@
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="9" />
+						<AttachedAnnotation Disambiguator="5" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -729,7 +699,7 @@
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="8" />
+						<AttachedAnnotation Disambiguator="6" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -788,7 +758,7 @@
 					<References Name="[dbo].[Character]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="13" />
+			<AttachedAnnotation Disambiguator="10" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK_CharacterSessions]">
 			<Relationship Name="ColumnSpecifications">
@@ -816,7 +786,7 @@
 					<References Name="[dbo].[CharacterSessions]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="16" />
+			<AttachedAnnotation Disambiguator="13" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK_Session]">
 			<Relationship Name="ColumnSpecifications">
@@ -835,7 +805,7 @@
 					<References Name="[dbo].[Session]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="19" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="16" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[Session]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -850,6 +820,22 @@
 									<Relationship Name="Type">
 										<Entry>
 											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[Session].[Title]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="40" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
 										</Entry>
 									</Relationship>
 								</Element>
@@ -889,6 +875,7 @@
 				</Entry>
 				<Entry>
 					<Element Type="SqlSimpleColumn" Name="[dbo].[Session].[SessionNumber]">
+						<Property Name="IsNullable" Value="False" />
 						<Relationship Name="TypeSpecifier">
 							<Entry>
 								<Element Type="SqlTypeSpecifier">
@@ -924,24 +911,9 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="18" />
-			<AttachedAnnotation Disambiguator="17" />
-			<AttachedAnnotation Disambiguator="19" />
-		</Element>
-		<Element Type="SqlLogin" Name="[GMPlanner]">
-			<Property Name="Password" Value="0d&lt;nVn&gt;?Ae#.H@LDzu|-\w%/FpG@9fqo" />
-			<Annotation Type="GloballyScoped" />
-		</Element>
-		<Element Type="SqlUser" Name="[GMPlanner]" Disambiguator="5">
-			<Property Name="LoginIdentifierScript">
-				<Value><![CDATA[GMPlanner]]></Value>
-			</Property>
-			<Property Name="AuthenticationType" Value="1" />
-			<Relationship Name="Login">
-				<Entry>
-					<References Name="[GMPlanner]" />
-				</Entry>
-			</Relationship>
+			<AttachedAnnotation Disambiguator="15" />
+			<AttachedAnnotation Disambiguator="14" />
+			<AttachedAnnotation Disambiguator="16" />
 		</Element>
 	</Model>
 </DataSchemaModel>

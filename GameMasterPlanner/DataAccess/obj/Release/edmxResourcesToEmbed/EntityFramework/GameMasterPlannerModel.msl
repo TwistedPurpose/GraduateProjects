@@ -1,22 +1,95 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="GameMasterPlannerDBModelStoreContainer" CdmEntityContainer="GameMasterPlannerDBEntities">
+    <EntitySetMapping Name="C__RefactorLog">
+      <EntityTypeMapping TypeName="GameMasterPlannerDBModel.C__RefactorLog">
+        <MappingFragment StoreEntitySet="__RefactorLog">
+          <ScalarProperty Name="OperationKey" ColumnName="OperationKey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Campaigns">
       <EntityTypeMapping TypeName="GameMasterPlannerDBModel.Campaign">
         <MappingFragment StoreEntitySet="Campaign">
+          <ScalarProperty Name="HistoryId" ColumnName="HistoryId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CampaignSessions">
+      <EntityTypeMapping TypeName="GameMasterPlannerDBModel.CampaignSession">
+        <MappingFragment StoreEntitySet="CampaignSessions">
+          <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+          <ScalarProperty Name="CampaignId" ColumnName="CampaignId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Characters">
+      <EntityTypeMapping TypeName="GameMasterPlannerDBModel.Character">
+        <MappingFragment StoreEntitySet="Character">
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="HistoryId" ColumnName="HistoryId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Histories">
       <EntityTypeMapping TypeName="GameMasterPlannerDBModel.History">
         <MappingFragment StoreEntitySet="History">
-          <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Items">
+      <EntityTypeMapping TypeName="GameMasterPlannerDBModel.Item">
+        <MappingFragment StoreEntitySet="Items">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Locations">
+      <EntityTypeMapping TypeName="GameMasterPlannerDBModel.Location">
+        <MappingFragment StoreEntitySet="Locations">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ChildMapId" ColumnName="ChildMapId" />
+          <ScalarProperty Name="ParentMapId" ColumnName="ParentMapId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Maps">
+      <EntityTypeMapping TypeName="GameMasterPlannerDBModel.Map">
+        <MappingFragment StoreEntitySet="Map">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ParentMapId" ColumnName="ParentMapId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sessions">
+      <EntityTypeMapping TypeName="GameMasterPlannerDBModel.Session">
+        <MappingFragment StoreEntitySet="Session">
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="SessionNumber" ColumnName="SessionNumber" />
+          <ScalarProperty Name="BaseMapId" ColumnName="BaseMapId" />
+          <ScalarProperty Name="CampaignId" ColumnName="CampaignId" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="CharacterSessions" TypeName="GameMasterPlannerDBModel.CharacterSessions" StoreEntitySet="CharacterSessions">
+      <EndProperty Name="Session">
+        <ScalarProperty Name="Id" ColumnName="SessionId" />
+      </EndProperty>
+      <EndProperty Name="Character">
+        <ScalarProperty Name="Id" ColumnName="CharacterId" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>

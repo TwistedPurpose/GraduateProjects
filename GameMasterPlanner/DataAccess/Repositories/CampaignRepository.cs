@@ -11,7 +11,7 @@ namespace DataAccess.Repositories
 {
     public class CampaignRepository
     {
-        public List<CampaignViewModel> getCampaignList()
+        public List<CampaignViewModel> GetCampaignList()
         {
 
             using (var db = new GameMasterPlannerDBEntities())
@@ -30,7 +30,7 @@ namespace DataAccess.Repositories
             }
         }
 
-        public void createCampaign(CampaignViewModel campaign)
+        public void CreateCampaign(CampaignViewModel campaign)
         {
             using (var db = new GameMasterPlannerDBEntities())
             {

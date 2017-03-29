@@ -78,6 +78,7 @@
           <ScalarProperty Name="SessionNumber" ColumnName="SessionNumber" />
           <ScalarProperty Name="BaseMapId" ColumnName="BaseMapId" />
           <ScalarProperty Name="CampaignId" ColumnName="CampaignId" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

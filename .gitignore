@@ -43,3 +43,8 @@ Temporary Items
 .apdisk
 *.iso
 Ubuntu.vdi
+
+#Web.config
+#Web.Debug.config
+#Web.Release.config
+#App.config

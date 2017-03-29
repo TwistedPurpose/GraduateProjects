@@ -76,9 +76,10 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="40" />
     <Property Name="CampaignId" Type="int" />
     <Property Name="BaseMapId" Type="int" />
-    <Property Name="SessionNumber" Type="int" />
+    <Property Name="SessionNumber" Type="int" Nullable="false" />
     <Property Name="Notes" Type="nvarchar(max)" />
   </EntityType>
   <Association Name="FK_Campaign_ToHistory">

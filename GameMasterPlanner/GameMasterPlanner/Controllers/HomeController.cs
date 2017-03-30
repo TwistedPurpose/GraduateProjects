@@ -16,6 +16,7 @@ namespace GameMasterPlanner.Controllers
 
         public ActionResult Hub(int campaignId)
         {
+            ViewBag.CampaignId = campaignId;
             return View("Hub", new { campaignId });
         }
     }

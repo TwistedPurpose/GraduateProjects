@@ -11,10 +11,15 @@ namespace GameMasterPlanner.Controllers.API
 {
     public class SessionController : ApiController
     {
-        public HttpResponseMessage Get()
+        /// <summary>
+        /// Get all sessions based on campaign ID
+        /// </summary>
+        /// <param name="id">Get all sessions with the following camaign ID</param>
+        /// <returns></returns>
+        public HttpResponseMessage Get(int id)
         {
             var repro = new SessionRepository();
-            var list = repro.GetSessionList();
+            var list = repro.GetSessionList(id);
             return Request.CreateResponse(HttpStatusCode.OK, list);
         }
     }

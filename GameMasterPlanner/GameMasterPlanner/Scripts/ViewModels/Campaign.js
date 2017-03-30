@@ -5,8 +5,7 @@
         this.id = id;
         this.hubURL = ko.computed(function () {
             return baseURL + 'Home/Hub?campaignId=' + id;
-        }, this);
-            
+        }, this);   
     }
 }
 

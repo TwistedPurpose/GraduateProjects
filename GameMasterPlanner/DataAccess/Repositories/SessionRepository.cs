@@ -23,6 +23,7 @@ namespace DataAccess.Repositories
             {
 
                 var list = from sessions in db.Sessions
+                           where sessions.CampaignId == id
                            select new SessionViewModel()
                            {
                                Id = sessions.Id,

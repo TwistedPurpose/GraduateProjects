@@ -6,6 +6,7 @@ using DataAccess.Repositories;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using DataAccess.EntityFramework;
 
 namespace GameMasterPlanner.Controllers.API
 {
@@ -20,7 +21,15 @@ namespace GameMasterPlanner.Controllers.API
         {
             var repro = new SessionRepository();
             var list = repro.GetSessionList(id);
-            return Request.CreateResponse(HttpStatusCode.OK, list);
+
+            List<SessionViewModel> sessionList = list.Select(x => new SessionViewModel() {
+                Id = x.Id,
+                Notes = x.Notes,
+                SessionNumber = x.SessionNumber,
+                Title = x.Title}).ToList();
+
+
+            return Request.CreateResponse(HttpStatusCode.OK, sessionList);
         }
     }
 }

@@ -157,11 +157,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\API\CampaignController.cs" />
+    <Compile Include="Controllers\API\CharacterController.cs" />
     <Compile Include="Controllers\API\SessionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CampaignViewModel.cs" />
+    <Compile Include="Models\CharacterViewModel.cs" />
+    <Compile Include="Models\SessionViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

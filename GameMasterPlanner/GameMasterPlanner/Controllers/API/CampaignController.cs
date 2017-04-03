@@ -1,4 +1,5 @@
-﻿using DataAccess.Models;
+﻿using DataAccess.EntityFramework;
+using DataAccess.Models;
 using DataAccess.Repositories;
 using System;
 using System.Collections.Generic;
@@ -16,15 +17,39 @@ namespace GameMasterPlanner.Controllers.API
         {
             var repro = new CampaignRepository();
             var list = repro.GetCampaignList();
-            return Request.CreateResponse(HttpStatusCode.OK, list);
+
+            List<CampaignViewModel> returnList = list.Select(x => new CampaignViewModel() { Id = x.Id,
+                History = x.History.Description,
+                Name = x.Name }).ToList();
+
+            return Request.CreateResponse(HttpStatusCode.OK, returnList);
         }
 
         public HttpResponseMessage Post(CampaignViewModel newCampaign)
         {
             var repro = new CampaignRepository();
-            repro.CreateCampaign(newCampaign);
+
+            Campaign campaignDb = new Campaign()
+            {
+                Name = newCampaign.Name
+            };
+
+            if (!String.IsNullOrWhiteSpace(newCampaign.History))
+            {
+
+                var campaignHistory = new History()
+                {
+                    Description = newCampaign.History
+                };
+                campaignDb.History = campaignHistory;
+
+                repro.CreateHistory(campaignHistory);
+            }
+
+            repro.CreateCampaign(campaignDb);
+
             var list = repro.GetCampaignList();
-            return Request.CreateResponse(HttpStatusCode.OK, list);
+            return Get();
         }
     }
 }

@@ -36,8 +36,173 @@ IF N'$(__IsSqlCmdEnabled)' NOT LIKE N'True'
 
 
 GO
+IF EXISTS (SELECT 1
+           FROM   [master].[dbo].[sysdatabases]
+           WHERE  [name] = N'$(DatabaseName)')
+    BEGIN
+        ALTER DATABASE [$(DatabaseName)]
+            SET QUERY_STORE (QUERY_CAPTURE_MODE = AUTO, OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30)) 
+            WITH ROLLBACK IMMEDIATE;
+    END
+
+
+GO
 USE [$(DatabaseName)];
 
+
+GO
+PRINT N'Rename refactoring operation with key b306fb9b-5912-4292-9222-df10bbb06115 is skipped, element [dbo].[CharacterSessions].[Id] (SqlSimpleColumn) will not be renamed to CharacterId';
+
+
+GO
+PRINT N'Rename refactoring operation with key bf83a970-9dc2-4c7b-8616-6453e70e2ee9 is skipped, element [dbo].[CampaignSessions].[Id] (SqlSimpleColumn) will not be renamed to CampaignId';
+
+
+GO
+PRINT N'Creating [dbo].[CampaignSessions]...';
+
+
+GO
+CREATE TABLE [dbo].[CampaignSessions] (
+    [CampaignId] INT NOT NULL,
+    [SessionId]  INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([CampaignId] ASC, [SessionId] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[Character]...';
+
+
+GO
+CREATE TABLE [dbo].[Character] (
+    [Id]        INT           IDENTITY (1, 1) NOT NULL,
+    [HistoryId] INT           NULL,
+    [Name]      NVARCHAR (50) NOT NULL,
+    CONSTRAINT [PK_Character] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[CharacterSessions]...';
+
+
+GO
+CREATE TABLE [dbo].[CharacterSessions] (
+    [CharacterId] INT NOT NULL,
+    [SessionId]   INT NOT NULL,
+    CONSTRAINT [PK_CharacterSessions] PRIMARY KEY CLUSTERED ([CharacterId] ASC, [SessionId] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[Items]...';
+
+
+GO
+CREATE TABLE [dbo].[Items] (
+    [Id]          INT           IDENTITY (1, 1) NOT NULL,
+    [Name]        NCHAR (50)    NULL,
+    [Description] NVARCHAR (50) NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[Locations]...';
+
+
+GO
+CREATE TABLE [dbo].[Locations] (
+    [Id]          INT             IDENTITY (1, 1) NOT NULL,
+    [ParentMapId] INT             NOT NULL,
+    [ChildMapId]  INT             NULL,
+    [Name]        NVARCHAR (50)   NOT NULL,
+    [Description] NVARCHAR (2000) NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[Map]...';
+
+
+GO
+CREATE TABLE [dbo].[Map] (
+    [Id]          INT           IDENTITY (1, 1) NOT NULL,
+    [ParentMapId] INT           NULL,
+    [Name]        NVARCHAR (50) NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[Session]...';
+
+
+GO
+CREATE TABLE [dbo].[Session] (
+    [Id]            INT            IDENTITY (1, 1) NOT NULL,
+    [Title]         NVARCHAR (40)  NULL,
+    [CampaignId]    INT            NULL,
+    [BaseMapId]     INT            NULL,
+    [SessionNumber] INT            NOT NULL,
+    [Notes]         NVARCHAR (MAX) NULL,
+    CONSTRAINT [PK_Session] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[FK_Character_Session_CharacterId]...';
+
+
+GO
+ALTER TABLE [dbo].[CharacterSessions] WITH NOCHECK
+    ADD CONSTRAINT [FK_Character_Session_CharacterId] FOREIGN KEY ([CharacterId]) REFERENCES [dbo].[Character] ([Id]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_Character_Session_SessionId]...';
+
+
+GO
+ALTER TABLE [dbo].[CharacterSessions] WITH NOCHECK
+    ADD CONSTRAINT [FK_Character_Session_SessionId] FOREIGN KEY ([SessionId]) REFERENCES [dbo].[Session] ([Id]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_Session_ToMap]...';
+
+
+GO
+ALTER TABLE [dbo].[Session] WITH NOCHECK
+    ADD CONSTRAINT [FK_Session_ToMap] FOREIGN KEY ([BaseMapId]) REFERENCES [dbo].[Map] ([Id]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_Session_ToCampaign]...';
+
+
+GO
+ALTER TABLE [dbo].[Session] WITH NOCHECK
+    ADD CONSTRAINT [FK_Session_ToCampaign] FOREIGN KEY ([CampaignId]) REFERENCES [dbo].[Campaign] ([Id]);
+
+
+GO
+-- Refactoring step to update target server with deployed transaction logs
+
+IF OBJECT_ID(N'dbo.__RefactorLog') IS NULL
+BEGIN
+    CREATE TABLE [dbo].[__RefactorLog] (OperationKey UNIQUEIDENTIFIER NOT NULL PRIMARY KEY)
+    EXEC sp_addextendedproperty N'microsoft_database_tools_support', N'refactoring log', N'schema', N'dbo', N'table', N'__RefactorLog'
+END
+GO
+IF NOT EXISTS (SELECT OperationKey FROM [dbo].[__RefactorLog] WHERE OperationKey = 'b306fb9b-5912-4292-9222-df10bbb06115')
+INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('b306fb9b-5912-4292-9222-df10bbb06115')
+IF NOT EXISTS (SELECT OperationKey FROM [dbo].[__RefactorLog] WHERE OperationKey = 'bf83a970-9dc2-4c7b-8616-6453e70e2ee9')
+INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('bf83a970-9dc2-4c7b-8616-6453e70e2ee9')
+
+GO
 
 GO
 /*
@@ -58,7 +223,33 @@ insert into History values('The hero of Seattle, the one they call... Eric!');
 insert into Campaign values('Dr. Larson and The Mystery of the Green Tomb',1);
 insert into Campaign values('Dr. Larson and The Longest Knight',2);
 
+insert into Session values('Trained to kill: A locomotive mystery!',1,null,1,'Some interesting notes here!');
+insert into Session values('A Dark and Stormy Knight',2,null,1,'Wow!  Other notes!');
+
+insert into Character values(null,'Dr. Larson');
+insert into Character values(null,'Soren');
+
+insert into CharacterSessions values(1,1);
+insert into CharacterSessions values(2,1);
 GO
+
+GO
+PRINT N'Checking existing data against newly created constraints';
+
+
+GO
+USE [$(DatabaseName)];
+
+
+GO
+ALTER TABLE [dbo].[CharacterSessions] WITH CHECK CHECK CONSTRAINT [FK_Character_Session_CharacterId];
+
+ALTER TABLE [dbo].[CharacterSessions] WITH CHECK CHECK CONSTRAINT [FK_Character_Session_SessionId];
+
+ALTER TABLE [dbo].[Session] WITH CHECK CHECK CONSTRAINT [FK_Session_ToMap];
+
+ALTER TABLE [dbo].[Session] WITH CHECK CHECK CONSTRAINT [FK_Session_ToCampaign];
+
 
 GO
 PRINT N'Update complete.';

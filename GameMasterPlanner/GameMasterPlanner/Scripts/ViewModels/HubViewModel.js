@@ -1,18 +1,16 @@
 ﻿class Hub {
     constructor(campaignId) {
-        let sessionList = [];
-        $.getJSON(baseURL + 'api/Session?id=' + campaignId, function (data) {
-            sessionList.push(new Session(data));
-        });
 
-        this.SessionList = ko.observableArray(sessionList);
+        this.CampaignId = campaignId
+        this.SessionList = ko.observableArray([]);
 
         //Check here if there is no sessions
-        this.CurrentSession = new ko.observable(sessionList[0]);
+        this.CurrentSession = ko.observable();
 
-        this.CharacterList;
-        this.LocationList;
-        this.OrganizationList;
+        this.CharacterList = ko.observableArray([]);
+
+        this.LocationList = ko.observableArray([]);
+        this.OrganizationList = ko.observableArray([]);
 
         let map = new GMaps({
             div: '#map',
@@ -48,5 +46,31 @@
     }
 }
 
+class Character {
+    constructor(data) {
+        this.Id = data.Id;
+        this.Name = data.Name;
+        this.History = data.History;
+        this.Description = data.Description;
+    }
+}
+
 let hubViewModel = new Hub(campaignId);
-ko.applyBindings(hubViewModel);
+
+$.getJSON(baseURL + 'api/Session?id=' + campaignId, function (data) {
+    data.forEach(function (sessionData) {
+        hubViewModel.SessionList.push(new Session(sessionData));
+    });
+
+    hubViewModel.CurrentSession(hubViewModel.SessionList()[0]);
+
+    $.getJSON(baseURL + 'api/Character/GetSessionCharacters?sessionId=' + hubViewModel.CurrentSession().Id, function (data) {
+        data.forEach(function (characterData) {
+            hubViewModel.CharacterList.push(new Character(characterData));
+        });
+
+        
+    });
+    ko.applyBindings(hubViewModel);
+});
+

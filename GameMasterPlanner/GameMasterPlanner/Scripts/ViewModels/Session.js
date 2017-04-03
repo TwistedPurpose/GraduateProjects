@@ -1,7 +1,11 @@
 ﻿class Session {
-    constructor() {
-
+    constructor(data) {
+        this.Id = data.Id;
+        this.Notes = data.Notes;
+        this.Title = data.Title;
     }
+
+
 }
 
 class SessionList {

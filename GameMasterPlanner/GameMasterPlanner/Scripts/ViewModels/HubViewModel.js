@@ -44,6 +44,10 @@
 
         this.Map = map;
     }
+
+    createCharacter() {
+        $('#addCharacterModal').modal('show');
+    }
 }
 
 class Character {

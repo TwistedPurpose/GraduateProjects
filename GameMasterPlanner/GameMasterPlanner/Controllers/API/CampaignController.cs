@@ -19,7 +19,7 @@ namespace GameMasterPlanner.Controllers.API
             var list = repro.GetCampaignList();
 
             List<CampaignViewModel> returnList = list.Select(x => new CampaignViewModel() { Id = x.Id,
-                History = x.History.Description,
+                History = x.History == null ? "" : x.History.Description,
                 Name = x.Name }).ToList();
 
             return Request.CreateResponse(HttpStatusCode.OK, returnList);

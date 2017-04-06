@@ -26,5 +26,10 @@ namespace GameMasterPlanner.Controllers.API
 
             return Request.CreateResponse(HttpStatusCode.OK, charList);
         }
+
+        public HttpResponseMessage Post(CharacterViewModel character)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
     }
 }

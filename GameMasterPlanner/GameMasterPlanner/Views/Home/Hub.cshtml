@@ -25,7 +25,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <textarea data-bind="text:CurrentSession().Notes" class="notes-text-edit" rows="12"></textarea>
+            <textarea data-bind="textInput:CurrentSession().Notes" class="notes-text-edit" rows="12"></textarea>
         </div>
     </div>
 
@@ -75,9 +75,11 @@
             </div>
             <div class="modal-body">
                 <div>Name</div>
+                <input data-bind="textInput:Name"/>
                 <div>Description</div>
+                <textarea data-bind="textInput:Description"></textarea>
                 <div>History</div>
-                <p>Modal body text goes here.</p>
+                <textarea data-bind="textInput:History"></textarea>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary">Save changes</button>
@@ -94,4 +96,4 @@
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBLS0MX9AwHUlg0Zkvodyp3sjDPdrrB9c"></script>
 @Scripts.Render("~/bundles/hub")
-
+@Scripts.Render("~/bundles/character")

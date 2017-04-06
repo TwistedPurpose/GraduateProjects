@@ -1,4 +1,4 @@
-﻿class Hub {
+﻿class HubViewModel {
     constructor(campaignId) {
 
         this.CampaignId = campaignId
@@ -8,7 +8,6 @@
         this.CurrentSession = ko.observable();
 
         this.CharacterList = ko.observableArray([]);
-
         this.LocationList = ko.observableArray([]);
         this.OrganizationList = ko.observableArray([]);
 
@@ -47,26 +46,23 @@
 
     createCharacter() {
         $('#addCharacterModal').modal('show');
+
+        var addCharacterViewModel = new AddCharacterViewModel();
+        ko.applyBindings(addCharacterViewModel);
     }
 }
 
-class Character {
-    constructor(data) {
-        this.Id = data.Id;
-        this.Name = data.Name;
-        this.History = data.History;
-        this.Description = data.Description;
-    }
-}
-
-let hubViewModel = new Hub(campaignId);
+let hubViewModel = new HubViewModel(campaignId);
 
 $.getJSON(baseURL + 'api/Session?id=' + campaignId, function (data) {
     data.forEach(function (sessionData) {
         hubViewModel.SessionList.push(new Session(sessionData));
     });
 
-    hubViewModel.CurrentSession(hubViewModel.SessionList()[0]);
+    if (hubViewModel.SessionList() && hubViewModel.SessionList().length > 0) {
+        hubViewModel.CurrentSession(hubViewModel.SessionList()[0]);
+    }
+    
 
     $.getJSON(baseURL + 'api/Character/GetSessionCharacters?sessionId=' + hubViewModel.CurrentSession().Id, function (data) {
         data.forEach(function (characterData) {

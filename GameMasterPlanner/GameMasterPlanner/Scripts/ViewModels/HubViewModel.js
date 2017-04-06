@@ -42,6 +42,8 @@
         });
 
         this.Map = map;
+
+        this.
     }
 
     createCharacter() {

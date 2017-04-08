@@ -6,29 +6,18 @@ using System.Linq;
 namespace DataAccess.Repositories
 {
 
-    public class CampaignRepository
+    public class CampaignRepository : BaseRepository
     {
-        private GameMasterPlannerDBEntities db;
-        public CampaignRepository()
-        {
-            db = new GameMasterPlannerDBEntities();
-        }
-
         public List<Campaign> GetCampaignList()
         {
-
-
             var list = from campaigns in db.Campaigns
                        select campaigns;
 
-
             return list.ToList();
-
         }
 
         public void CreateCampaign(Campaign campaign)
         {
-
             db.Campaigns.Add(campaign);
             db.SaveChanges();
         }

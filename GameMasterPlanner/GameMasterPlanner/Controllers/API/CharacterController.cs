@@ -29,7 +29,11 @@ namespace GameMasterPlanner.Controllers.API
 
         public HttpResponseMessage Post(CharacterViewModel character)
         {
+            var repro = new CharacterRepository();
+            //repro.addNewCharacterToSession();
             return Request.CreateResponse(HttpStatusCode.OK);
         }
+
+
     }
 }

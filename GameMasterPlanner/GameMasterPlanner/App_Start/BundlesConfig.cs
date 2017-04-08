@@ -26,12 +26,14 @@ namespace GameMasterPlanner.App_Start
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                 "~/Scripts/knockout-3.4.1.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/common").Include(
+                "~/Scripts/Common/Helper.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/campaign").Include(
                 "~/Scripts/ViewModels/Campaign.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/character").Include(
-                "~/Scripts/ViewModels/AddCharacterViewModel.js",
-                "~/Scripts/ViewModels/Character.js"));
+                "~/Scripts/ViewModels/CharacterViewModel.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/maps").Include(
                 "~/Scripts/gmaps.js"));

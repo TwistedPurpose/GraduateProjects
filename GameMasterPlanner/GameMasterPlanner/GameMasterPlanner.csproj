@@ -16,7 +16,7 @@
     <RootNamespace>GameMasterPlanner</RootNamespace>
     <AssemblyName>GameMasterPlanner</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -137,12 +137,13 @@
     <None Include="Properties\PublishProfiles\KevinsAzure.pubxml" />
     <None Include="Properties\PublishProfiles\Local Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Common\Helper.js" />
     <Content Include="Scripts\gmaps.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\knockout-3.4.1.debug.js" />
     <Content Include="Scripts\knockout-3.4.1.js" />
-    <Content Include="Scripts\ViewModels\AddCharacterViewModel.js" />
+    <Content Include="Scripts\ViewModels\CharacterViewModel.js" />
     <Content Include="Scripts\ViewModels\Campaign.js" />
     <Content Include="Scripts\ViewModels\Character.js" />
     <Content Include="Scripts\ViewModels\HubViewModel.js" />
@@ -207,16 +208,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>62531</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/GameMasterPlanner</IISUrl>
-          <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
-          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

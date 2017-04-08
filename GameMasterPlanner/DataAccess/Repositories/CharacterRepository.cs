@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories
 {
-    public class CharacterRepository
+    public class CharacterRepository : BaseRepository
     {
         /// <summary>
         /// 
@@ -21,15 +21,33 @@ namespace DataAccess.Repositories
 
         public List<Character> GetCharactersInSession(int sessionId)
         {
-            using (var db = new GameMasterPlannerDBEntities())
-            {
-                var list = from session in db.Sessions
-                           where session.Id == sessionId
-                           select session.Characters;
+            var list = from session in db.Sessions
+                       where session.Id == sessionId
+                       select session.Characters;
 
 
-                return list.First().ToList();
-            }
+            return list.FirstOrDefault().ToList();
+        }
+
+        public void AddNewCharacter(Character character)
+        {
+            db.Characters.Add(character);
+            db.SaveChanges();
+        }
+
+        public void AddCharacterToSession(int characterId, int sessionId)
+        {
+            Session s = (from session in db.Sessions
+                          where session.Id == sessionId
+                         select session).FirstOrDefault();
+
+            Character c = (from character in db.Characters
+                           where character.Id == characterId
+                           select character).FirstOrDefault();
+
+            s.Characters.Add(c);
+
+            db.SaveChanges();
         }
     }
 }

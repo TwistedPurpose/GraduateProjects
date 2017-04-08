@@ -64,16 +64,16 @@
     </div>
 </div>
 
-<div class="modal fade" id="addCharacterModal">
+<div class="modal fade" id="addCharacterModal" data-bind="modal: showAddCharacterModal">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content" data-bind="with: addCharacterVM">
             <div class="modal-header">
                 <h5 class="modal-title">Add A Character</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" >
                 <div>Name</div>
                 <input data-bind="textInput:Name"/>
                 <div>Description</div>
@@ -82,7 +82,7 @@
                 <textarea data-bind="textInput:History"></textarea>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" data-bind="click:save" data-dismiss="modal">Save changes</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -95,5 +95,5 @@
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBLS0MX9AwHUlg0Zkvodyp3sjDPdrrB9c"></script>
-@Scripts.Render("~/bundles/hub")
 @Scripts.Render("~/bundles/character")
+@Scripts.Render("~/bundles/hub")

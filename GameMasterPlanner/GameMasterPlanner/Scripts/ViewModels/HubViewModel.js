@@ -43,14 +43,13 @@
 
         this.Map = map;
 
-        this.
+        this.showAddCharacterModal = ko.observable(false);
+
+        this.addCharacterVM = new CharacterViewModel(null);
     }
 
     createCharacter() {
-        $('#addCharacterModal').modal('show');
-
-        var addCharacterViewModel = new AddCharacterViewModel();
-        ko.applyBindings(addCharacterViewModel);
+        this.showAddCharacterModal(true);
     }
 }
 
@@ -68,7 +67,7 @@ $.getJSON(baseURL + 'api/Session?id=' + campaignId, function (data) {
 
     $.getJSON(baseURL + 'api/Character/GetSessionCharacters?sessionId=' + hubViewModel.CurrentSession().Id, function (data) {
         data.forEach(function (characterData) {
-            hubViewModel.CharacterList.push(new Character(characterData));
+            hubViewModel.CharacterList.push(new CharacterViewModel(characterData));
         });
 
         

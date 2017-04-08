@@ -46,6 +46,7 @@
         this.showAddCharacterModal = ko.observable(false);
 
         this.addCharacterVM = new CharacterViewModel(null);
+        
     }
 
     createCharacter() {
@@ -62,6 +63,8 @@ $.getJSON(baseURL + 'api/Session?id=' + campaignId, function (data) {
 
     if (hubViewModel.SessionList() && hubViewModel.SessionList().length > 0) {
         hubViewModel.CurrentSession(hubViewModel.SessionList()[0]);
+
+        hubViewModel.addCharacterVM.setSessionId(hubViewModel.CurrentSession().Id);
     }
     
 

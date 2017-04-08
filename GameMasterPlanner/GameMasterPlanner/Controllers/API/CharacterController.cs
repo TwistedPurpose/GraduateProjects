@@ -12,9 +12,10 @@ namespace GameMasterPlanner.Controllers.API
 {
     public class CharacterController : ApiController
     {
+        private CharacterRepository repro = new CharacterRepository();
+
         public HttpResponseMessage GetSessionCharacters(int sessionId)
         {
-            var repro = new CharacterRepository();
             var list = repro.GetCharactersInSession(sessionId);
 
 
@@ -29,11 +30,19 @@ namespace GameMasterPlanner.Controllers.API
 
         public HttpResponseMessage Post(CharacterViewModel character)
         {
-            var repro = new CharacterRepository();
-            //repro.addNewCharacterToSession();
+            Character newCharacter = new Character()
+            {
+
+            };
+            repro.AddNewCharacter(newCharacter);
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
+        public HttpResponseMessage PostAssociateToSession(int characterId, int sessionId)
+        {
+            var repro = new CharacterRepository();
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
 
     }
 }

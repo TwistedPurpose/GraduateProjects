@@ -36,10 +36,11 @@
     save() {
         $.post(baseURL + 'api/Character', this.toJson(), function (returnedData) { });
 
-        if (sessionId) {
-            this.associateToSesssion(sessionId);
+        if (this.SessionId) {
+            this.associateToSesssion();
         }
-        
+
+        this.clear();
     }
 
     loadCharacter(characterId) {
@@ -47,9 +48,23 @@
 
     }
 
-    associateToSesssion(sessionId) {
-        $.post(baseURL + 'api/Character/AssociateToSession?characterId=' + this.Id + '&sessionId=' + sessionId,
-            toJson(), function (returnedData) { });
+    associateToSesssion() {
+        $.post(baseURL + 'api/Character/PostAssociateToSession?characterId=' + this.Id + '&sessionId=' + this.SessionId,
+            this.toJson(), function (returnedData) { });
+    }
+
+    setSessionId(sessionId) {
+        this.SessionId = sessionId;
+    }
+
+    clear() {
+        this.Id = -1;
+        this.HistoryId = -1;
+        this.SessionId = null;
+        this.Name(null);
+        this.History(null);
+        this.Description(null);
+        this.Notes(null);
     }
 }
 

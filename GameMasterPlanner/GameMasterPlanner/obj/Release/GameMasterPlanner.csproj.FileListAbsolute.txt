@@ -143,3 +143,4 @@ D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\System.Web
 D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\obj\Release\GameMasterPlanner.csprojResolveAssemblyReference.cache
 D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\obj\Release\GameMasterPlanner.dll
 D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\obj\Release\GameMasterPlanner.pdb
+D:\Documents\GraduateProjects\GameMasterPlanner\GameMasterPlanner\bin\DataAccess.dll.config

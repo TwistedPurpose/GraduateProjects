@@ -46,7 +46,6 @@
         this.showAddCharacterModal = ko.observable(false);
 
         this.addCharacterVM = new CharacterViewModel(null);
-        
     }
 
     createCharacter() {
@@ -72,9 +71,19 @@ $.getJSON(baseURL + 'api/Session?id=' + campaignId, function (data) {
         data.forEach(function (characterData) {
             hubViewModel.CharacterList.push(new CharacterViewModel(characterData));
         });
-
-        
     });
     ko.applyBindings(hubViewModel);
 });
+
+$('#addCharacterModal').on('hidden.bs.modal', function () {
+    let self = hubViewModel;
+
+    self.CharacterList.removeAll();
+
+    $.getJSON(baseURL + 'api/Character/GetSessionCharacters?sessionId=' + hubViewModel.CurrentSession().Id, function (data) {
+        data.forEach(function (characterData) {
+            self.CharacterList.push(new CharacterViewModel(characterData));
+        });
+    });
+})
 

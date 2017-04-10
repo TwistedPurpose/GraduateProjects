@@ -31,5 +31,19 @@ namespace DataAccess.Repositories
 
             return list.ToList();
         }
+
+        public void AssociateCharacterToSession(int characterId, int sessionId)
+        {
+            Session session = (from sessions in db.Sessions
+                          where sessions.Id == sessionId
+                          select sessions).FirstOrDefault();
+
+            Character character = (from charcters in db.Characters
+                                   where charcters.Id == characterId
+                                   select charcters).FirstOrDefault();
+
+            session.Characters.Add(character);
+            db.SaveChanges();
+        }
     }
 }

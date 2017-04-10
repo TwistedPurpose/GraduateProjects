@@ -132,6 +132,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\GameMasterPlanner - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\GameMasterPlanner20170409075532 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\gmplanner - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\gmplanner - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\KevinsAzure.pubxml" />
@@ -166,7 +167,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\ModelConverter.cs" />
     <Compile Include="Models\CampaignViewModel.cs" />
     <Compile Include="Models\CharacterViewModel.cs" />
     <Compile Include="Models\SessionViewModel.cs" />
@@ -184,9 +184,11 @@
     <Content Include="Views\Home\Hub.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>

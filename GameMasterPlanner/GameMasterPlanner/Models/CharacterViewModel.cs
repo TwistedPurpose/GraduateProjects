@@ -9,8 +9,7 @@ namespace GameMasterPlanner.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string History { get; set; }
-        public string Description { get; set; }
+        public string CharDescription { get; set; }
         public string Notes { get; set; }
     
     }

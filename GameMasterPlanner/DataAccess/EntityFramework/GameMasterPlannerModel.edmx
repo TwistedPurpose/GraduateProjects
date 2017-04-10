@@ -34,6 +34,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="HistoryId" Type="int" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nchar" MaxLength="1000" />
+          <Property Name="Notes" Type="nchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="CharacterSessions">
           <Key>
@@ -241,6 +243,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="HistoryId" Type="Int32" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="true" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="1000" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="Sessions" Relationship="GameMasterPlannerDBModel.CharacterSessions" FromRole="Character" ToRole="Session" />
         </EntityType>
         <EntityType Name="History">
@@ -365,6 +369,8 @@
           <EntitySetMapping Name="Characters">
             <EntityTypeMapping TypeName="GameMasterPlannerDBModel.Character">
               <MappingFragment StoreEntitySet="Character">
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="HistoryId" ColumnName="HistoryId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

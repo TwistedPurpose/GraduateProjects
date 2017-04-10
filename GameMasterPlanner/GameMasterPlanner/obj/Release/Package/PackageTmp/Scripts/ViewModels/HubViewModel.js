@@ -1,4 +1,4 @@
-﻿class Hub {
+﻿class HubViewModel {
     constructor(campaignId) {
 
         this.CampaignId = campaignId
@@ -8,7 +8,6 @@
         this.CurrentSession = ko.observable();
 
         this.CharacterList = ko.observableArray([]);
-
         this.LocationList = ko.observableArray([]);
         this.OrganizationList = ko.observableArray([]);
 
@@ -43,34 +42,48 @@
         });
 
         this.Map = map;
+
+        this.showAddCharacterModal = ko.observable(false);
+
+        this.addCharacterVM = new CharacterViewModel(null);
+    }
+
+    createCharacter() {
+        this.showAddCharacterModal(true);
     }
 }
 
-class Character {
-    constructor(data) {
-        this.Id = data.Id;
-        this.Name = data.Name;
-        this.History = data.History;
-        this.Description = data.Description;
-    }
-}
-
-let hubViewModel = new Hub(campaignId);
+let hubViewModel = new HubViewModel(campaignId);
 
 $.getJSON(baseURL + 'api/Session?id=' + campaignId, function (data) {
     data.forEach(function (sessionData) {
         hubViewModel.SessionList.push(new Session(sessionData));
     });
 
-    hubViewModel.CurrentSession(hubViewModel.SessionList()[0]);
+    if (hubViewModel.SessionList() && hubViewModel.SessionList().length > 0) {
+        hubViewModel.CurrentSession(hubViewModel.SessionList()[0]);
+
+        hubViewModel.addCharacterVM.setSessionId(hubViewModel.CurrentSession().Id);
+    }
+    
 
     $.getJSON(baseURL + 'api/Character/GetSessionCharacters?sessionId=' + hubViewModel.CurrentSession().Id, function (data) {
         data.forEach(function (characterData) {
-            hubViewModel.CharacterList.push(new Character(characterData));
+            hubViewModel.CharacterList.push(new CharacterViewModel(characterData));
         });
-
-        
     });
     ko.applyBindings(hubViewModel);
 });
+
+$('#addCharacterModal').on('hidden.bs.modal', function () {
+    let self = hubViewModel;
+
+    self.CharacterList.removeAll();
+
+    $.getJSON(baseURL + 'api/Character/GetSessionCharacters?sessionId=' + hubViewModel.CurrentSession().Id, function (data) {
+        data.forEach(function (characterData) {
+            self.CharacterList.push(new CharacterViewModel(characterData));
+        });
+    });
+})
 

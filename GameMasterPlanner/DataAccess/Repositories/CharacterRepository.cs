@@ -29,10 +29,18 @@ namespace DataAccess.Repositories
             return list.FirstOrDefault().ToList();
         }
 
-        public void AddNewCharacter(Character character)
+        public Character GetCharacter(int characterId)
+        {
+            return (from character in db.Characters
+                    where character.Id == characterId
+                    select character).FirstOrDefault();
+        }
+
+        public Character AddNewCharacter(Character character)
         {
             db.Characters.Add(character);
             db.SaveChanges();
+            return character;
         }
 
         public void AddCharacterToSession(int characterId, int sessionId)

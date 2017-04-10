@@ -29,6 +29,8 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="HistoryId" Type="int" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nchar" MaxLength="1000" />
+    <Property Name="Notes" Type="nchar" MaxLength="1000" />
   </EntityType>
   <EntityType Name="CharacterSessions">
     <Key>

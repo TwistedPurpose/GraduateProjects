@@ -31,5 +31,11 @@ namespace GameMasterPlanner.Controllers.API
 
             return Request.CreateResponse(HttpStatusCode.OK, sessionList);
         }
+
+        public HttpResponseMessage Post(SessionViewModel session)
+        {
+            throw new NotImplementedException();
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
     }
 }

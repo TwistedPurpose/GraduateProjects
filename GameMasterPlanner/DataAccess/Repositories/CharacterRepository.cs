@@ -36,7 +36,7 @@ namespace DataAccess.Repositories
                     select character).FirstOrDefault();
         }
 
-        public Character AddNewCharacter(Character character)
+        public Character CreateCharacter(Character character)
         {
             db.Characters.Add(character);
             db.SaveChanges();

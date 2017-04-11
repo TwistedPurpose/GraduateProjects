@@ -34,6 +34,10 @@ namespace GameMasterPlanner.Controllers.API
                 Name = newCampaign.Name
             };
 
+            Session newSession = new Session();
+
+            campaignDb.Sessions.Add(newSession);
+
             if (!String.IsNullOrWhiteSpace(newCampaign.History))
             {
 

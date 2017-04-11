@@ -39,7 +39,7 @@ namespace GameMasterPlanner.Controllers.API
                 Notes = character.Notes
             };
 
-            newCharacter = characterRepro.AddNewCharacter(newCharacter);
+            newCharacter = characterRepro.CreateCharacter(newCharacter);
 
             return Get(newCharacter.Id);
         }

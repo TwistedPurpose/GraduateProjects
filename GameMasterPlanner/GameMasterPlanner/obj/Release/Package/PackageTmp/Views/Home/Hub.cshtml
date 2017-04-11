@@ -49,7 +49,8 @@
                 <div class="col-sm-4">
                     <button class="btn btn-default" data-bind="click:createCharacter">Add Character</button>
                     <div class="row "data-bind="foreach:CharacterList">
-                        <li data-bind="text:Name"></li>
+                        <div class="row"><span data-bind="text:Name"></span></div>
+                        
                     </div>
                 </div>
 
@@ -82,7 +83,7 @@
                 <textarea data-bind="textInput:Notes"></textarea>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bind="click:save" data-dismiss="modal">Save changes</button>
+                <button type="button" class="btn btn-primary" data-bind="click:save" >Save changes</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>

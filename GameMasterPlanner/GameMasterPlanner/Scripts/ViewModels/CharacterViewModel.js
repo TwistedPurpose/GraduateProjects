@@ -41,6 +41,8 @@
                 self.associateToSesssion();
             }
             self.clear();
+
+            $('#addCharacterModal').modal('hide');
         });
     }
 
@@ -49,8 +51,8 @@
 
     }
 
-    associateToSesssion() {
-        $.post(baseURL + 'api/Character/PostAssociateToSession?characterId=' + this.Id + '&sessionId=' + this.SessionId,
+    associateToSession(SessionId) {
+        $.post(baseURL + 'api/Character/PostAssociateToSession?characterId=' + this.Id + '&sessionId=' + SessionId,
             this.toJson(), function (returnedData) { });
     }
 

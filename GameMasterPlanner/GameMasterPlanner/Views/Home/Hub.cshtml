@@ -49,7 +49,8 @@
                 <div class="col-sm-4">
                     <button class="btn btn-default" data-bind="click:createCharacter">Add Character</button>
                     <div class="row "data-bind="foreach:CharacterList">
-                        <span data-bind="text:Name"></span>
+                        <div class="row"><span data-bind="text:Name"></span></div>
+                        
                     </div>
                 </div>
 
@@ -66,14 +67,14 @@
 
 <div class="modal fade" id="addCharacterModal" data-bind="modal: showAddCharacterModal">
     <div class="modal-dialog" role="document">
-        <div class="modal-content" data-bind="with: addCharacterVM">
+        <div class="modal-content" >
             <div class="modal-header">
                 <h5 class="modal-title">Add A Character</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" >
+            <div class="modal-body" data-bind="with: addCharacterVM">
                 <div>Name</div>
                 <input data-bind="textInput:Name"/>
                 <div>Description</div>
@@ -82,7 +83,7 @@
                 <textarea data-bind="textInput:Notes"></textarea>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click:save" >Save changes</button>
+                <button type="button" class="btn btn-primary" data-bind="click:saveCharacter" >Save changes</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>

@@ -51,6 +51,34 @@
     createCharacter() {
         this.showAddCharacterModal(true);
     }
+
+    saveCharacter() {
+        let self = this;
+
+        $.post(baseURL + 'api/Character', self.addCharacterVM.toJson(), function (returnedData) {
+            self.addCharacterVM.Id = returnedData.Id;
+
+            if (self.CurrentSession().Id) {
+                self.addCharacterVM.associateToSession(self.CurrentSession().Id);
+            }
+
+            self.showAddCharacterModal(false);
+            self.reloadCharacterList();
+            self.addCharacterVM = new CharacterViewModel(null);
+        });
+    }
+
+    reloadCharacterList() {
+        let self = this;
+
+        self.CharacterList.removeAll();
+
+        $.getJSON(baseURL + 'api/Character/GetSessionCharacters?sessionId=' + self.CurrentSession().Id, function (data) {
+            data.forEach(function (characterData) {
+                self.CharacterList.push(new CharacterViewModel(characterData));
+            });
+        });
+    }
 }
 
 let hubViewModel = new HubViewModel(campaignId);
@@ -72,18 +100,19 @@ $.getJSON(baseURL + 'api/Session?id=' + campaignId, function (data) {
             hubViewModel.CharacterList.push(new CharacterViewModel(characterData));
         });
     });
+
     ko.applyBindings(hubViewModel);
 });
 
-$('#addCharacterModal').on('hidden.bs.modal', function () {
-    let self = hubViewModel;
+//$('#addCharacterModal').on('hidden.bs.modal', function () {
+//    let self = hubViewModel;
 
-    self.CharacterList.removeAll();
+//    self.CharacterList.removeAll();
 
-    $.getJSON(baseURL + 'api/Character/GetSessionCharacters?sessionId=' + hubViewModel.CurrentSession().Id, function (data) {
-        data.forEach(function (characterData) {
-            self.CharacterList.push(new CharacterViewModel(characterData));
-        });
-    });
-})
+//    $.getJSON(baseURL + 'api/Character/GetSessionCharacters?sessionId=' + hubViewModel.CurrentSession().Id, function (data) {
+//        data.forEach(function (characterData) {
+//            hubViewModel.CharacterList.push(new CharacterViewModel(characterData));
+//        });
+//    });
+//})
 

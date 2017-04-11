@@ -41,6 +41,8 @@
                 self.associateToSesssion();
             }
             self.clear();
+
+            $('#addCharacterModal').modal('hide');
         });
     }
 

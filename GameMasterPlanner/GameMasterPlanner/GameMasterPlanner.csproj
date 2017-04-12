@@ -146,11 +146,10 @@
     <Content Include="Scripts\knockout-3.4.1.js" />
     <Content Include="Scripts\ViewModels\CharacterViewModel.js" />
     <Content Include="Scripts\ViewModels\Campaign.js" />
-    <Content Include="Scripts\ViewModels\Character.js" />
     <Content Include="Scripts\ViewModels\HubViewModel.js" />
     <Content Include="Scripts\ViewModels\Map.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\ViewModels\Session.js" />
+    <Content Include="Scripts\ViewModels\SessionViewModel.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

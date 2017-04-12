@@ -51,5 +51,17 @@ namespace DataAccess.Repositories
             session.Characters.Add(character);
             db.SaveChanges();
         }
+
+        public void UpdateSession(Session dbSession)
+        {
+            db.Sessions.Attach(dbSession);
+            var entry = db.Entry(dbSession);
+
+            entry.State = EntityState.Modified;
+
+            entry.Property(e => e.CampaignId).IsModified = false;
+
+            db.SaveChanges();
+        }
     }
 }

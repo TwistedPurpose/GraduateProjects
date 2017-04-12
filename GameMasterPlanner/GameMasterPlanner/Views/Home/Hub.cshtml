@@ -1,9 +1,21 @@
 ﻿
 @{
-    ViewBag.Title = "Hub";
+    ViewBag.Title = "Campaign Hub";
 }
 
 <div class="container-fluid" style="margin-top: 20px;">
+
+    <div class="row">
+        <div class="col-md-2 col-md-offset-5">
+            <select data-bind="options: SessionList,
+                   optionsText: function(item) {
+                       return item.Title;
+                   },
+                   value: CurrentSession,
+                   optionsCaption: 'Choose...'"></select>
+            <span class="glyphicon glyphicon-plus"></span>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-md-12">
@@ -29,6 +41,12 @@
         </div>
     </div>
 
+    <div class="row" style="margin-bottom: 20px; margin-top:20px;">
+        <div class="col-md-12">
+            <button data-bind="click:saveSession" class="btn btn-default">Save Session</button>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-sm-8 map">
             <div class="google-map-canvas" id="map">
@@ -39,18 +57,18 @@
 
             <div class="row">
                 <div class="col-sm-4">
-                    <button class="btn btn-default">Upload Map</button>
+                    <button class="btn btn-default disabled">Upload Map</button>
 
-                    <button class="btn btn-default">Set Root Map</button>
+                    <button class="btn btn-default disabled">Set Root Map</button>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-sm-4">
                     <button class="btn btn-default" data-bind="click:createCharacter">Add Character</button>
-                    <div class="row "data-bind="foreach:CharacterList">
+                    <div class="row " data-bind="foreach:CharacterList">
                         <div class="row"><span data-bind="text:Name"></span></div>
-                        
+
                     </div>
                 </div>
 
@@ -58,16 +76,18 @@
 
             <div class="row">
                 <div class="col-sm-4">
-                    <button class="btn btn-default">Add An Item</button>
+                    <button class="btn btn-default disabled">Add An Item</button>
                 </div>
             </div>
         </div>
     </div>
+
+    
 </div>
 
 <div class="modal fade" id="addCharacterModal" data-bind="modal: showAddCharacterModal">
     <div class="modal-dialog" role="document">
-        <div class="modal-content" >
+        <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Add A Character</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -76,14 +96,14 @@
             </div>
             <div class="modal-body" data-bind="with: addCharacterVM">
                 <div>Name</div>
-                <input data-bind="textInput:Name"/>
+                <input data-bind="textInput:Name" />
                 <div>Description</div>
                 <textarea data-bind="textInput:CharDescription"></textarea>
                 <div>Notes</div>
                 <textarea data-bind="textInput:Notes"></textarea>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bind="click:saveCharacter" >Save changes</button>
+                <button type="button" class="btn btn-primary" data-bind="click:saveCharacter">Save changes</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>

@@ -12,5 +12,6 @@ namespace DataAccess.Models
         public string Title { get; set; }
         public int SessionNumber { get; set; }
         public string Notes { get; set; }
+        public int? BaseMapId { get; internal set; }
     }
 }

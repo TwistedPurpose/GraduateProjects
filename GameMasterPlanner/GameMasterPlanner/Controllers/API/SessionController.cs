@@ -12,6 +12,12 @@ namespace GameMasterPlanner.Controllers.API
 {
     public class SessionController : ApiController
     {
+        private SessionRepository sessionRepository = new SessionRepository();
+
+        SessionController()
+        {
+            sessionRepository = new SessionRepository();
+        }
         /// <summary>
         /// Get all sessions based on campaign ID
         /// </summary>
@@ -19,8 +25,7 @@ namespace GameMasterPlanner.Controllers.API
         /// <returns></returns>
         public HttpResponseMessage Get(int id)
         {
-            var repro = new SessionRepository();
-            var list = repro.GetSessionList(id);
+            var list = sessionRepository.GetSessionList(id);
 
             List<SessionViewModel> sessionList = list.Select(x => new SessionViewModel() {
                 Id = x.Id,
@@ -34,8 +39,25 @@ namespace GameMasterPlanner.Controllers.API
 
         public HttpResponseMessage Post(SessionViewModel session)
         {
-            throw new NotImplementedException();
+            Session dbSession = new Session()
+            {
+                Id = session.Id,
+                Title = session.Title,
+                Notes = session.Notes,
+                SessionNumber = session.SessionNumber,
+                BaseMapId = session.BaseMapId
+            };
+
+            if (dbSession.Id != 0)
+            {
+                sessionRepository.UpdateSession(dbSession);
+            } else
+            {
+                sessionRepository.CreateSession(dbSession);
+            }
+            
             return Request.CreateResponse(HttpStatusCode.OK);
         }
+
     }
 }

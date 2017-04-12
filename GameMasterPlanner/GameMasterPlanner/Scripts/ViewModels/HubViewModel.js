@@ -52,6 +52,13 @@
         this.showAddCharacterModal(true);
     }
 
+    saveSession() {
+        let self = this;
+
+        $.post(baseURL + 'api/Session', self.CurrentSession().toJson(), function (returnedData) {
+        });
+    }
+
     saveCharacter() {
         let self = this;
 
@@ -63,8 +70,8 @@
             }
 
             self.showAddCharacterModal(false);
+            self.addCharacterVM.clear();
             self.reloadCharacterList();
-            self.addCharacterVM = new CharacterViewModel(null);
         });
     }
 
@@ -75,6 +82,7 @@
 
         $.getJSON(baseURL + 'api/Character/GetSessionCharacters?sessionId=' + self.CurrentSession().Id, function (data) {
             data.forEach(function (characterData) {
+                
                 self.CharacterList.push(new CharacterViewModel(characterData));
             });
         });
@@ -85,7 +93,7 @@ let hubViewModel = new HubViewModel(campaignId);
 
 $.getJSON(baseURL + 'api/Session?id=' + campaignId, function (data) {
     data.forEach(function (sessionData) {
-        hubViewModel.SessionList.push(new Session(sessionData));
+        hubViewModel.SessionList.push(new SessionViewModel(sessionData));
     });
 
     if (hubViewModel.SessionList() && hubViewModel.SessionList().length > 0) {
@@ -101,16 +109,3 @@ $.getJSON(baseURL + 'api/Session?id=' + campaignId, function (data) {
 
     ko.applyBindings(hubViewModel);
 });
-
-//$('#addCharacterModal').on('hidden.bs.modal', function () {
-//    let self = hubViewModel;
-
-//    self.CharacterList.removeAll();
-
-//    $.getJSON(baseURL + 'api/Character/GetSessionCharacters?sessionId=' + hubViewModel.CurrentSession().Id, function (data) {
-//        data.forEach(function (characterData) {
-//            hubViewModel.CharacterList.push(new CharacterViewModel(characterData));
-//        });
-//    });
-//})
-

@@ -7,8 +7,8 @@
             this.CharDescription = ko.observable(data.Description);
             this.Notes = ko.observable(data.Notes);
         } else {
-            this.Id = -1;
-            this.HistoryId = -1;
+            this.Id;
+            this.HistoryId;
             this.Name = ko.observable();
             this.CharDescription = ko.observable();
             this.Notes = ko.observable();
@@ -28,6 +28,14 @@
         }
 
         return character;
+    }
+
+    clear() {
+        this.Id = null;
+        this.HistoryId = null;
+        this.Name(null);
+        this.CharDescription(null);
+        this.Notes(null);
     }
 
     loadCharacter(characterId) {

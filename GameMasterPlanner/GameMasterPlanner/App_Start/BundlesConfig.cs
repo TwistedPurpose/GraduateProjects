@@ -41,7 +41,7 @@ namespace GameMasterPlanner.App_Start
             bundles.Add(new ScriptBundle("~/bundles/hub").Include(
                 "~/Scripts/gmaps.js",
                 "~/Scripts/ViewModels/HubViewModel.js",
-                "~/Scripts/ViewModels/Session.js"));
+                "~/Scripts/ViewModels/SessionViewModel.js"));
 
 
             bundles.Add(new StyleBundle("~/Content/css").Include(

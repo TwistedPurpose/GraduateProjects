@@ -30,14 +30,21 @@
         return character;
     }
 
+    clear() {
+        this.Id = null;
+        this.HistoryId = null;
+        this.Name(null);
+        this.CharDescription(null);
+        this.Notes(null);
+    }
+
     loadCharacter(characterId) {
         $.getJSON(baseUrl + "api/Character?characterId=" + characterId, function (data) { });
 
     }
 
     associateToSession(SessionId) {
-        $.post(baseURL + 'api/Character/PostAssociateToSession?characterId=' + this.Id + '&sessionId=' + SessionId,
-            this.toJson(), function (returnedData) { });
+
     }
 }
 

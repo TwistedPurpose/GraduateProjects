@@ -1,6 +1,7 @@
 ﻿using DataAccess.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,6 +55,18 @@ namespace DataAccess.Repositories
                            select character).FirstOrDefault();
 
             s.Characters.Add(c);
+
+            db.SaveChanges();
+        }
+
+        public void UpdateCharacter(Character dbCharacter)
+        {
+            db.Characters.Attach(dbCharacter);
+            var entry = db.Entry(dbCharacter);
+
+            entry.State = EntityState.Modified;
+
+            //entry.Property(e => e.CampaignId).IsModified = false;
 
             db.SaveChanges();
         }

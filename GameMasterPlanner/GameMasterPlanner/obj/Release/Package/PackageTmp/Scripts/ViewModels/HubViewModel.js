@@ -61,29 +61,30 @@
 
     saveCharacter() {
         let self = this;
+        self.showAddCharacterModal(false);
+        this.CharacterList.removeAll();
 
         $.post(baseURL + 'api/Character', self.addCharacterVM.toJson(), function (returnedData) {
             self.addCharacterVM.Id = returnedData.Id;
 
             if (self.CurrentSession().Id) {
-                self.addCharacterVM.associateToSession(self.CurrentSession().Id);
+                $.post(baseURL + 'api/Character/PostAssociateToSession?characterId=' + self.addCharacterVM.Id +
+                    '&sessionId=' + self.CurrentSession().Id,
+                    self.addCharacterVM.toJson(), function (returnedData) {
+
+                        self.addCharacterVM.clear();
+
+                        $.getJSON(baseURL + 'api/Character/GetSessionCharacters?sessionId=' + self.CurrentSession().Id, function (data) {
+
+                            data.forEach(function (characterData) {
+                                self.CharacterList.push(new CharacterViewModel(characterData));
+                            });
+
+                            console.log(self.CharacterList());
+                        });
+                    });
             }
 
-            self.showAddCharacterModal(false);
-            self.reloadCharacterList();
-            self.addCharacterVM = new CharacterViewModel(null);
-        });
-    }
-
-    reloadCharacterList() {
-        let self = this;
-
-        self.CharacterList.removeAll();
-
-        $.getJSON(baseURL + 'api/Character/GetSessionCharacters?sessionId=' + self.CurrentSession().Id, function (data) {
-            data.forEach(function (characterData) {
-                self.CharacterList.push(new CharacterViewModel(characterData));
-            });
         });
     }
 }
@@ -98,7 +99,7 @@ $.getJSON(baseURL + 'api/Session?id=' + campaignId, function (data) {
     if (hubViewModel.SessionList() && hubViewModel.SessionList().length > 0) {
         hubViewModel.CurrentSession(hubViewModel.SessionList()[0]);
     }
-    
+
 
     $.getJSON(baseURL + 'api/Character/GetSessionCharacters?sessionId=' + hubViewModel.CurrentSession().Id, function (data) {
         data.forEach(function (characterData) {

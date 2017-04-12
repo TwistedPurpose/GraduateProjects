@@ -32,10 +32,12 @@ namespace DataAccess.Repositories
             return list.ToList();
         }
 
-        public void CreateSession(Session newSession)
+        public Session CreateSession(Session newSession)
         {
             db.Sessions.Add(newSession);
             db.SaveChanges();
+
+            return newSession;
         }
 
         public void AssociateCharacterToSession(int characterId, int sessionId)

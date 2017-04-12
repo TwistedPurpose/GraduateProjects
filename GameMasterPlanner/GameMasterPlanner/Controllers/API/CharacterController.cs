@@ -12,8 +12,14 @@ namespace GameMasterPlanner.Controllers.API
 {
     public class CharacterController : ApiController
     {
-        private CharacterRepository characterRepro = new CharacterRepository();
-        private SessionRepository sessionRepro = new SessionRepository();
+        public CharacterController()
+        {
+            characterRepro = new CharacterRepository();
+            sessionRepro = new SessionRepository();
+    }
+
+        private CharacterRepository characterRepro;
+        private SessionRepository sessionRepro;
 
         public HttpResponseMessage Get(int characterId)
         {
@@ -32,22 +38,23 @@ namespace GameMasterPlanner.Controllers.API
 
         public HttpResponseMessage Post(CharacterViewModel character)
         {
-            Character newCharacter = new Character()
+            Character dbCharacter = new Character()
             {
+                Id = character.Id,
                 Name = character.Name,
                 Description = character.CharDescription,
                 Notes = character.Notes
             };
 
-            newCharacter = characterRepro.CreateCharacter(newCharacter);
-
-            return Get(newCharacter.Id);
-        }
-
-        public HttpResponseMessage Put(CharacterViewModel character)
-        {
-            throw new NotImplementedException();
-            return Request.CreateResponse(HttpStatusCode.OK);
+            if(dbCharacter.Id > 0)
+            {
+                characterRepro.UpdateCharacter(dbCharacter);
+            } else
+            {
+                dbCharacter = characterRepro.CreateCharacter(dbCharacter);
+            }
+            
+            return Get(dbCharacter.Id);
         }
 
         public HttpResponseMessage PostAssociateToSession(int characterId, int sessionId)

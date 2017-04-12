@@ -20,6 +20,7 @@ insert into Campaign values('Dr. Perl and the Ruby Python',3)
 
 insert into Session values('Trained to kill: A locomotive mystery!',1,null,1,'Some interesting notes here!');
 insert into Session values('A Dark and Stormy Knight',2,null,1,'Wow!  Other notes!');
+insert into Session values('Off the Ruby Rails',3,null,1,'Wow!  Other notes!');
 
 insert into Character values(null,'Dr. Larson','The hero!','Notes and stuff');
 insert into Character values(null,'Soren','The other guy!!','Notes and stuff');

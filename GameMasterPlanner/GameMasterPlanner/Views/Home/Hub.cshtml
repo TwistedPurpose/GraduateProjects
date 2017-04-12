@@ -13,7 +13,10 @@
                    },
                    value: CurrentSession,
                    optionsCaption: 'Choose...'"></select>
-            <span class="glyphicon glyphicon-plus"></span>
+            <a data-bind="click:newSession">
+                <span class="glyphicon glyphicon-plus"></span>
+            </a>
+
         </div>
     </div>
 
@@ -66,10 +69,13 @@
             <div class="row">
                 <div class="col-sm-4">
                     <button class="btn btn-default" data-bind="click:createCharacter">Add Character</button>
-                    <div class="row " data-bind="foreach:CharacterList">
-                        <div class="row"><span data-bind="text:Name"></span></div>
-
-                    </div>
+                    <ul class="row" data-bind="foreach:CharacterList">
+                        <li>
+                            <a data-bind="click:$parent.editCharacter">
+                                <span data-bind="text:Name" />
+                            </a>
+                        </li>
+                    </ul>
                 </div>
 
             </div>
@@ -81,8 +87,6 @@
             </div>
         </div>
     </div>
-
-    
 </div>
 
 <div class="modal fade" id="addCharacterModal" data-bind="modal: showAddCharacterModal">

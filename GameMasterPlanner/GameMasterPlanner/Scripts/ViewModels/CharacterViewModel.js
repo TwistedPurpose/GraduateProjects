@@ -2,18 +2,27 @@
     constructor(data) {
         if (data) {
             this.Id = data.Id;
-            this.HistoryId = data.HistoryId;
+            this.SessionId = data.SessionId;
             this.Name = ko.observable(data.Name);
-            this.CharDescription = ko.observable(data.Description);
+            this.CharDescription = ko.observable(data.CharDescription);
             this.Notes = ko.observable(data.Notes);
         } else {
             this.Id;
-            this.HistoryId;
+            this.SessionId;
             this.Name = ko.observable();
             this.CharDescription = ko.observable();
             this.Notes = ko.observable();
         }
 
+    }
+
+    setupToEdit(character) {
+        this.Id = character.Id;
+        this.SessionId = character.SessionId;
+        this.HistoryId = character.HistoryId;
+        this.Name(character.Name());
+        this.CharDescription(character.CharDescription());
+        this.Notes(character.Notes());
     }
 
     toJson() {
@@ -41,11 +50,6 @@
     loadCharacter(characterId) {
         $.getJSON(baseUrl + "api/Character?characterId=" + characterId, function (data) { });
 
-    }
-
-    associateToSession(SessionId) {
-        $.post(baseURL + 'api/Character/PostAssociateToSession?characterId=' + this.Id + '&sessionId=' + SessionId,
-            this.toJson(), function (returnedData) { });
     }
 }
 

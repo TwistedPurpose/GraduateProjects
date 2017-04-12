@@ -18,6 +18,7 @@ namespace GameMasterPlanner.Controllers.API
         {
             sessionRepository = new SessionRepository();
         }
+
         /// <summary>
         /// Get all sessions based on campaign ID
         /// </summary>
@@ -42,21 +43,22 @@ namespace GameMasterPlanner.Controllers.API
             Session dbSession = new Session()
             {
                 Id = session.Id,
+                CampaignId = session.CampaignId,
                 Title = session.Title,
                 Notes = session.Notes,
                 SessionNumber = session.SessionNumber,
                 BaseMapId = session.BaseMapId
             };
 
-            if (dbSession.Id != 0)
+            if (session.Id > 0)
             {
                 sessionRepository.UpdateSession(dbSession);
             } else
             {
-                sessionRepository.CreateSession(dbSession);
+                dbSession = sessionRepository.CreateSession(dbSession);
             }
             
-            return Request.CreateResponse(HttpStatusCode.OK);
+            return Request.CreateResponse(HttpStatusCode.OK, dbSession);
         }
 
     }

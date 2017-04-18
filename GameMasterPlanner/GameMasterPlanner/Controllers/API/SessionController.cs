@@ -44,8 +44,8 @@ namespace GameMasterPlanner.Controllers.API
             {
                 Id = session.Id,
                 CampaignId = session.CampaignId,
-                Title = session.Title,
-                Notes = session.Notes,
+                Title = session.Title.Trim(),
+                Notes = session.Notes.Trim(),
                 SessionNumber = session.SessionNumber,
                 BaseMapId = session.BaseMapId
             };

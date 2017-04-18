@@ -142,11 +142,11 @@ $.getJSON(baseURL + 'api/Session?id=' + campaignId, function (data) {
     }
 
 
-    $.getJSON(baseURL + 'api/Character/GetSessionCharacters?sessionId=' + hubViewModel.CurrentSession().Id, function (data) {
-        data.forEach(function (characterData) {
-            hubViewModel.CharacterList.push(new CharacterViewModel(characterData));
-        });
-    });
+    //$.getJSON(baseURL + 'api/Character/GetSessionCharacters?sessionId=' + hubViewModel.CurrentSession().Id, function (data) {
+    //    data.forEach(function (characterData) {
+    //        hubViewModel.CharacterList.push(new CharacterViewModel(characterData));
+    //    });
+    //});
 
     ko.applyBindings(hubViewModel);
 });

@@ -31,7 +31,7 @@ namespace GameMasterPlanner.Controllers.API
 
             Campaign campaignDb = new Campaign()
             {
-                Name = newCampaign.Name
+                Name = newCampaign.Name.Trim()
             };
 
             Session newSession = new Session();
@@ -43,7 +43,7 @@ namespace GameMasterPlanner.Controllers.API
 
                 var campaignHistory = new History()
                 {
-                    Description = newCampaign.History
+                    Description = newCampaign.History.Trim()
                 };
                 campaignDb.History = campaignHistory;
 

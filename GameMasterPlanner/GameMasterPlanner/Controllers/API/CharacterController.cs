@@ -41,9 +41,9 @@ namespace GameMasterPlanner.Controllers.API
             Character dbCharacter = new Character()
             {
                 Id = character.Id,
-                Name = character.Name,
-                Description = character.CharDescription,
-                Notes = character.Notes
+                Name = character.Name.Trim(),
+                Description = character.CharDescription.Trim(),
+                Notes = character.Notes.Trim()
             };
 
             if(dbCharacter.Id > 0)

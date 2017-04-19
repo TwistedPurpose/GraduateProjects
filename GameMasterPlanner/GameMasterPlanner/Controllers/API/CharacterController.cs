@@ -16,7 +16,7 @@ namespace GameMasterPlanner.Controllers.API
         {
             characterRepro = new CharacterRepository();
             sessionRepro = new SessionRepository();
-    }
+        }
 
         private CharacterRepository characterRepro;
         private SessionRepository sessionRepro;
@@ -36,24 +36,39 @@ namespace GameMasterPlanner.Controllers.API
             return Request.CreateResponse(HttpStatusCode.OK, character);
         }
 
+        public HttpResponseMessage GetAll(int campaignId)
+        {
+            List<CharacterViewModel> characters = characterRepro.GetAllCharacters(campaignId)
+                .Select(x => new CharacterViewModel()
+                {
+                    Id = x.Id,
+                    CharDescription = x.Description,
+                    Notes = x.Notes,
+                    Name = x.Name
+                }).ToList();
+
+            return Request.CreateResponse(HttpStatusCode.OK, characters);
+        }
+
         public HttpResponseMessage Post(CharacterViewModel character)
         {
             Character dbCharacter = new Character()
             {
                 Id = character.Id,
-                Name = character.Name.Trim(),
-                Description = character.CharDescription.Trim(),
-                Notes = character.Notes.Trim()
+                Name = String.IsNullOrWhiteSpace(character.Name) ? String.Empty : character.Name.Trim(),
+                Description = String.IsNullOrWhiteSpace(character.CharDescription) ? String.Empty : character.CharDescription.Trim(),
+                Notes = String.IsNullOrWhiteSpace(character.Notes) ? String.Empty : character.Notes.Trim()
             };
 
-            if(dbCharacter.Id > 0)
+            if (dbCharacter.Id > 0)
             {
                 characterRepro.UpdateCharacter(dbCharacter);
-            } else
+            }
+            else
             {
                 dbCharacter = characterRepro.CreateCharacter(dbCharacter);
             }
-            
+
             return Get(dbCharacter.Id);
         }
 

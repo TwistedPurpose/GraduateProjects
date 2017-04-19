@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "CharacterLibrary";
+}
+
+<h2>CharacterLibrary</h2>
+
+<div class="row">
+    <div class="row">
+        <select data-bind="options: CampaignList,
+                   optionsText: function(item) { return item.Name; },
+                   value: CurrentCampaign" />
+    </div>
+
+
+    <div class="row" data-bind="foreach:CharacterList">
+        <span data-bind="Name"></span>
+    </div>
+</div>

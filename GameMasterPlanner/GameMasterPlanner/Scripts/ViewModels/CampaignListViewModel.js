@@ -1,19 +1,8 @@
-﻿class Campaign {
-    constructor(id, name, history) {
-        this.name = name;
-        this.history = history;
-        this.id = id;
-        this.hubURL = ko.computed(function () {
-            return baseURL + 'Home/Hub?campaignId=' + id;
-        }, this);   
-    }
-}
-
-class CampaignList {
+﻿class CampaignList {
     constructor(data) {
         let list = [];
         data.forEach(function (campaign) {
-            list.push(new Campaign(campaign.Id, campaign.Name, campaign.History));
+            list.push(new Campaign(campaign));
         });
         this.campaignList = ko.observableArray(list);
 
@@ -22,14 +11,16 @@ class CampaignList {
     }
 
     addCampagin() {
-        let data = new Campaign(-1, this.newCampaginName(), this.newCampaginHistory());
+        let self = this;
+
+        let data = { Name: self.newCampaginName(), History: self.newCampaginHistory()};
         
         this.campaignList.removeAll();
         var list = this.campaignList;
         
         $.post(baseURL + 'api/Campaign', data, function (returnedData) {
             returnedData.forEach(function (campaign) {
-                list.push(new Campaign(campaign.Id, campaign.Name, campaign.History));
+                list.push(new Campaign(campaign));
             });
         });
 

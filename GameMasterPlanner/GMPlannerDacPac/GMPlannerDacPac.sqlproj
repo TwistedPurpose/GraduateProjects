@@ -78,6 +78,7 @@
   <ItemGroup>
     <None Include="GMPlannerDacPac.publish.xml" />
     <None Include="AzureDBPublish.publish.xml" />
+    <None Include="GMPlannerDacPac_1.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="GMPlannerDacPac.refactorlog" />

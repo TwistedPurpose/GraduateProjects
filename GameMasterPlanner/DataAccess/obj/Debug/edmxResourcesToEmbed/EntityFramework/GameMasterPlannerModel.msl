@@ -32,6 +32,7 @@
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="HistoryId" ColumnName="HistoryId" />
+          <ScalarProperty Name="CampaignId" ColumnName="CampaignId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

@@ -22,8 +22,8 @@ insert into Session values('Trained to kill: A locomotive mystery!',1,null,1,'So
 insert into Session values('A Dark and Stormy Knight',2,null,1,'Wow!  Other notes!');
 insert into Session values('Off the Ruby Rails',3,null,1,'Wow!  Other notes!');
 
-insert into Character values(null,'Dr. Larson','The hero!','Notes and stuff');
-insert into Character values(null,'Soren','The other guy!!','Notes and stuff');
+insert into Character values(1,null,'Dr. Larson','The hero!','Notes and stuff');
+insert into Character values(1,null,'Soren','The other guy!!','Notes and stuff');
 
 insert into CharacterSessions values(1,1);
 insert into CharacterSessions values(2,1);

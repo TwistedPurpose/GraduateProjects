@@ -55,6 +55,7 @@ namespace GameMasterPlanner.Controllers.API
             Character dbCharacter = new Character()
             {
                 Id = character.Id,
+                CampaignId = character.CampaignId,
                 Name = String.IsNullOrWhiteSpace(character.Name) ? String.Empty : character.Name.Trim(),
                 Description = String.IsNullOrWhiteSpace(character.CharDescription) ? String.Empty : character.CharDescription.Trim(),
                 Notes = String.IsNullOrWhiteSpace(character.Notes) ? String.Empty : character.Notes.Trim()
@@ -83,10 +84,10 @@ namespace GameMasterPlanner.Controllers.API
         {
             var list = characterRepro.GetCharactersInSession(sessionId);
 
-
             List<CharacterViewModel> charList = list.Select(c => new CharacterViewModel()
             {
                 Id = c.Id,
+                CampaignId = c.CampaignId,
                 CharDescription = c.Description,
                 Name = c.Name,
                 Notes = c.Notes

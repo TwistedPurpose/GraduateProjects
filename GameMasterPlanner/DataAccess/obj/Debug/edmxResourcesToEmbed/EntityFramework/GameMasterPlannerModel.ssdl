@@ -27,6 +27,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CampaignId" Type="int" Nullable="false" />
     <Property Name="HistoryId" Type="int" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Description" Type="nchar" MaxLength="1000" />
@@ -96,6 +97,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Character_Campaign">
+    <End Role="Campaign" Type="Self.Campaign" Multiplicity="1" />
+    <End Role="Character" Type="Self.Character" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Campaign">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Character">
+        <PropertyRef Name="CampaignId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Character_Session_CharacterId">
     <End Role="Character" Type="Self.Character" Multiplicity="1" />
     <End Role="CharacterSessions" Type="Self.CharacterSessions" Multiplicity="*" />
@@ -158,6 +171,10 @@
     <AssociationSet Name="FK_Campaign_ToHistory" Association="Self.FK_Campaign_ToHistory">
       <End Role="History" EntitySet="History" />
       <End Role="Campaign" EntitySet="Campaign" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Character_Campaign" Association="Self.FK_Character_Campaign">
+      <End Role="Campaign" EntitySet="Campaign" />
+      <End Role="Character" EntitySet="Character" />
     </AssociationSet>
     <AssociationSet Name="FK_Character_Session_CharacterId" Association="Self.FK_Character_Session_CharacterId">
       <End Role="Character" EntitySet="Character" />

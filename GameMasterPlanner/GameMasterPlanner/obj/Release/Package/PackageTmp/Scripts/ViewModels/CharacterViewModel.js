@@ -2,12 +2,14 @@
     constructor(data) {
         if (data) {
             this.Id = data.Id;
+            this.CampaignId = data.CampaignId;
             this.SessionId = data.SessionId;
             this.Name = ko.observable(data.Name);
             this.CharDescription = ko.observable(data.CharDescription);
             this.Notes = ko.observable(data.Notes);
         } else {
             this.Id;
+            this.CampaignId;
             this.SessionId;
             this.Name = ko.observable();
             this.CharDescription = ko.observable();
@@ -18,6 +20,7 @@
 
     setupToEdit(character) {
         this.Id = character.Id;
+        this.CampaignId = character.CampaignId;
         this.SessionId = character.SessionId;
         this.HistoryId = character.HistoryId;
         this.Name(character.Name());
@@ -30,6 +33,7 @@
 
         let character = {
             Id: self.Id,
+            CampaignId: self.CampaignId,
             HistoryId: self.HistoryId,
             Name: self.Name(),
             CharDescription: self.CharDescription(),

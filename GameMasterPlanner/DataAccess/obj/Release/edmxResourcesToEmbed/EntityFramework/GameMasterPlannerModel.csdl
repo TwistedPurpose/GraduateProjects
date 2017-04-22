@@ -14,6 +14,10 @@
       <End Role="History" EntitySet="Histories" />
       <End Role="Campaign" EntitySet="Campaigns" />
     </AssociationSet>
+    <AssociationSet Name="FK_Character_Campaign" Association="GameMasterPlannerDBModel.FK_Character_Campaign">
+      <End Role="Campaign" EntitySet="Campaigns" />
+      <End Role="Character" EntitySet="Characters" />
+    </AssociationSet>
     <AssociationSet Name="FK_Session_ToCampaign" Association="GameMasterPlannerDBModel.FK_Session_ToCampaign">
       <End Role="Campaign" EntitySet="Campaigns" />
       <End Role="Session" EntitySet="Sessions" />
@@ -41,6 +45,7 @@
     <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="HistoryId" Type="Int32" />
     <NavigationProperty Name="History" Relationship="GameMasterPlannerDBModel.FK_Campaign_ToHistory" FromRole="Campaign" ToRole="History" />
+    <NavigationProperty Name="Characters" Relationship="GameMasterPlannerDBModel.FK_Character_Campaign" FromRole="Campaign" ToRole="Character" />
     <NavigationProperty Name="Sessions" Relationship="GameMasterPlannerDBModel.FK_Session_ToCampaign" FromRole="Campaign" ToRole="Session" />
   </EntityType>
   <EntityType Name="CampaignSession">
@@ -56,10 +61,12 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CampaignId" Type="Int32" Nullable="false" />
     <Property Name="HistoryId" Type="Int32" />
     <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Description" Type="String" MaxLength="1000" FixedLength="true" Unicode="true" />
     <Property Name="Notes" Type="String" MaxLength="1000" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Campaign" Relationship="GameMasterPlannerDBModel.FK_Character_Campaign" FromRole="Character" ToRole="Campaign" />
     <NavigationProperty Name="Sessions" Relationship="GameMasterPlannerDBModel.CharacterSessions" FromRole="Character" ToRole="Session" />
   </EntityType>
   <EntityType Name="History">
@@ -120,6 +127,18 @@
       </Principal>
       <Dependent Role="Campaign">
         <PropertyRef Name="HistoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Character_Campaign">
+    <End Type="GameMasterPlannerDBModel.Campaign" Role="Campaign" Multiplicity="1" />
+    <End Type="GameMasterPlannerDBModel.Character" Role="Character" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Campaign">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Character">
+        <PropertyRef Name="CampaignId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

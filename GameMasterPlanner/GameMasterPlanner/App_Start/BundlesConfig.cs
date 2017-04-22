@@ -30,7 +30,13 @@ namespace GameMasterPlanner.App_Start
                 "~/Scripts/Common/Helper.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/campaign").Include(
-                "~/Scripts/ViewModels/Campaign.js"));
+                "~/Scripts/ViewModels/CampaignViewModel.js",
+                "~/Scripts/ViewModels/CampaignListViewModel.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/characterLibrary").Include(
+                "~/Scripts/ViewModels/CampaignViewModel.js",
+                "~/Scripts/ViewModels/CharacterViewModel.js",
+                "~/Scripts/ViewModels/CharacterLibraryViewModel.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/character").Include(
                 "~/Scripts/ViewModels/CharacterViewModel.js"));

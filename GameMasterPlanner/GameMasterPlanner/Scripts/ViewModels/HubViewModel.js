@@ -45,17 +45,17 @@
 
         this.Map = map;
 
-        this.showAddCharacterModal = ko.observable(false);
+        this.showAddEditCharacterModal = ko.observable(false);
 
-        this.addCharacterVM = new CharacterViewModel(null);
+        this.addEditCharacterVM = new CharacterViewModel(null);
 
         this.editCharacter = (character) => {
-            this.addCharacterVM.setupToEdit(character);
-            this.showAddCharacterModal(true);
+            this.addEditCharacterVM.setupToEdit(character);
+            this.showAddEditCharacterModal(true);
         }
 
         $('#addCharacterModal').on('hidden.bs.modal', function () {
-            self.addCharacterVM.clear();
+            self.addEditCharacterVM.clear();
 
         });
 
@@ -74,7 +74,7 @@
     }
 
     createCharacter() {
-        this.showAddCharacterModal(true);
+        this.showAddEditCharacterModal(true);
     }
 
     saveSession() {
@@ -98,11 +98,13 @@
 
     saveCharacter() {
         let self = this;
-        self.showAddCharacterModal(false);
-        this.CharacterList.removeAll();
+        self.showAddEditCharacterModal(false);
+        self.CharacterList.removeAll();
 
-        if (this.addCharacterVM.Id) {
-            $.post(baseURL + 'api/Character', self.addCharacterVM.toJson(), function (returnedData) {
+        self.addEditCharacterVM.CampaignId = self.CampaignId;
+
+        if (this.addEditCharacterVM.Id) {
+            $.post(baseURL + 'api/Character', self.addEditCharacterVM.toJson(), function (returnedData) {
                 $.getJSON(baseURL + 'api/Character/GetSessionCharacters?sessionId=' + self.CurrentSession().Id, function (data) {
                     data.forEach(function (characterData) {
                         self.CharacterList.push(new CharacterViewModel(characterData));
@@ -110,13 +112,13 @@
                 });
             });
         } else {
-            $.post(baseURL + 'api/Character', self.addCharacterVM.toJson(), function (returnedData) {
-                self.addCharacterVM.Id = returnedData.Id;
+            $.post(baseURL + 'api/Character', self.addEditCharacterVM.toJson(), function (returnedData) {
+                self.addEditCharacterVM.Id = returnedData.Id;
 
                 if (self.CurrentSession().Id) {
-                    $.post(baseURL + 'api/Character/PostAssociateToSession?characterId=' + self.addCharacterVM.Id +
+                    $.post(baseURL + 'api/Character/PostAssociateToSession?characterId=' + self.addEditCharacterVM.Id +
                         '&sessionId=' + self.CurrentSession().Id,
-                        self.addCharacterVM.toJson(), function (returnedData) {
+                        self.addEditCharacterVM.toJson(), function (returnedData) {
 
                             $.getJSON(baseURL + 'api/Character/GetSessionCharacters?sessionId=' + self.CurrentSession().Id, function (data) {
                                 data.forEach(function (characterData) {

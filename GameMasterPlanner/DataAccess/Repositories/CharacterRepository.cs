@@ -17,7 +17,11 @@ namespace DataAccess.Repositories
         /// <returns></returns>
         public List<Character> GetAllCharacters(int campaignId)
         {
-            return new List<Character>();
+            var list = from characters in db.Characters
+                       where characters.CampaignId == campaignId
+                       select characters;
+
+            return list.ToList();
         }
 
         public List<Character> GetCharactersInSession(int sessionId)
@@ -25,7 +29,6 @@ namespace DataAccess.Repositories
             var list = from session in db.Sessions
                        where session.Id == sessionId
                        select session.Characters;
-
 
             return list.FirstOrDefault().ToList();
         }

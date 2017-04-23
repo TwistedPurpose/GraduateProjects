@@ -110,7 +110,7 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Title" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
-    <Property Name="CampaignId" Type="Int32" />
+    <Property Name="CampaignId" Type="Int32" Nullable="false" />
     <Property Name="BaseMapId" Type="Int32" />
     <Property Name="SessionNumber" Type="Int32" Nullable="false" />
     <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -143,7 +143,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Session_ToCampaign">
-    <End Type="GameMasterPlannerDBModel.Campaign" Role="Campaign" Multiplicity="0..1" />
+    <End Type="GameMasterPlannerDBModel.Campaign" Role="Campaign" Multiplicity="1" />
     <End Type="GameMasterPlannerDBModel.Session" Role="Session" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Campaign">

@@ -1,8 +1,8 @@
 ﻿CREATE TABLE [dbo].[Session]
 (
 	[Id] INT identity NOT NULL,
-	[Title] NVARCHAR(40) NULL, 
-	[CampaignId] Int NULL,
+	[Title] NVARCHAR(200) NULL, 
+	[CampaignId] Int NOT NULL,
 	[BaseMapId] INT NULL, 
 	[SessionNumber] INT NOT NULL,
     [Notes] NVARCHAR(MAX) NULL, 

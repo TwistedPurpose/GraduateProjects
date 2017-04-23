@@ -22,7 +22,7 @@ namespace DataAccess.EntityFramework
     
         public int Id { get; set; }
         public string Title { get; set; }
-        public Nullable<int> CampaignId { get; set; }
+        public int CampaignId { get; set; }
         public Nullable<int> BaseMapId { get; set; }
         public int SessionNumber { get; set; }
         public string Notes { get; set; }

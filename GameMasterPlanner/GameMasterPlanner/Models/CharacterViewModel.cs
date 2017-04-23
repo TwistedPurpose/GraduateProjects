@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataAccess.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,5 +13,6 @@ namespace GameMasterPlanner.Models
         public string Name { get; set; }
         public string CharDescription { get; set; }
         public string Notes { get; set; }
+        public List<SessionViewModel> SessionList { get; set; }
     }
 }

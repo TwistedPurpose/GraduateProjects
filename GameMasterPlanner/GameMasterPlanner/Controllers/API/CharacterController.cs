@@ -1,5 +1,6 @@
 ﻿using DataAccess.EntityFramework;
 using DataAccess.Repositories;
+using GameMasterPlanner.Helper;
 using GameMasterPlanner.Models;
 using System;
 using System.Collections.Generic;
@@ -12,26 +13,20 @@ namespace GameMasterPlanner.Controllers.API
 {
     public class CharacterController : ApiController
     {
+        private CharacterRepository characterRepro;
+        private SessionRepository sessionRepro;
+
         public CharacterController()
         {
             characterRepro = new CharacterRepository();
             sessionRepro = new SessionRepository();
         }
 
-        private CharacterRepository characterRepro;
-        private SessionRepository sessionRepro;
-
         public HttpResponseMessage Get(int characterId)
         {
             Character c = characterRepro.GetCharacter(characterId);
 
-            CharacterViewModel character = new CharacterViewModel()
-            {
-                Id = c.Id,
-                Name = c.Name,
-                CharDescription = c.Description,
-                Notes = c.Notes
-            };
+            CharacterViewModel character = ModelConverter.ToCharacterViewModel(c);
 
             return Request.CreateResponse(HttpStatusCode.OK, character);
         }
@@ -39,27 +34,14 @@ namespace GameMasterPlanner.Controllers.API
         public HttpResponseMessage GetAll(int campaignId)
         {
             List<CharacterViewModel> characters = characterRepro.GetAllCharacters(campaignId)
-                .Select(x => new CharacterViewModel()
-                {
-                    Id = x.Id,
-                    CharDescription = x.Description,
-                    Notes = x.Notes,
-                    Name = x.Name
-                }).ToList();
+                .Select(x => ModelConverter.ToCharacterViewModel(x)).ToList();
 
             return Request.CreateResponse(HttpStatusCode.OK, characters);
         }
 
         public HttpResponseMessage Post(CharacterViewModel character)
         {
-            Character dbCharacter = new Character()
-            {
-                Id = character.Id,
-                CampaignId = character.CampaignId,
-                Name = String.IsNullOrWhiteSpace(character.Name) ? String.Empty : character.Name.Trim(),
-                Description = String.IsNullOrWhiteSpace(character.CharDescription) ? String.Empty : character.CharDescription.Trim(),
-                Notes = String.IsNullOrWhiteSpace(character.Notes) ? String.Empty : character.Notes.Trim()
-            };
+            Character dbCharacter = ModelConverter.ToDbCharacterModel(character);
 
             if (dbCharacter.Id > 0)
             {
@@ -84,14 +66,7 @@ namespace GameMasterPlanner.Controllers.API
         {
             var list = characterRepro.GetCharactersInSession(sessionId);
 
-            List<CharacterViewModel> charList = list.Select(c => new CharacterViewModel()
-            {
-                Id = c.Id,
-                CampaignId = c.CampaignId,
-                CharDescription = c.Description,
-                Name = c.Name,
-                Notes = c.Notes
-            }).ToList();
+            List<CharacterViewModel> charList = list.Select(c => ModelConverter.ToCharacterViewModel(c)).ToList();
 
             return Request.CreateResponse(HttpStatusCode.OK, charList);
         }

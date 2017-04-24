@@ -16,15 +16,25 @@
         <button class="btn btn-default" data-bind="click:createCharacter">Add Character</button>
     </div>
 
-    <div class="row">
-        <ul data-bind="foreach:CharacterList">
-            <li>
+    <div class="row" style="margin-bottom: 10px; font-weight: bold">
+        <div class="col-md-2">Character Name
+        </div>
+        <div class="col-md-10">
+            Sessions Character Is In
+        </div>
+    </div>
+    <div class="row" data-bind="foreach:CharacterList">
+        
+        <div class="row">
+            <div class="col-md-2">
                 <a data-bind="click:$parent.editCharacter">
                     <span data-bind="text:Name"></span>
                 </a>
-            </li>
-        </ul>
-
+            </div>
+            <div class="col-md-10" data-bind="foreach:SessionList">
+                <span data-bind="text:Title"></span>
+            </div>
+        </div>
     </div>
 </div>
 

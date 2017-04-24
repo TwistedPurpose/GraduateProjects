@@ -7,6 +7,7 @@
             this.Name = ko.observable(data.Name);
             this.CharDescription = ko.observable(data.CharDescription);
             this.Notes = ko.observable(data.Notes);
+            this.SessionList = ko.observableArray(data.SessionList);
         } else {
             this.Id;
             this.CampaignId;
@@ -14,6 +15,7 @@
             this.Name = ko.observable();
             this.CharDescription = ko.observable();
             this.Notes = ko.observable();
+            this.SessionList = ko.observableArray([]);
         }
 
     }
@@ -50,10 +52,17 @@
         this.CharDescription(null);
         this.Notes(null);
     }
+}
 
-    loadCharacter(characterId) {
-        $.getJSON(baseUrl + "api/Character?characterId=" + characterId, function (data) { });
+class CharacterListViewModel {
+    constructor(data) {
+        if (data) {
+            this.CharacterList = ko.observableArray(data.CharacterList);
+            this.SelectedCharacters = ko.observableArray(data.SelectedCharacters);
+        } else {
+            this.CharacterList = ko.observableArray([]);
+            this.SelectedCharacters = ko.observableArray([]);
+        }
 
     }
 }
-

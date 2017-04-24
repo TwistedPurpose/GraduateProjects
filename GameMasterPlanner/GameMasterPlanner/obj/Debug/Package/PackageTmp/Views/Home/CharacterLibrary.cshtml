@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "Character Library";
+}
+
+<h2>CharacterLibrary</h2>
+
+<div class="row">
+    <div class="row">
+        <select data-bind="options: CampaignList,
+                   optionsText: function(item) { return item.Name; },
+                   value: CurrentCampaign"></select>
+    </div>
+
+    <div class="row">
+        <button class="btn btn-default" data-bind="click:createCharacter">Add Character</button>
+    </div>
+
+    <div class="row">
+        <div class="row" data-bind="foreach:CharacterList">
+            <div class="col-md-2"> <a data-bind="click:$parent.editCharacter">
+                    <span data-bind="text:Name"></span>
+                </a></div>
+            <div class="col-md-10" data-bind="foreach:SessionList">
+                <span data-bind="text:Title"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_AddCharacterModal")
+
+@Scripts.Render("~/bundles/characterLibrary")

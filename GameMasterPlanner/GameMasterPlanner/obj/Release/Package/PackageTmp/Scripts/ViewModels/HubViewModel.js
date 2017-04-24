@@ -46,8 +46,10 @@
         this.Map = map;
 
         this.showAddEditCharacterModal = ko.observable(false);
+        this.showAddExistingCharacterModal = ko.observable(false);
 
         this.addEditCharacterVM = new CharacterViewModel(null);
+        this.addExistingCharacterVM = new CharacterListViewModel(null);
 
         this.editCharacter = (character) => {
             this.addEditCharacterVM.setupToEdit(character);
@@ -56,7 +58,6 @@
 
         $('#addCharacterModal').on('hidden.bs.modal', function () {
             self.addEditCharacterVM.clear();
-
         });
 
         self.CurrentSession.subscribe(function (newValue) {
@@ -71,10 +72,6 @@
             }
 
         });
-    }
-
-    createCharacter() {
-        this.showAddEditCharacterModal(true);
     }
 
     saveSession() {
@@ -96,6 +93,10 @@
         });
     }
 
+    createCharacter() {
+        this.showAddEditCharacterModal(true);
+    }
+
     saveCharacter() {
         let self = this;
         self.showAddEditCharacterModal(false);
@@ -103,6 +104,7 @@
 
         self.addEditCharacterVM.CampaignId = self.CampaignId;
 
+        // Save an edited character
         if (this.addEditCharacterVM.Id) {
             $.post(baseURL + 'api/Character', self.addEditCharacterVM.toJson(), function (returnedData) {
                 $.getJSON(baseURL + 'api/Character/GetSessionCharacters?sessionId=' + self.CurrentSession().Id, function (data) {
@@ -112,6 +114,8 @@
                 });
             });
         } else {
+            //Save a new character
+
             $.post(baseURL + 'api/Character', self.addEditCharacterVM.toJson(), function (returnedData) {
                 self.addEditCharacterVM.Id = returnedData.Id;
 

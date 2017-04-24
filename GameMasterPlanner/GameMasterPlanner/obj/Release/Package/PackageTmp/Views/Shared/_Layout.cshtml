@@ -34,12 +34,11 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="#">Campaign List</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#">Campaign Hub</a></li>
+                    <li>@Html.ActionLink("Campaign List", "Index", "Home")</li>
+                    @*<li><a href="#">Campaign Hub</a></li>*@
                     <li>@Html.ActionLink("Character Library", "CharacterLibrary", "Home")</li>
-                    <li><a href="#">Session Library</a></li>
-                    <li><a href="#">Location Library</a></li>
+                    @*<li><a href="#">Session Library</a></li>*@
+                    @*<li><a href="#">Location Library</a></li>*@
                 </ul>
             </div>
         </div>

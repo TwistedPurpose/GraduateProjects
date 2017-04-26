@@ -52,7 +52,12 @@ namespace GameMasterPlanner.Controllers.API
                 dbCharacter = characterRepro.CreateCharacter(dbCharacter);
             }
 
-            return Get(dbCharacter.Id);
+            if(character.SessionId > 0)
+            {
+                sessionRepro.AssociateCharacterToSession(dbCharacter.Id, character.SessionId);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, ModelConverter.ToCharacterViewModel(dbCharacter));
         }
 
         public HttpResponseMessage PostAssociateToSession(int characterId, int sessionId)

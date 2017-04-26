@@ -100,37 +100,30 @@
     saveCharacter() {
         let self = this;
         self.showAddEditCharacterModal(false);
-        self.CharacterList.removeAll();
+        //self.CharacterList.removeAll();
 
         self.addEditCharacterVM.CampaignId = self.CampaignId;
 
         // Save an edited character
         if (this.addEditCharacterVM.Id) {
             $.post(baseURL + 'api/Character', self.addEditCharacterVM.toJson(), function (returnedData) {
-                $.getJSON(baseURL + 'api/Character/GetSessionCharacters?sessionId=' + self.CurrentSession().Id, function (data) {
-                    data.forEach(function (characterData) {
-                        self.CharacterList.push(new CharacterViewModel(characterData));
-                    });
+
+                let indexOfCharacter = arrayFirstIndexOf(self.CharacterList(), function (character) {
+                    return character.Id === returnedData.Id;
                 });
+
+                self.CharacterList()[indexOfCharacter] = new CharacterViewModel(returnedData);
+                self.CharacterList.valueHasMutated();
             });
         } else {
             //Save a new character
 
+            self.addEditCharacterVM.SessionId = self.CurrentSession().Id;
+
             $.post(baseURL + 'api/Character', self.addEditCharacterVM.toJson(), function (returnedData) {
                 self.addEditCharacterVM.Id = returnedData.Id;
 
-                if (self.CurrentSession().Id) {
-                    $.post(baseURL + 'api/Character/PostAssociateToSession?characterId=' + self.addEditCharacterVM.Id +
-                        '&sessionId=' + self.CurrentSession().Id,
-                        self.addEditCharacterVM.toJson(), function (returnedData) {
-
-                            $.getJSON(baseURL + 'api/Character/GetSessionCharacters?sessionId=' + self.CurrentSession().Id, function (data) {
-                                data.forEach(function (characterData) {
-                                    self.CharacterList.push(new CharacterViewModel(characterData));
-                                });
-                            });
-                        });
-                }
+                self.CharacterList.push(new CharacterViewModel(returnedData));
             });
         }
     }

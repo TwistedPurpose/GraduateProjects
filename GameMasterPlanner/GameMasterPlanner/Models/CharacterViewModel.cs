@@ -10,6 +10,8 @@ namespace GameMasterPlanner.Models
     {
         public int Id { get; set; }
         public int CampaignId { get; set; }
+        // for associating new sessions
+        public int SessionId { get; set; }
         public string Name { get; set; }
         public string CharDescription { get; set; }
         public string Notes { get; set; }

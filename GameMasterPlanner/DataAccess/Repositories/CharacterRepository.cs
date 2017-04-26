@@ -37,7 +37,7 @@ namespace DataAccess.Repositories
         {
             return (from character in db.Characters
                     where character.Id == characterId
-                    select character).FirstOrDefault();
+                    select character).Include(s => s.Sessions).FirstOrDefault();
         }
 
         public Character CreateCharacter(Character character)

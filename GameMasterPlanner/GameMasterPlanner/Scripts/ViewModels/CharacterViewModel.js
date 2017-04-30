@@ -66,6 +66,5 @@ class CharacterListViewModel {
             this.CharacterList = ko.observableArray([]);
             this.SelectedCharacters = ko.observableArray([]);
         }
-
     }
 }

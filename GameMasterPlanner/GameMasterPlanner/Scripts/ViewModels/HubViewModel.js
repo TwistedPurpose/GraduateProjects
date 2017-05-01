@@ -68,20 +68,6 @@
                     data.forEach(function (characterData) {
                         self.CharacterList.push(new CharacterViewModel(characterData));
                     });
-
-                    //let characterListInfo = { CharacterList: self.CompleteCharacterList(), SelectedCharacters: self.CharacterList() };
-
-                    self.addExistingCharacterVM.CharacterList(self.CompleteCharacterList());
-
-                    self.addExistingCharacterVM.SelectedCharacters(self.CharacterList());
-
-                    //self.CharacterList().forEach(function (characterInSession) {
-                    //    let index = arrayFirstIndexOf(self.addExistingCharacterVM.CharacterList(), function (character) {
-                    //        return character.Id === characterInSession.Id;
-                    //    });
-
-                    //    self.addExistingCharacterVM.SelectedCharacters.push(self.addExistingCharacterVM.CharacterList()[index]);
-                    //});
                 });
             }
 
@@ -115,8 +101,44 @@
         });
     }
 
+    setupCharacterListForAssociation() {
+        self = this;
+
+        self.addExistingCharacterVM.CharacterList(self.CompleteCharacterList());
+
+        self.addExistingCharacterVM.SelectedCharacters.removeAll();
+
+        self.CharacterList().forEach(function (characterInSession) {
+            self.addExistingCharacterVM.SelectedCharacters.push(characterInSession.Id);
+        });
+    }
+
     addExistingCharacters() {
+        this.setupCharacterListForAssociation();
         this.showAddExistingCharacterModal(true);
+    }
+
+    //
+    associateCharacters() {
+        self = this;
+
+        self.showAddExistingCharacterModal(false);
+
+        let params = { sessionId: self.CurrentSession().Id, characterIds: self.addExistingCharacterVM.SelectedCharacters() };
+
+        $.post(baseURL + 'api/Character/PostAssociateCharactersWithSession', params);
+
+        self.CharacterList.removeAll();
+
+        self.addExistingCharacterVM.SelectedCharacters().forEach(function (characterId) {
+            let index = arrayFirstIndexOf(self.CompleteCharacterList(), function (character) {
+                return character.Id === characterId;
+            });
+
+            if (index >= 0) {
+                self.CharacterList.push(self.CompleteCharacterList()[index]);
+            }
+        });
     }
 
     createCharacter() {

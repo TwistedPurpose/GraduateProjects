@@ -53,9 +53,7 @@ namespace DataAccess.Repositories
                           where session.Id == sessionId
                          select session).FirstOrDefault();
 
-            Character c = (from character in db.Characters
-                           where character.Id == characterId
-                           select character).FirstOrDefault();
+            Character c = GetCharacterById(sessionId);
 
             s.Characters.Add(c);
 
@@ -69,9 +67,44 @@ namespace DataAccess.Repositories
 
             entry.State = EntityState.Modified;
 
-            //entry.Property(e => e.CampaignId).IsModified = false;
+            db.SaveChanges();
+        }
+
+        /// <summary>
+        /// Takes a list of character ids and associates with a session
+        /// This is destructive, the session will only have the
+        /// characters in the characterIds list.
+        /// </summary>
+        /// <param name="sessionId"></param>
+        /// <param name="characterIds"></param>
+        public void AssociateCharactersInSession(int sessionId, List<int> characterIds)
+        {
+            Session session = (from s in db.Sessions
+                               where s.Id == sessionId
+                               select s).FirstOrDefault();
+
+            session.Characters.Clear();
+
+            foreach(int characterId in characterIds)
+            {
+                Character c = GetCharacterById(characterId);
+
+                session.Characters.Add(c);
+            }
 
             db.SaveChanges();
+        }
+
+        /// <summary>
+        /// Gets the first instance of a character by ID
+        /// </summary>
+        /// <param name="characterId">Id of the character</param>
+        /// <returns>Character that matches id in input</returns>
+        private Character GetCharacterById (int characterId)
+        {
+            return (from character in db.Characters
+                           where character.Id == characterId
+                           select character).FirstOrDefault();
         }
     }
 }

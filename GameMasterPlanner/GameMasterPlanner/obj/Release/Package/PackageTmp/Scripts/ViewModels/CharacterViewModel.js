@@ -28,6 +28,7 @@
         this.Name(character.Name());
         this.CharDescription(character.CharDescription());
         this.Notes(character.Notes());
+        this.SessionList(character.SessionList());
     }
 
     toJson() {
@@ -36,10 +37,12 @@
         let character = {
             Id: self.Id,
             CampaignId: self.CampaignId,
+            SessionId: self.SessionId,
             HistoryId: self.HistoryId,
             Name: self.Name(),
             CharDescription: self.CharDescription(),
-            Notes: self.Notes()
+            Notes: self.Notes(),
+            SessionList: self.SessionList()
         }
 
         return character;
@@ -63,6 +66,5 @@ class CharacterListViewModel {
             this.CharacterList = ko.observableArray([]);
             this.SelectedCharacters = ko.observableArray([]);
         }
-
     }
 }

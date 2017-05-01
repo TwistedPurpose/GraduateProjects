@@ -3,13 +3,13 @@
     constructor(campaignId) {
         let self = this;
 
-        this.CampaignId = campaignId
+        this.CampaignId = campaignId;
         this.SessionList = ko.observableArray([]);
 
-        //Check here if there is no sessions
         this.CurrentSession = ko.observable();
 
         this.CharacterList = ko.observableArray([]);
+        this.CompleteCharacterList = ko.observableArray([]); 
         this.LocationList = ko.observableArray([]);
         this.OrganizationList = ko.observableArray([]);
 
@@ -72,6 +72,14 @@
             }
 
         });
+
+        $.getJSON(baseURL + 'api/Character/GetAll?campaignId=' + self.CampaignId, function (characterList) {
+            characterList.forEach(function (character) {
+                self.CompleteCharacterList.push(new CharacterViewModel(character));
+            });
+
+            self.addExistingCharacterVM.CharacterList(self.CompleteCharacterList());
+        });
     }
 
     saveSession() {
@@ -93,6 +101,46 @@
         });
     }
 
+    setupCharacterListForAssociation() {
+        self = this;
+
+        self.addExistingCharacterVM.CharacterList(self.CompleteCharacterList());
+
+        self.addExistingCharacterVM.SelectedCharacters.removeAll();
+
+        self.CharacterList().forEach(function (characterInSession) {
+            self.addExistingCharacterVM.SelectedCharacters.push(characterInSession.Id);
+        });
+    }
+
+    addExistingCharacters() {
+        this.setupCharacterListForAssociation();
+        this.showAddExistingCharacterModal(true);
+    }
+
+    //
+    associateCharacters() {
+        self = this;
+
+        self.showAddExistingCharacterModal(false);
+
+        let params = { sessionId: self.CurrentSession().Id, characterIds: self.addExistingCharacterVM.SelectedCharacters() };
+
+        $.post(baseURL + 'api/Character/PostAssociateCharactersWithSession', params);
+
+        self.CharacterList.removeAll();
+
+        self.addExistingCharacterVM.SelectedCharacters().forEach(function (characterId) {
+            let index = arrayFirstIndexOf(self.CompleteCharacterList(), function (character) {
+                return character.Id === characterId;
+            });
+
+            if (index >= 0) {
+                self.CharacterList.push(self.CompleteCharacterList()[index]);
+            }
+        });
+    }
+
     createCharacter() {
         this.showAddEditCharacterModal(true);
     }
@@ -100,37 +148,29 @@
     saveCharacter() {
         let self = this;
         self.showAddEditCharacterModal(false);
-        self.CharacterList.removeAll();
 
         self.addEditCharacterVM.CampaignId = self.CampaignId;
 
         // Save an edited character
         if (this.addEditCharacterVM.Id) {
             $.post(baseURL + 'api/Character', self.addEditCharacterVM.toJson(), function (returnedData) {
-                $.getJSON(baseURL + 'api/Character/GetSessionCharacters?sessionId=' + self.CurrentSession().Id, function (data) {
-                    data.forEach(function (characterData) {
-                        self.CharacterList.push(new CharacterViewModel(characterData));
-                    });
+
+                let indexOfCharacter = arrayFirstIndexOf(self.CharacterList(), function (character) {
+                    return character.Id === returnedData.Id;
                 });
+
+                self.CharacterList()[indexOfCharacter] = new CharacterViewModel(returnedData);
+                self.CharacterList.valueHasMutated();
             });
         } else {
             //Save a new character
 
+            self.addEditCharacterVM.SessionId = self.CurrentSession().Id;
+
             $.post(baseURL + 'api/Character', self.addEditCharacterVM.toJson(), function (returnedData) {
                 self.addEditCharacterVM.Id = returnedData.Id;
 
-                if (self.CurrentSession().Id) {
-                    $.post(baseURL + 'api/Character/PostAssociateToSession?characterId=' + self.addEditCharacterVM.Id +
-                        '&sessionId=' + self.CurrentSession().Id,
-                        self.addEditCharacterVM.toJson(), function (returnedData) {
-
-                            $.getJSON(baseURL + 'api/Character/GetSessionCharacters?sessionId=' + self.CurrentSession().Id, function (data) {
-                                data.forEach(function (characterData) {
-                                    self.CharacterList.push(new CharacterViewModel(characterData));
-                                });
-                            });
-                        });
-                }
+                self.CharacterList.push(new CharacterViewModel(returnedData));
             });
         }
     }
@@ -139,10 +179,13 @@
 let hubViewModel = new HubViewModel(campaignId);
 
 $.getJSON(baseURL + 'api/Session?id=' + campaignId, function (data) {
+    // Fill sessions list
     data.forEach(function (sessionData) {
         hubViewModel.SessionList.push(new SessionViewModel(sessionData));
     });
 
+    // If there are sessions, set the first one in the list to the
+    // current session
     if (hubViewModel.SessionList() && hubViewModel.SessionList().length > 0) {
         hubViewModel.CurrentSession(hubViewModel.SessionList()[0]);
     }

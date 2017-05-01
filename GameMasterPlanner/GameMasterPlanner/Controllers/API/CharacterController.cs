@@ -22,6 +22,11 @@ namespace GameMasterPlanner.Controllers.API
             sessionRepro = new SessionRepository();
         }
 
+        /// <summary>
+        /// Gets a single character by ID
+        /// </summary>
+        /// <param name="characterId">Id of character</param>
+        /// <returns>HTTP response with character view model object</returns>
         public HttpResponseMessage Get(int characterId)
         {
             Character c = characterRepro.GetCharacter(characterId);
@@ -76,5 +81,25 @@ namespace GameMasterPlanner.Controllers.API
             return Request.CreateResponse(HttpStatusCode.OK, charList);
         }
 
+        /// <summary>
+        /// Associates characters with a session
+        /// Process is destructive, session will ONLY contain these characters
+        /// </summary>
+        /// <param name="sessionId">Id of the session to be modified</param>
+        /// <param name="characterIds">ids of all the characers to be set to this session</param>
+        /// <returns>HTTP response for status of action</returns>
+        public HttpResponseMessage PostAssociateCharactersWithSession(SessionWithCharacters modelView)
+        {
+            characterRepro.AssociateCharactersInSession(modelView.sessionId, modelView.characterIds.ToList());
+
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+
+        public class SessionWithCharacters
+        {
+            public int sessionId { get; set; }
+            public int[] characterIds { get; set; }
+        }
     }
 }

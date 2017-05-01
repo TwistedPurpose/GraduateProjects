@@ -48,25 +48,25 @@
 
     saveCharacter() {
         let self = this;
-        self.showAddEditCharacterModal(false);
-
+        
         if (this.addEditCharacterVM.Id) {
             $.post(baseURL + 'api/Character', self.addEditCharacterVM.toJson(), function (returnedData) {
-                let indexOfCharacter = arrayFirstIndexOf(self.addEditCharacterVM, function (character) {
+                let indexOfCharacter = arrayFirstIndexOf(self.CharacterList(), function (character) {
                     return character.Id === returnedData.Id;
                 });
 
                 self.CharacterList()[indexOfCharacter] = new CharacterViewModel(returnedData);
+                self.CharacterList.valueHasMutated();
             });
         } else {
             self.addEditCharacterVM.CampaignId = self.CurrentCampaign().Id;
 
             $.post(baseURL + 'api/Character', self.addEditCharacterVM.toJson(), function (returnedData) {
-                self.CharacterList.push(returnedData);
+                self.CharacterList.push(new CharacterViewModel(returnedData));
             });
         }
 
-        self.addEditCharacterVM.clear();
+        self.showAddEditCharacterModal(false);
     }
 }
 

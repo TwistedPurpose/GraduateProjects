@@ -58,7 +58,7 @@ namespace GameMasterPlanner.Helper
         public static Session ToDbSessionModel(SessionViewModel vm)
         {
             Session dbSession = null;
-
+            throw new NotImplementedException();
             return dbSession;
         }
 
@@ -80,6 +80,29 @@ namespace GameMasterPlanner.Helper
             }
 
             return vm;
+        }
+
+        public static ItemViewModel ToItemViewModel(Item dbItem)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static Item ToDbItemModel(ItemViewModel itemVM)
+        {
+            Item dbItem = null;
+
+            if(itemVM != null)
+            {
+                dbItem = new Item()
+                {
+                    Id = itemVM.Id,
+                    Name = itemVM.Name,
+                    Description = itemVM.ItemDescription,
+                    Abilities = itemVM.Abilities
+                };
+            }
+
+            return dbItem;
         }
     }
 }

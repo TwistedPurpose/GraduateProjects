@@ -18,6 +18,7 @@ namespace DataAccess.EntityFramework
         public Session()
         {
             this.Characters = new HashSet<Character>();
+            this.Items = new HashSet<Item>();
         }
     
         public int Id { get; set; }
@@ -31,5 +32,7 @@ namespace DataAccess.EntityFramework
         public virtual Map Map { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Character> Characters { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Item> Items { get; set; }
     }
 }

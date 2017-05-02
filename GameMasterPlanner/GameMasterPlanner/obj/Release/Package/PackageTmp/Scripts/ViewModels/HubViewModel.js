@@ -54,7 +54,7 @@
         this.editCharacter = (character) => {
             this.addEditCharacterVM.setupToEdit(character);
             this.showAddEditCharacterModal(true);
-        }
+        };
 
         $('#addCharacterModal').on('hidden.bs.modal', function () {
             self.addEditCharacterVM.clear();
@@ -124,9 +124,9 @@
 
         self.showAddExistingCharacterModal(false);
 
-        let params = { sessionId: self.CurrentSession().Id, characterIds: self.addExistingCharacterVM.SelectedCharacters() };
+        let modelView = { sessionId: self.CurrentSession().Id, characterIds: self.addExistingCharacterVM.SelectedCharacters() };
 
-        $.post(baseURL + 'api/Character/PostAssociateCharactersWithSession', params);
+        $.post(baseURL + 'api/SessionCharacter/PostAssociateCharactersWithSession', modelView);
 
         self.CharacterList.removeAll();
 

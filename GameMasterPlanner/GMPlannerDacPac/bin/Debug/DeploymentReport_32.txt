@@ -1,0 +1,32 @@
+﻿** Highlights
+     Tables that will be rebuilt
+       None
+     Clustered indexes that will be dropped
+       None
+     Clustered indexes that will be created
+       None
+     Possible data issues
+       None
+
+** User actions
+     Create
+       [dbo].[CharacterSessions] (Table)
+       [dbo].[Character] (Table)
+       [dbo].[Locations] (Table)
+       [dbo].[Map] (Table)
+       [dbo].[Session] (Table)
+       [dbo].[History] (Table)
+       [dbo].[Campaign] (Table)
+       [dbo].[Items] (Table)
+       [dbo].[ItemSession] (Table)
+       [dbo].[FK_Character_Session_CharacterId] (Foreign Key)
+       [dbo].[FK_Character_Session_SessionId] (Foreign Key)
+       [dbo].[FK_Character_Campaign] (Foreign Key)
+       [dbo].[FK_Session_ToMap] (Foreign Key)
+       [dbo].[FK_Session_ToCampaign] (Foreign Key)
+       [dbo].[FK_Campaign_ToHistory] (Foreign Key)
+       [dbo].[FK_Items_ToCampaign] (Foreign Key)
+       [dbo].[FK_Items_Session_ItemId] (Foreign Key)
+       [dbo].[FK_Items_Session_SessionId] (Foreign Key)
+
+** Supporting actions

@@ -54,9 +54,6 @@
     <Compile Include="EntityFramework\Campaign.cs">
       <DependentUpon>GameMasterPlannerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="EntityFramework\CampaignSession.cs">
-      <DependentUpon>GameMasterPlannerModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="EntityFramework\Character.cs">
       <DependentUpon>GameMasterPlannerModel.tt</DependentUpon>
     </Compile>
@@ -97,6 +94,7 @@
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\CampaignRepository.cs" />
     <Compile Include="Repositories\CharacterRepository.cs" />
+    <Compile Include="Repositories\ItemRepository.cs" />
     <Compile Include="Repositories\SessionRepository.cs" />
   </ItemGroup>
   <ItemGroup>

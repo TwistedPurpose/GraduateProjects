@@ -14,8 +14,20 @@ namespace DataAccess.EntityFramework
     
     public partial class Item
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Item()
+        {
+            this.Sessions = new HashSet<Session>();
+        }
+    
         public int Id { get; set; }
+        public int CampaignId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string Abilities { get; set; }
+    
+        public virtual Campaign Campaign { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Session> Sessions { get; set; }
     }
 }

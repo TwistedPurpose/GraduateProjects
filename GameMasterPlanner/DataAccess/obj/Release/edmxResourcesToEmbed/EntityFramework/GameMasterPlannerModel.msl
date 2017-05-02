@@ -17,14 +17,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="CampaignSessions">
-      <EntityTypeMapping TypeName="GameMasterPlannerDBModel.CampaignSession">
-        <MappingFragment StoreEntitySet="CampaignSessions">
-          <ScalarProperty Name="SessionId" ColumnName="SessionId" />
-          <ScalarProperty Name="CampaignId" ColumnName="CampaignId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Characters">
       <EntityTypeMapping TypeName="GameMasterPlannerDBModel.Character">
         <MappingFragment StoreEntitySet="Character">
@@ -48,8 +40,10 @@
     <EntitySetMapping Name="Items">
       <EntityTypeMapping TypeName="GameMasterPlannerDBModel.Item">
         <MappingFragment StoreEntitySet="Items">
+          <ScalarProperty Name="Abilities" ColumnName="Abilities" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CampaignId" ColumnName="CampaignId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -92,6 +86,14 @@
       </EndProperty>
       <EndProperty Name="Character">
         <ScalarProperty Name="Id" ColumnName="CharacterId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ItemSession" TypeName="GameMasterPlannerDBModel.ItemSession" StoreEntitySet="ItemSession">
+      <EndProperty Name="Session">
+        <ScalarProperty Name="Id" ColumnName="SessionId" />
+      </EndProperty>
+      <EndProperty Name="Item">
+        <ScalarProperty Name="Id" ColumnName="ItemId" />
       </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>

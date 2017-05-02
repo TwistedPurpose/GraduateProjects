@@ -18,6 +18,7 @@ namespace DataAccess.EntityFramework
         public Campaign()
         {
             this.Characters = new HashSet<Character>();
+            this.Items = new HashSet<Item>();
             this.Sessions = new HashSet<Session>();
         }
     
@@ -28,6 +29,8 @@ namespace DataAccess.EntityFramework
         public virtual History History { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Character> Characters { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Item> Items { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Session> Sessions { get; set; }
     }

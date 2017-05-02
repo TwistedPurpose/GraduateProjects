@@ -71,6 +71,7 @@
     <Build Include="Tables\Items.sql" />
     <Build Include="Tables\CharacterSessions.sql" />
     <Build Include="Tables\CampaignSessions.sql" />
+    <Build Include="Tables\ItemSession.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="PostScripts\Script.PostDeployment1.sql" />

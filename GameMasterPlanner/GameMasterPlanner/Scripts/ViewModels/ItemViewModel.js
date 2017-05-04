@@ -30,13 +30,23 @@
         let self = this;
 
         let item = {
-
+            Id: self.Id,
+            CampaignId: self.CampaignId,
+            SessionId: self.SessionId,
+            Name: self.Name(),
+            ItemDescription: self.ItemDescription(),
+            Abilities: self.Abilities()
         };
 
-        //Implement me!
+        return item;
     }
 
     clear() {
-        //Implement me!
+        this.Id = 0;
+        this.CampaignId = 0;
+        this.SessionId = 0;
+        this.Name(null);
+        this.ItemDescription(null);
+        this.Abilities(null);
     }
 }

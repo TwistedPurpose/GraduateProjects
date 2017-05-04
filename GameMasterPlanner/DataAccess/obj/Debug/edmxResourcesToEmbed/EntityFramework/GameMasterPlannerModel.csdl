@@ -3,7 +3,6 @@
   <EntityContainer Name="GameMasterPlannerDBEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="C__RefactorLog" EntityType="GameMasterPlannerDBModel.C__RefactorLog" />
     <EntitySet Name="Campaigns" EntityType="GameMasterPlannerDBModel.Campaign" />
-    <EntitySet Name="CampaignSessions" EntityType="GameMasterPlannerDBModel.CampaignSession" />
     <EntitySet Name="Characters" EntityType="GameMasterPlannerDBModel.Character" />
     <EntitySet Name="Histories" EntityType="GameMasterPlannerDBModel.History" />
     <EntitySet Name="Items" EntityType="GameMasterPlannerDBModel.Item" />
@@ -18,6 +17,10 @@
       <End Role="Campaign" EntitySet="Campaigns" />
       <End Role="Character" EntitySet="Characters" />
     </AssociationSet>
+    <AssociationSet Name="FK_Item_ToCampaign" Association="GameMasterPlannerDBModel.FK_Item_ToCampaign">
+      <End Role="Campaign" EntitySet="Campaigns" />
+      <End Role="Item" EntitySet="Items" />
+    </AssociationSet>
     <AssociationSet Name="FK_Session_ToCampaign" Association="GameMasterPlannerDBModel.FK_Session_ToCampaign">
       <End Role="Campaign" EntitySet="Campaigns" />
       <End Role="Session" EntitySet="Sessions" />
@@ -28,6 +31,10 @@
     </AssociationSet>
     <AssociationSet Name="CharacterSessions" Association="GameMasterPlannerDBModel.CharacterSessions">
       <End Role="Character" EntitySet="Characters" />
+      <End Role="Session" EntitySet="Sessions" />
+    </AssociationSet>
+    <AssociationSet Name="ItemSession" Association="GameMasterPlannerDBModel.ItemSession">
+      <End Role="Item" EntitySet="Items" />
       <End Role="Session" EntitySet="Sessions" />
     </AssociationSet>
   </EntityContainer>
@@ -46,15 +53,8 @@
     <Property Name="HistoryId" Type="Int32" />
     <NavigationProperty Name="History" Relationship="GameMasterPlannerDBModel.FK_Campaign_ToHistory" FromRole="Campaign" ToRole="History" />
     <NavigationProperty Name="Characters" Relationship="GameMasterPlannerDBModel.FK_Character_Campaign" FromRole="Campaign" ToRole="Character" />
+    <NavigationProperty Name="Items" Relationship="GameMasterPlannerDBModel.FK_Item_ToCampaign" FromRole="Campaign" ToRole="Item" />
     <NavigationProperty Name="Sessions" Relationship="GameMasterPlannerDBModel.FK_Session_ToCampaign" FromRole="Campaign" ToRole="Session" />
-  </EntityType>
-  <EntityType Name="CampaignSession">
-    <Key>
-      <PropertyRef Name="CampaignId" />
-      <PropertyRef Name="SessionId" />
-    </Key>
-    <Property Name="CampaignId" Type="Int32" Nullable="false" />
-    <Property Name="SessionId" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="Character">
     <Key>
@@ -82,8 +82,12 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CampaignId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="Abilities" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Campaign" Relationship="GameMasterPlannerDBModel.FK_Item_ToCampaign" FromRole="Item" ToRole="Campaign" />
+    <NavigationProperty Name="Sessions" Relationship="GameMasterPlannerDBModel.ItemSession" FromRole="Item" ToRole="Session" />
   </EntityType>
   <EntityType Name="Location">
     <Key>
@@ -109,7 +113,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Title" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="CampaignId" Type="Int32" Nullable="false" />
     <Property Name="BaseMapId" Type="Int32" />
     <Property Name="SessionNumber" Type="Int32" Nullable="false" />
@@ -117,6 +121,7 @@
     <NavigationProperty Name="Campaign" Relationship="GameMasterPlannerDBModel.FK_Session_ToCampaign" FromRole="Session" ToRole="Campaign" />
     <NavigationProperty Name="Map" Relationship="GameMasterPlannerDBModel.FK_Session_ToMap" FromRole="Session" ToRole="Map" />
     <NavigationProperty Name="Characters" Relationship="GameMasterPlannerDBModel.CharacterSessions" FromRole="Session" ToRole="Character" />
+    <NavigationProperty Name="Items" Relationship="GameMasterPlannerDBModel.ItemSession" FromRole="Session" ToRole="Item" />
   </EntityType>
   <Association Name="FK_Campaign_ToHistory">
     <End Type="GameMasterPlannerDBModel.History" Role="History" Multiplicity="0..1" />
@@ -138,6 +143,18 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Character">
+        <PropertyRef Name="CampaignId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Item_ToCampaign">
+    <End Type="GameMasterPlannerDBModel.Campaign" Role="Campaign" Multiplicity="1" />
+    <End Type="GameMasterPlannerDBModel.Item" Role="Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Campaign">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Item">
         <PropertyRef Name="CampaignId" />
       </Dependent>
     </ReferentialConstraint>
@@ -168,6 +185,10 @@
   </Association>
   <Association Name="CharacterSessions">
     <End Type="GameMasterPlannerDBModel.Character" Role="Character" Multiplicity="*" />
+    <End Type="GameMasterPlannerDBModel.Session" Role="Session" Multiplicity="*" />
+  </Association>
+  <Association Name="ItemSession">
+    <End Type="GameMasterPlannerDBModel.Item" Role="Item" Multiplicity="*" />
     <End Type="GameMasterPlannerDBModel.Session" Role="Session" Multiplicity="*" />
   </Association>
 </Schema>

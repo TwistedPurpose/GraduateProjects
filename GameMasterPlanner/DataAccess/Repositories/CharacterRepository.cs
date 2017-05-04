@@ -17,9 +17,9 @@ namespace DataAccess.Repositories
         /// <returns></returns>
         public List<Character> GetAllCharacters(int campaignId)
         {
-            var list = from characters in db.Characters
+            var list = (from characters in db.Characters
                        where characters.CampaignId == campaignId
-                       select characters;
+                       select characters).Include(s => s.Sessions);
 
             return list.ToList();
         }

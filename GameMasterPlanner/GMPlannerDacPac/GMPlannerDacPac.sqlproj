@@ -68,7 +68,7 @@
     <Build Include="Tables\Map.sql" />
     <Build Include="Tables\Locations.sql" />
     <Build Include="Tables\Character.sql" />
-    <Build Include="Tables\Items.sql" />
+    <Build Include="Tables\Item.sql" />
     <Build Include="Tables\CharacterSessions.sql" />
     <Build Include="Tables\CampaignSessions.sql" />
     <Build Include="Tables\ItemSession.sql" />

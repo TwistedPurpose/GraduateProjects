@@ -11,11 +11,11 @@
         <EntityTypeShape EntityType="GameMasterPlannerDBModel.History" Width="1.5" PointX="0.75" PointY="3.375" />
         <EntityTypeShape EntityType="GameMasterPlannerDBModel.Item" Width="1.5" PointX="5.25" PointY="4.625" />
         <EntityTypeShape EntityType="GameMasterPlannerDBModel.Location" Width="1.5" PointX="0.75" PointY="6.75" />
-        <EntityTypeShape EntityType="GameMasterPlannerDBModel.Map" Width="1.5" PointX="7.75" PointY="6.625" />
+        <EntityTypeShape EntityType="GameMasterPlannerDBModel.Map" Width="1.5" PointX="5.25" PointY="9.25" />
         <EntityTypeShape EntityType="GameMasterPlannerDBModel.Session" Width="1.5" PointX="7.5" PointY="2.625" />
         <AssociationConnector Association="GameMasterPlannerDBModel.FK_Campaign_ToHistory" />
         <AssociationConnector Association="GameMasterPlannerDBModel.FK_Character_Campaign" />
-        <AssociationConnector Association="GameMasterPlannerDBModel.FK_Items_ToCampaign" />
+        <AssociationConnector Association="GameMasterPlannerDBModel.FK_Item_ToCampaign" />
         <AssociationConnector Association="GameMasterPlannerDBModel.FK_Session_ToCampaign" />
         <AssociationConnector Association="GameMasterPlannerDBModel.FK_Session_ToMap" />
         <AssociationConnector Association="GameMasterPlannerDBModel.CharacterSessions" />

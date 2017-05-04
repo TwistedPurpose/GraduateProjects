@@ -190,7 +190,7 @@
     <Content Include="Views\Home\Hub.cshtml" />
     <Content Include="Views\Home\CharacterLibrary.cshtml" />
     <Content Include="Views\Shared\_AddCharacterModal.cshtml" />
-    <Content Include="Views\Shared\_AddExistingCharacterModal.cshtml" />
+    <Content Include="Views\Shared\_ExistingCharacterModal.cshtml" />
     <Content Include="Views\Shared\_CrudItemModal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -19,15 +19,15 @@ namespace GameMasterPlanner.Helper
                 {
                     Id = dbCharacter.Id,
                     CampaignId = dbCharacter.CampaignId,
-                    CharDescription = dbCharacter.Description,
-                    Name = dbCharacter.Name,
-                    Notes = dbCharacter.Notes,
+                    CharDescription = String.IsNullOrWhiteSpace(dbCharacter.Description) ? String.Empty : dbCharacter.Description.Trim(),
+                    Name = String.IsNullOrWhiteSpace(dbCharacter.Name) ? String.Empty : dbCharacter.Name.Trim(),
+                    Notes = String.IsNullOrWhiteSpace(dbCharacter.Notes) ? String.Empty : dbCharacter.Notes.Trim(),
                     SessionList = dbCharacter.Sessions.Select(x => new SessionViewModel()
                     {
                         // add more values later?
                         Id = x.Id,
                         CampaignId = x.CampaignId,
-                        Title = x.Title,
+                        Title = String.IsNullOrWhiteSpace(x.Title) ? String.Empty : x.Title.Trim(),
                         SessionNumber = x.SessionNumber
                     }).ToList()
                 };
@@ -48,7 +48,7 @@ namespace GameMasterPlanner.Helper
                     Name = String.IsNullOrWhiteSpace(vm.Name) ? String.Empty : vm.Name.Trim(),
                     Description = String.IsNullOrWhiteSpace(vm.CharDescription) ? String.Empty : vm.CharDescription.Trim(),
                     Notes = String.IsNullOrWhiteSpace(vm.Notes) ? String.Empty : vm.Notes.Trim(),
-
+                       // Add session conversion too?
                 };
             }
 
@@ -73,9 +73,9 @@ namespace GameMasterPlanner.Helper
                     Id = dbSession.Id,
                     BaseMapId = dbSession.BaseMapId,
                     CampaignId = dbSession.CampaignId,
-                    Notes = dbSession.Notes,
+                    Notes = String.IsNullOrWhiteSpace(dbSession.Notes) ? String.Empty : dbSession.Notes.Trim(),
                     SessionNumber = dbSession.SessionNumber,
-                    Title = dbSession.Title
+                    Title = String.IsNullOrWhiteSpace(dbSession.Title) ? String.Empty : dbSession.Title.Trim()
                 };
             }
 
@@ -84,7 +84,29 @@ namespace GameMasterPlanner.Helper
 
         public static ItemViewModel ToItemViewModel(Item dbItem)
         {
-            throw new NotImplementedException();
+            ItemViewModel vm = null;
+            
+            if(dbItem != null)
+            {
+                vm = new ItemViewModel()
+                {
+                    Id = dbItem.Id,
+                    CampaignId = dbItem.CampaignId,
+                    Name = dbItem.Name.Trim(),
+                    ItemDescription = String.IsNullOrWhiteSpace(dbItem.Description) ? String.Empty : dbItem.Description.Trim(),
+                    Abilities = String.IsNullOrWhiteSpace(dbItem.Abilities) ? String.Empty : dbItem.Abilities.Trim(),
+                    SessionList = dbItem.Sessions.Select(x => new SessionViewModel()
+                    {
+                        // add more values later?
+                        Id = x.Id,
+                        CampaignId = x.CampaignId,
+                        Title = String.IsNullOrWhiteSpace(x.Title) ? String.Empty : x.Title.Trim(),
+                        SessionNumber = x.SessionNumber
+                    }).ToList()
+                };
+            }
+
+            return vm;
         }
 
         public static Item ToDbItemModel(ItemViewModel itemVM)
@@ -97,8 +119,9 @@ namespace GameMasterPlanner.Helper
                 {
                     Id = itemVM.Id,
                     Name = itemVM.Name,
-                    Description = itemVM.ItemDescription,
-                    Abilities = itemVM.Abilities
+                    CampaignId = itemVM.CampaignId,
+                    Description = String.IsNullOrWhiteSpace(itemVM.ItemDescription) ? String.Empty : itemVM.ItemDescription.Trim(),
+                    Abilities = String.IsNullOrWhiteSpace(itemVM.Abilities) ? String.Empty : itemVM.Abilities.Trim()
                 };
             }
 

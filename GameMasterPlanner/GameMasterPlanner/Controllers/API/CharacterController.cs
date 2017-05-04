@@ -62,6 +62,9 @@ namespace GameMasterPlanner.Controllers.API
                 sessionRepro.AssociateCharacterToSession(dbCharacter.Id, character.SessionId);
             }
 
+            // This is a hack to cover up for the fact session list is dropping off somewhere?
+            dbCharacter = characterRepro.GetCharacter(dbCharacter.Id);
+
             return Request.CreateResponse(HttpStatusCode.OK, ModelConverter.ToCharacterViewModel(dbCharacter));
         }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using DataAccess.Models;
 
 namespace GameMasterPlanner.Models
 {
@@ -13,5 +14,6 @@ namespace GameMasterPlanner.Models
         public string Name { get; set; }
         public string ItemDescription { get; set; }
         public string Abilities { get; set; }
+        public List<SessionViewModel> SessionList { get; internal set; }
     }
 }

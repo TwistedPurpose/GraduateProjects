@@ -58,7 +58,20 @@ namespace GameMasterPlanner.Helper
         public static Session ToDbSessionModel(SessionViewModel vm)
         {
             Session dbSession = null;
-            throw new NotImplementedException();
+            
+            if(vm != null)
+            {
+                dbSession = new Session()
+                {
+                    Id = vm.Id,
+                    BaseMapId = vm.BaseMapId,
+                    CampaignId = vm.CampaignId,
+                    Notes = vm.Notes,
+                    Title = vm.Title,
+                    SessionNumber = vm.SessionNumber
+                };
+            }
+
             return dbSession;
         }
 

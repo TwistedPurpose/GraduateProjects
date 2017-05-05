@@ -69,7 +69,6 @@
                 <div class="col-sm-4">
                     <button class="btn btn-default" data-bind="click:addExistingCharacters">Add existing character</button>
                 </div>
-
             </div>
 
             <div class="row">
@@ -84,6 +83,12 @@
                     </ul>
                 </div>
 
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <button class="btn btn-default" data-bind="click:addExistingItems">Include Existing Items</button>
+                </div>
             </div>
 
             <div class="row">
@@ -107,6 +112,7 @@
 @Html.Partial("_AddCharacterModal")
 @Html.Partial("_ExistingCharacterModal")
 @Html.Partial("_CrudItemModal")
+@Html.Partial("_ExistingItemModal")
 
 
 <script>

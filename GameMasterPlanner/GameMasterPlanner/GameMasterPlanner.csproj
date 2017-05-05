@@ -196,6 +196,7 @@
     <Content Include="Views\Shared\_CrudItemModal.cshtml" />
     <Content Include="Views\Shared\_ExistingItemModal.cshtml" />
     <Content Include="Views\Home\ItemLibrary.cshtml" />
+    <Content Include="Views\Home\SessionManagment.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

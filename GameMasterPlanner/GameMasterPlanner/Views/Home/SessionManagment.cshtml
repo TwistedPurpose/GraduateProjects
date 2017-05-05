@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Session Managment";
+}
+
+<h2>Session Managment</h2>
+
+<div class="row" data-bind="forEach:SessionList">
+    <div class="col-md-1">
+        <input data-bind="value: SessionNumber"/>
+    </div>
+    <div class="col-md-11" data-bind="text:Title">
+    </div>
+</div>
+<div class="row">
+    <div>
+        <button data-bind="click:save"></button>
+    </div>
+</div>

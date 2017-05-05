@@ -54,6 +54,7 @@
         this.Name(null);
         this.CharDescription(null);
         this.Notes(null);
+        //Add SessionList?
     }
 }
 

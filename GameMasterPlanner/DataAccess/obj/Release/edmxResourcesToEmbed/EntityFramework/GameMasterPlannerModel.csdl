@@ -17,7 +17,7 @@
       <End Role="Campaign" EntitySet="Campaigns" />
       <End Role="Character" EntitySet="Characters" />
     </AssociationSet>
-    <AssociationSet Name="FK_Items_ToCampaign" Association="GameMasterPlannerDBModel.FK_Items_ToCampaign">
+    <AssociationSet Name="FK_Item_ToCampaign" Association="GameMasterPlannerDBModel.FK_Item_ToCampaign">
       <End Role="Campaign" EntitySet="Campaigns" />
       <End Role="Item" EntitySet="Items" />
     </AssociationSet>
@@ -53,7 +53,7 @@
     <Property Name="HistoryId" Type="Int32" />
     <NavigationProperty Name="History" Relationship="GameMasterPlannerDBModel.FK_Campaign_ToHistory" FromRole="Campaign" ToRole="History" />
     <NavigationProperty Name="Characters" Relationship="GameMasterPlannerDBModel.FK_Character_Campaign" FromRole="Campaign" ToRole="Character" />
-    <NavigationProperty Name="Items" Relationship="GameMasterPlannerDBModel.FK_Items_ToCampaign" FromRole="Campaign" ToRole="Item" />
+    <NavigationProperty Name="Items" Relationship="GameMasterPlannerDBModel.FK_Item_ToCampaign" FromRole="Campaign" ToRole="Item" />
     <NavigationProperty Name="Sessions" Relationship="GameMasterPlannerDBModel.FK_Session_ToCampaign" FromRole="Campaign" ToRole="Session" />
   </EntityType>
   <EntityType Name="Character">
@@ -86,7 +86,7 @@
     <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
     <Property Name="Description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
     <Property Name="Abilities" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Campaign" Relationship="GameMasterPlannerDBModel.FK_Items_ToCampaign" FromRole="Item" ToRole="Campaign" />
+    <NavigationProperty Name="Campaign" Relationship="GameMasterPlannerDBModel.FK_Item_ToCampaign" FromRole="Item" ToRole="Campaign" />
     <NavigationProperty Name="Sessions" Relationship="GameMasterPlannerDBModel.ItemSession" FromRole="Item" ToRole="Session" />
   </EntityType>
   <EntityType Name="Location">
@@ -147,7 +147,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Items_ToCampaign">
+  <Association Name="FK_Item_ToCampaign">
     <End Type="GameMasterPlannerDBModel.Campaign" Role="Campaign" Multiplicity="1" />
     <End Type="GameMasterPlannerDBModel.Item" Role="Item" Multiplicity="*" />
     <ReferentialConstraint>

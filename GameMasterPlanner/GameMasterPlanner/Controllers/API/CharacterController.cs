@@ -36,6 +36,11 @@ namespace GameMasterPlanner.Controllers.API
             return Request.CreateResponse(HttpStatusCode.OK, character);
         }
 
+        /// <summary>
+        /// Gets all characters in a single campaign
+        /// </summary>
+        /// <param name="campaignId">Id of the campaign the characters are in</param>
+        /// <returns>List of character model views wrapped in an HTTPResponse</returns>
         public HttpResponseMessage GetAll(int campaignId)
         {
             List<CharacterViewModel> characters = characterRepro.GetAllCharacters(campaignId)

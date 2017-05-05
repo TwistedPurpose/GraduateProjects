@@ -24,5 +24,10 @@ namespace GameMasterPlanner.Controllers
         {
             return View();
         }
+
+        public ActionResult ItemLibrary()
+        {
+            return View();
+        }
     }
 }

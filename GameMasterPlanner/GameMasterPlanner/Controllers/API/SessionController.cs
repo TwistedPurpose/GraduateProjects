@@ -61,5 +61,7 @@ namespace GameMasterPlanner.Controllers.API
             return Request.CreateResponse(HttpStatusCode.OK, dbSession);
         }
 
+
+        ///Should bring in character and item associations into here to consolidate controllers
     }
 }

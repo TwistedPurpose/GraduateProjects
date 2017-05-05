@@ -48,6 +48,9 @@ namespace GameMasterPlanner.Controllers.API
                 itemRepository.AddItemToSession(dbItem.Id, itemVM.SessionId);
             }
 
+            //Another hack, fix disappearing session lists from item library after grad school
+            dbItem = itemRepository.GetItem(dbItem.Id);
+
             return Request.CreateResponse(HttpStatusCode.OK, ModelConverter.ToItemViewModel(dbItem));
         }
 
@@ -75,5 +78,20 @@ namespace GameMasterPlanner.Controllers.API
 
             return Request.CreateResponse(HttpStatusCode.OK, itemList);
         }
+
+        /// <summary>
+        /// Gets all items in a campaign
+        /// </summary>
+        /// <param name="campaignId">Integer id of campaign to get all items</param>
+        /// <returns>HTTP Response wrapped list of items in campaign</returns>
+        public HttpResponseMessage GetAll(int campaignId)
+        {
+            List<ItemViewModel> itemList = itemRepository.GetAll(campaignId)
+                .Select(x => ModelConverter.ToItemViewModel(x)).ToList();
+
+            return Request.CreateResponse(HttpStatusCode.OK, itemList);
+        }
+
+
     }
 }

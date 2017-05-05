@@ -74,6 +74,41 @@ namespace DataAccess.Repositories
         }
 
         /// <summary>
+        /// Gets a list of all items in the database for a specific campaign
+        /// </summary>
+        /// <param name="campaignId">Integer campaign id for fetching all items</param>
+        /// <returns>IEnumerable of items from the selected campaign</returns>
+        public IEnumerable<Item> GetAll(int campaignId)
+        {
+            return (from items in db.Items
+                    where items.CampaignId == campaignId
+                    select items).Include(s => s.Sessions).ToList();
+        }
+
+        /// <summary>
+        /// Assocaites Items with a session
+        /// </summary>
+        /// <param name="sessionId">Integer id of the session for items to be added to</param>
+        /// <param name="itemIds">Ids of all the items to be used in that sessions</param>
+        public void AssociateItemsInSession(int sessionId, List<int> itemIds)
+        {
+            Session session = (from s in db.Sessions
+                               where s.Id == sessionId
+                               select s).FirstOrDefault();
+
+            session.Items.Clear();
+
+            foreach (int itemId in itemIds)
+            {
+                Item i = GetItemById(itemId);
+
+                session.Items.Add(i);
+            }
+
+            db.SaveChanges();
+        }
+
+        /// <summary>
         /// Helper method for fetching items by integer id
         /// </summary>
         /// <param name="id">Interger representing the id of a game item</param>
@@ -82,7 +117,8 @@ namespace DataAccess.Repositories
         {
             return (from items in db.Items
                     where items.Id == id
-                    select items).FirstOrDefault();
+                    select items).Include(s => s.Sessions).FirstOrDefault();
         }
+
     }
 }

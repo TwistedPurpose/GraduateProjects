@@ -27,7 +27,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <input data-bind="textInput:CurrentSession().Title" style="width:100%"></input>
+            <input data-bind="textInput:CurrentSession().Title" style="width:100%" />
         </div>
     </div>
 
@@ -67,7 +67,14 @@
 
             <div class="row">
                 <div class="col-sm-4">
-                    <button class="btn btn-default" data-bind="click:createCharacter">Add Character</button>
+                    <button class="btn btn-default" data-bind="click:addExistingCharacters">Add existing character</button>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <button class="btn btn-default" data-bind="click:createCharacter">New Character</button>
                     <ul class="row" data-bind="foreach:CharacterList">
                         <li>
                             <a data-bind="click:$parent.editCharacter">
@@ -81,22 +88,25 @@
 
             <div class="row">
                 <div class="col-sm-4">
-                    <button class="btn btn-default disabled">Add An Item</button>
+                    <button class="btn btn-default" data-bind="click:showAddEditItemModal">Add An Item</button>
+                    <ul class="row" data-bind="foreach:ItemList">
+                        <li>
+                            <a data-bind="click:$parent.editItem">
+                                <span data-bind="text:Name" />
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-sm-4">
-            <button class="btn btn-default" data-bind="click:addExistingCharacters">Add existing character</button>
-        </div>
 
-    </div>
 </div>
 
 @Html.Partial("_AddCharacterModal")
-@Html.Partial("_AddExistingCharacterModal")
+@Html.Partial("_ExistingCharacterModal")
+@Html.Partial("_CrudItemModal")
 
 
 <script>
@@ -105,4 +115,5 @@
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBLS0MX9AwHUlg0Zkvodyp3sjDPdrrB9c"></script>
 @Scripts.Render("~/bundles/character")
+@Scripts.Render("~/bundles/item")
 @Scripts.Render("~/bundles/hub")

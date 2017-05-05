@@ -8,8 +8,8 @@
 
         this.CurrentSession = ko.observable();
 
+        this.ItemList = ko.observableArray([]);
         this.CharacterList = ko.observableArray([]);
-        this.CompleteCharacterList = ko.observableArray([]); 
         this.LocationList = ko.observableArray([]);
         this.OrganizationList = ko.observableArray([]);
 
@@ -46,10 +46,12 @@
         this.Map = map;
 
         this.showAddEditCharacterModal = ko.observable(false);
-        this.showAddExistingCharacterModal = ko.observable(false);
+        this.existingCharacterModal = ko.observable(false);
+        this.showItemModal = ko.observable(false);
 
         this.addEditCharacterVM = new CharacterViewModel(null);
-        this.addExistingCharacterVM = new CharacterListViewModel(null);
+        this.existingCharacterVM = new CharacterListViewModel(null);
+        this.addEditItemVM = new ItemViewModel(null);
 
         this.editCharacter = (character) => {
             this.addEditCharacterVM.setupToEdit(character);
@@ -57,11 +59,16 @@
         };
 
         $('#addCharacterModal').on('hidden.bs.modal', function () {
+            self.addEditItemVM.clear();
+        });
+
+        $('#addCharacterModal').on('hidden.bs.modal', function () {
             self.addEditCharacterVM.clear();
         });
 
         self.CurrentSession.subscribe(function (newValue) {
             self.CharacterList.removeAll();
+            self.ItemList.removeAll();
 
             if (self.CurrentSession().Id) {
                 $.getJSON(baseURL + 'api/Character/GetSessionCharacters?sessionId=' + self.CurrentSession().Id, function (data) {
@@ -71,14 +78,13 @@
                 });
             }
 
-        });
-
-        $.getJSON(baseURL + 'api/Character/GetAll?campaignId=' + self.CampaignId, function (characterList) {
-            characterList.forEach(function (character) {
-                self.CompleteCharacterList.push(new CharacterViewModel(character));
-            });
-
-            self.addExistingCharacterVM.CharacterList(self.CompleteCharacterList());
+            if (self.CurrentSession().Id) {
+                $.getJSON(baseURL + 'api/Item/GetAllInSession?sessionId=' + self.CurrentSession().Id, function (itemsList) {
+                    itemsList.forEach(function (item) {
+                        self.ItemList.push(new ItemViewModel(item));
+                    });
+                });
+            }
         });
     }
 
@@ -101,37 +107,44 @@
         });
     }
 
+    // Helper for setting up character list
     setupCharacterListForAssociation() {
         self = this;
 
-        self.addExistingCharacterVM.CharacterList(self.CompleteCharacterList());
+        self.existingCharacterVM.CharacterList.removeAll();
 
-        self.addExistingCharacterVM.SelectedCharacters.removeAll();
+        $.getJSON(baseURL + 'api/Character/GetAll?campaignId=' + self.CampaignId, function (characterList) {
+            characterList.forEach(function (character) {
+                self.existingCharacterVM.CharacterList.push(new CharacterViewModel(character));
+            });
 
-        self.CharacterList().forEach(function (characterInSession) {
-            self.addExistingCharacterVM.SelectedCharacters.push(characterInSession.Id);
+            self.existingCharacterVM.SelectedCharacters.removeAll();
+
+            self.CharacterList().forEach(function (characterInSession) {
+                self.existingCharacterVM.SelectedCharacters.push(characterInSession.Id);
+            });
         });
     }
 
     addExistingCharacters() {
         this.setupCharacterListForAssociation();
-        this.showAddExistingCharacterModal(true);
+        this.existingCharacterModal(true);
     }
 
-    //
+    //Associates characters from
     associateCharacters() {
         self = this;
 
-        self.showAddExistingCharacterModal(false);
+        self.existingCharacterModal(false);
 
-        let modelView = { sessionId: self.CurrentSession().Id, characterIds: self.addExistingCharacterVM.SelectedCharacters() };
+        let modelView = { sessionId: self.CurrentSession().Id, characterIds: self.existingCharacterVM.SelectedCharacters() };
 
         $.post(baseURL + 'api/SessionCharacter/PostAssociateCharactersWithSession', modelView);
 
         self.CharacterList.removeAll();
 
-        self.addExistingCharacterVM.SelectedCharacters().forEach(function (characterId) {
-            let index = arrayFirstIndexOf(self.CompleteCharacterList(), function (character) {
+        self.existingCharacterVM.SelectedCharacters().forEach(function (characterId) {
+            let index = arrayFirstIndexOf(self.existingCharacterVM.CharacterList(), function (character) {
                 return character.Id === characterId;
             });
 
@@ -168,9 +181,38 @@
             self.addEditCharacterVM.SessionId = self.CurrentSession().Id;
 
             $.post(baseURL + 'api/Character', self.addEditCharacterVM.toJson(), function (returnedData) {
+                //Get rid of as it is redundant?
                 self.addEditCharacterVM.Id = returnedData.Id;
 
                 self.CharacterList.push(new CharacterViewModel(returnedData));
+            });
+        }
+    }
+
+    showAddEditItemModal() {
+        this.showItemModal(true);
+    }
+
+    saveItem() {
+        let self = this;
+
+        //Hide modal
+        self.showItemModal(false);
+
+        //Set the campaign id of the item to the current campaign
+        self.addEditItemVM.CampaignId = self.CampaignId;
+
+        if (self.addEditItemVM.Id) {
+            //If Id is not null, then it is an edit
+            $.post(baseURL + 'api/Item', self.addEditItemVM.toJson(), function (editedItem) {
+                
+
+            });
+        } else {
+            //If the campaign Id is null, then it is create
+            self.addEditItemVM.SessionId = self.CurrentSession().Id;
+            $.post(baseURL + 'api/Item', self.addEditItemVM.toJson(), function (addedItem) {
+                self.ItemList.push(new ItemViewModel(addedItem));
             });
         }
     }

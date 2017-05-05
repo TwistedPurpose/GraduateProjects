@@ -39,7 +39,7 @@
     </EntitySetMapping>
     <EntitySetMapping Name="Items">
       <EntityTypeMapping TypeName="GameMasterPlannerDBModel.Item">
-        <MappingFragment StoreEntitySet="Items">
+        <MappingFragment StoreEntitySet="Item">
           <ScalarProperty Name="Abilities" ColumnName="Abilities" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Name" ColumnName="Name" />

@@ -47,15 +47,24 @@
 
         this.showAddEditCharacterModal = ko.observable(false);
         this.existingCharacterModal = ko.observable(false);
+
         this.showItemModal = ko.observable(false);
+        this.existingItemsModal = ko.observable(false);
 
         this.addEditCharacterVM = new CharacterViewModel(null);
         this.existingCharacterVM = new CharacterListViewModel(null);
+
         this.addEditItemVM = new ItemViewModel(null);
+        this.existingItemsVM = new ItemListViewModel(null);
 
         this.editCharacter = (character) => {
             this.addEditCharacterVM.setupToEdit(character);
             this.showAddEditCharacterModal(true);
+        };
+
+        this.editItem = (item) => {
+            this.addEditItemVM.setupToEdit(item);
+            this.showItemModal(true);
         };
 
         $('#addCharacterModal').on('hidden.bs.modal', function () {
@@ -76,9 +85,7 @@
                         self.CharacterList.push(new CharacterViewModel(characterData));
                     });
                 });
-            }
 
-            if (self.CurrentSession().Id) {
                 $.getJSON(baseURL + 'api/Item/GetAllInSession?sessionId=' + self.CurrentSession().Id, function (itemsList) {
                     itemsList.forEach(function (item) {
                         self.ItemList.push(new ItemViewModel(item));
@@ -86,6 +93,7 @@
                 });
             }
         });
+
     }
 
     saveSession() {
@@ -149,7 +157,7 @@
             });
 
             if (index >= 0) {
-                self.CharacterList.push(self.CompleteCharacterList()[index]);
+                self.CharacterList.push(self.existingCharacterVM.CharacterList()[index]);
             }
         });
     }
@@ -166,14 +174,12 @@
 
         // Save an edited character
         if (this.addEditCharacterVM.Id) {
-            $.post(baseURL + 'api/Character', self.addEditCharacterVM.toJson(), function (returnedData) {
+            $.post(baseURL + 'api/Character', self.addEditCharacterVM.toJson(), function (editedCharacter) {
 
-                let indexOfCharacter = arrayFirstIndexOf(self.CharacterList(), function (character) {
-                    return character.Id === returnedData.Id;
-                });
+                self.CharacterList.remove(function (character) { return character.Id === editedCharacter.Id });
 
-                self.CharacterList()[indexOfCharacter] = new CharacterViewModel(returnedData);
-                self.CharacterList.valueHasMutated();
+                self.CharacterList.push(new CharacterViewModel(editedCharacter));
+
             });
         } else {
             //Save a new character
@@ -205,8 +211,11 @@
         if (self.addEditItemVM.Id) {
             //If Id is not null, then it is an edit
             $.post(baseURL + 'api/Item', self.addEditItemVM.toJson(), function (editedItem) {
-                
 
+                // Add sorting later via computed value
+                self.ItemList.remove(function (item) { return item.Id === editedItem.Id });
+
+                self.ItemList.push(new ItemViewModel(editedItem));
             });
         } else {
             //If the campaign Id is null, then it is create
@@ -216,8 +225,59 @@
             });
         }
     }
+
+    // Sets up a list of all items in the campaign, and selects
+    // Which items are already in this session then displays the modal
+    // For users to change what items are in the session
+    addExistingItems() {
+        this.setupItemListForAssociation();
+        this.existingItemsModal(true);
+    }
+
+    //Helper method for setting up UI for item list
+    setupItemListForAssociation() {
+        self = this;
+
+        self.existingItemsVM.CompleteItemList.removeAll();
+
+        $.getJSON(baseURL + 'api/Item/GetAll?campaignId=' + self.CampaignId, function (itemList) {
+            itemList.forEach(function (item) {
+                self.existingItemsVM.CompleteItemList.push(new ItemViewModel(item));
+            });
+
+            self.existingItemsVM.SelectedItems.removeAll();
+
+            self.ItemList().forEach(function (itemInSession) {
+                self.existingItemsVM.SelectedItems.push(itemInSession.Id);
+            });
+        });
+    }
+
+    //Associates selected items with the current session
+    associateItems() {
+        let self = this;
+
+        self.existingItemsModal(false);
+
+        let existingItemList = { SessionId: self.CurrentSession().Id, itemIds: self.existingItemsVM.SelectedItems() };
+
+        $.post(baseURL + "api/SessionItem/", existingItemList);
+
+        self.ItemList.removeAll();
+
+        self.existingItemsVM.SelectedItems().forEach(function (itemId) {
+            let index = arrayFirstIndexOf(self.existingItemsVM.CompleteItemList(), function (item) {
+                return item.Id === itemId;
+            });
+
+            if (index >= 0) {
+                self.ItemList.push(self.existingItemsVM.CompleteItemList()[index]);
+            }
+        });
+    }
 }
 
+// The hubs view model to be bound to knockout
 let hubViewModel = new HubViewModel(campaignId);
 
 $.getJSON(baseURL + 'api/Session?id=' + campaignId, function (data) {

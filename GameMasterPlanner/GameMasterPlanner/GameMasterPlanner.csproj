@@ -149,6 +149,7 @@
     <Content Include="Scripts\ViewModels\CharacterViewModel.js" />
     <Content Include="Scripts\ViewModels\CampaignListViewModel.js" />
     <Content Include="Scripts\ViewModels\HubViewModel.js" />
+    <Content Include="Scripts\ViewModels\ItemLibraryViewModel.js" />
     <Content Include="Scripts\ViewModels\ItemViewModel.js" />
     <Content Include="Scripts\ViewModels\Map.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
@@ -167,6 +168,7 @@
     <Compile Include="Controllers\API\ItemController.cs" />
     <Compile Include="Controllers\API\SessionCharacterController.cs" />
     <Compile Include="Controllers\API\SessionController.cs" />
+    <Compile Include="Controllers\API\SessionItemController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -192,6 +194,8 @@
     <Content Include="Views\Shared\_AddCharacterModal.cshtml" />
     <Content Include="Views\Shared\_ExistingCharacterModal.cshtml" />
     <Content Include="Views\Shared\_CrudItemModal.cshtml" />
+    <Content Include="Views\Shared\_ExistingItemModal.cshtml" />
+    <Content Include="Views\Home\ItemLibrary.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

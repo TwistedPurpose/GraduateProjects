@@ -11,12 +11,10 @@ namespace GameMasterPlanner.Controllers.API
     public class SessionCharacterController : ApiController
     {
         private CharacterRepository characterRepro;
-        private SessionRepository sessionRepro;
 
         public SessionCharacterController()
         {
             characterRepro = new CharacterRepository();
-            sessionRepro = new SessionRepository();
         }
 
         /// <summary>
@@ -28,8 +26,17 @@ namespace GameMasterPlanner.Controllers.API
         /// <returns>HTTP response for status of action</returns>
         public HttpResponseMessage PostAssociateCharactersWithSession(SessionWithCharacters modelView)
         {
-            characterRepro.AssociateCharactersInSession(modelView.sessionId, modelView.characterIds.ToList());
-
+            if (modelView != null)
+            {
+                if(modelView.characterIds != null)
+                {
+                    characterRepro.AssociateCharactersInSession(modelView.sessionId, modelView.characterIds.ToList());
+                } else
+                {
+                    characterRepro.AssociateCharactersInSession(modelView.sessionId, new List<int>());
+                }
+            }
+            
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 

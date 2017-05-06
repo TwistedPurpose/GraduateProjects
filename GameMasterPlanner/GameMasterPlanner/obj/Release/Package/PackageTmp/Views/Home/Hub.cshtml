@@ -20,13 +20,21 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-1">
+            <span>Session Number</span>
+        </div>
+
+        <div class="col-md-11">
             <span>Title</span>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-1">
+            <input data-bind="value:CurrentSession().SessionNumber" style="width:100%" />
+        </div>
+
+        <div class="col-md-11">
             <input data-bind="textInput:CurrentSession().Title" style="width:100%" />
         </div>
     </div>

@@ -29,5 +29,10 @@ namespace GameMasterPlanner.Controllers
         {
             return View();
         }
+
+        public ActionResult SessionManagment()
+        {
+            return View();
+        }
     }
 }

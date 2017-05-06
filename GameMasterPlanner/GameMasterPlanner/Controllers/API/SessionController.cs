@@ -14,7 +14,7 @@ namespace GameMasterPlanner.Controllers.API
     {
         private SessionRepository sessionRepository = new SessionRepository();
 
-        SessionController()
+        public SessionController()
         {
             sessionRepository = new SessionRepository();
         }
@@ -26,6 +26,7 @@ namespace GameMasterPlanner.Controllers.API
         /// <returns></returns>
         public HttpResponseMessage Get(int id)
         {
+            //Switch this to get one session later
             var list = sessionRepository.GetSessionList(id);
 
             List<SessionViewModel> sessionList = list.Select(x => new SessionViewModel() {
@@ -38,27 +39,35 @@ namespace GameMasterPlanner.Controllers.API
             return Request.CreateResponse(HttpStatusCode.OK, sessionList);
         }
 
-        public HttpResponseMessage Post(SessionViewModel session)
+        public HttpResponseMessage Post(List<SessionViewModel> sessionList)
         {
-            Session dbSession = new Session()
-            {
-                Id = session.Id,
-                CampaignId = session.CampaignId,
-                Title = String.IsNullOrWhiteSpace(session.Title) ? String.Empty : session.Title.Trim(),
-                Notes = String.IsNullOrWhiteSpace(session.Notes) ? String.Empty : session.Notes.Trim(),
-                SessionNumber = session.SessionNumber,
-                BaseMapId = session.BaseMapId
-            };
+            List<Session> dbSessions = new List<Session>();
 
-            if (session.Id > 0)
+            foreach (SessionViewModel session in sessionList)
             {
-                sessionRepository.UpdateSession(dbSession);
-            } else
-            {
-                dbSession = sessionRepository.CreateSession(dbSession);
+                Session dbSession = new Session()
+                {
+                    Id = session.Id,
+                    CampaignId = session.CampaignId,
+                    Title = String.IsNullOrWhiteSpace(session.Title) ? String.Empty : session.Title.Trim(),
+                    Notes = String.IsNullOrWhiteSpace(session.Notes) ? String.Empty : session.Notes.Trim(),
+                    SessionNumber = session.SessionNumber,
+                    BaseMapId = session.BaseMapId
+                };
+
+                if (session.Id > 0)
+                {
+                    sessionRepository.UpdateSession(dbSession);
+                }
+                else
+                {
+                    dbSession = sessionRepository.CreateSession(dbSession);
+                }
+
+                dbSessions.Add(dbSession);
             }
-            
-            return Request.CreateResponse(HttpStatusCode.OK, dbSession);
+
+            return Request.CreateResponse(HttpStatusCode.OK, dbSessions);
         }
 
 

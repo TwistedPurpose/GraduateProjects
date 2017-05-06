@@ -43,7 +43,7 @@
             CharDescription: self.CharDescription(),
             Notes: self.Notes(),
             SessionList: self.SessionList()
-        }
+        };
 
         return character;
     }

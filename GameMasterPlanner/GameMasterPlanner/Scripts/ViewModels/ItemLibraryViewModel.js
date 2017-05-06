@@ -32,7 +32,7 @@
         this.editItem = (Item) => {
             this.addEditItemVM.setupToEdit(Item);
             this.showItemModal(true);
-        }
+        };
 
         //When modal is closed for whatever reason, clear the VM
         //To ensure clean use on next opening

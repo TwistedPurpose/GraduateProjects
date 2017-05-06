@@ -153,6 +153,7 @@
     <Content Include="Scripts\ViewModels\ItemViewModel.js" />
     <Content Include="Scripts\ViewModels\Map.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\ViewModels\SessionManagmentViewModel.js" />
     <Content Include="Scripts\ViewModels\SessionViewModel.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

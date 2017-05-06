@@ -97,7 +97,25 @@
     }
 
     saveSession() {
-        $.post(baseURL + 'api/Session', this.CurrentSession().toJson());
+        let self = this;
+
+        let session = self.CurrentSession();
+
+        let data = [{
+            Id: session.Id,
+            CampaignId: session.CampaignId,
+            SessionNumber: session.SessionNumber(),
+            Notes: session.Notes(),
+            Title: session.Title()
+        }];
+
+        $.ajax({
+            url: baseURL + 'api/Session',
+            type: 'POST',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            contentType: 'application/json'
+        });
     }
 
     newSession() {
@@ -106,12 +124,19 @@
         let newSession = new SessionViewModel();
         newSession.CampaignId = self.CampaignId;
 
-        let json = newSession.toJson();
-
-        $.post(baseURL + 'api/Session', json, function (returnedData) {
-            newSession = new SessionViewModel(returnedData);
-            self.SessionList.push(newSession);
-            self.CurrentSession(newSession);
+        $.ajax({
+            url: baseURL + 'api/Session',
+            type: 'POST',
+            data: JSON.stringify([newSession.toJson()]),
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (sessionList) {
+                if (sessionList && sessionList.length > 0) {
+                    newSession = new SessionViewModel(sessionList[0]);
+                    self.SessionList.push(newSession);
+                    self.CurrentSession(newSession);
+                }
+            }
         });
     }
 
@@ -176,7 +201,7 @@
         if (this.addEditCharacterVM.Id) {
             $.post(baseURL + 'api/Character', self.addEditCharacterVM.toJson(), function (editedCharacter) {
 
-                self.CharacterList.remove(function (character) { return character.Id === editedCharacter.Id });
+                self.CharacterList.remove(function (character) { return character.Id === editedCharacter.Id; });
 
                 self.CharacterList.push(new CharacterViewModel(editedCharacter));
 
@@ -213,7 +238,7 @@
             $.post(baseURL + 'api/Item', self.addEditItemVM.toJson(), function (editedItem) {
 
                 // Add sorting later via computed value
-                self.ItemList.remove(function (item) { return item.Id === editedItem.Id });
+                self.ItemList.remove(function (item) { return item.Id === editedItem.Id; });
 
                 self.ItemList.push(new ItemViewModel(editedItem));
             });

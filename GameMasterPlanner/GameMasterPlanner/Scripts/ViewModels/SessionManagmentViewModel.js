@@ -28,7 +28,21 @@
     }
 
     save() {
-        $.post(baseURL + 'api/Session', );
+        let self = this;
+
+        let sessionVMList = [];
+
+        self.SessionList().forEach(function (session) {
+            sessionVMList.push(session.toJson());
+        });
+
+        $.ajax({
+            url: baseURL + 'api/Session',
+            type: 'POST',
+            data: JSON.stringify(sessionVMList),
+            dataType: 'json',
+            contentType: 'application/json'
+        });
     }
 }
 

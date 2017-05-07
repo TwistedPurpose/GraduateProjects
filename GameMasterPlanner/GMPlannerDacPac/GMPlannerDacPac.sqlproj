@@ -66,7 +66,7 @@
     <Build Include="UserSetup.sql" />
     <Build Include="Tables\Session.sql" />
     <Build Include="Tables\Map.sql" />
-    <Build Include="Tables\Locations.sql" />
+    <Build Include="Tables\Location.sql" />
     <Build Include="Tables\Character.sql" />
     <Build Include="Tables\Item.sql" />
     <Build Include="Tables\CharacterSessions.sql" />
@@ -77,9 +77,7 @@
     <PostDeploy Include="PostScripts\Script.PostDeployment1.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="GMPlannerDacPac.publish.xml" />
     <None Include="AzureDBPublish.publish.xml" />
-    <None Include="GMPlannerDacPac_1.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="GMPlannerDacPac.refactorlog" />

@@ -1,5 +1,7 @@
 ﻿class SessionViewModel {
     constructor(data) {
+        let self = this;
+
         if (data) {
             this.Id = data.Id;
             this.CampaignId = data.CampaignId;
@@ -13,6 +15,10 @@
             this.Notes = ko.observable();
             this.Title = ko.observable();
         }
+
+        this.NumberSessionTitle = ko.computed(function (session) {
+            return self.SessionNumber() + ": " + self.Title();
+        });
     }
 
     toJson() {

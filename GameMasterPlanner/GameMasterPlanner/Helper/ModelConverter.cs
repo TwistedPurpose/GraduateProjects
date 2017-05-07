@@ -66,8 +66,8 @@ namespace GameMasterPlanner.Helper
                     Id = vm.Id,
                     BaseMapId = vm.BaseMapId,
                     CampaignId = vm.CampaignId,
-                    Notes = vm.Notes,
-                    Title = vm.Title,
+                    Notes = String.IsNullOrWhiteSpace(vm.Notes) ? String.Empty : vm.Notes.Trim(),
+                    Title = String.IsNullOrWhiteSpace(vm.Title) ? String.Empty : vm.Title,
                     SessionNumber = vm.SessionNumber
                 };
             }

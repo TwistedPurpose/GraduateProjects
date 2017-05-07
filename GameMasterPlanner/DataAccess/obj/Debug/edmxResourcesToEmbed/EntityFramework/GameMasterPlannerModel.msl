@@ -1,13 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="GameMasterPlannerDBModelStoreContainer" CdmEntityContainer="GameMasterPlannerDBEntities">
-    <EntitySetMapping Name="C__RefactorLog">
-      <EntityTypeMapping TypeName="GameMasterPlannerDBModel.C__RefactorLog">
-        <MappingFragment StoreEntitySet="__RefactorLog">
-          <ScalarProperty Name="OperationKey" ColumnName="OperationKey" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Campaigns">
       <EntityTypeMapping TypeName="GameMasterPlannerDBModel.Campaign">
         <MappingFragment StoreEntitySet="Campaign">
@@ -50,7 +43,7 @@
     </EntitySetMapping>
     <EntitySetMapping Name="Locations">
       <EntityTypeMapping TypeName="GameMasterPlannerDBModel.Location">
-        <MappingFragment StoreEntitySet="Locations">
+        <MappingFragment StoreEntitySet="Location">
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ChildMapId" ColumnName="ChildMapId" />

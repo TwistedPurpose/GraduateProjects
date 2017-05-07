@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameMasterPlanner", "GameMasterPlanner\GameMasterPlanner.csproj", "{1ECC4AD7-D94C-4C1D-9FED-8588408426B9}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "GMPlannerDacPac", "GMPlannerDacPac\GMPlannerDacPac.sqlproj", "{B09BE8F5-9679-4461-9DF4-11C5CE202322}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{3E33C797-56CE-450F-86D1-5F581BD86DAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Test\Tests.csproj", "{9640F0B8-BD85-4304-85BC-A121302B31F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{3E33C797-56CE-450F-86D1-5F581BD86DAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E33C797-56CE-450F-86D1-5F581BD86DAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E33C797-56CE-450F-86D1-5F581BD86DAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9640F0B8-BD85-4304-85BC-A121302B31F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9640F0B8-BD85-4304-85BC-A121302B31F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9640F0B8-BD85-4304-85BC-A121302B31F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9640F0B8-BD85-4304-85BC-A121302B31F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

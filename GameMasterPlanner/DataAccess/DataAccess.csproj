@@ -57,9 +57,6 @@
     <Compile Include="EntityFramework\Character.cs">
       <DependentUpon>GameMasterPlannerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="EntityFramework\C__RefactorLog.cs">
-      <DependentUpon>GameMasterPlannerModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="EntityFramework\GameMasterPlannerModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

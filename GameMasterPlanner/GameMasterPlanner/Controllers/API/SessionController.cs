@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using DataAccess.EntityFramework;
+using GameMasterPlanner.Helper;
 
 namespace GameMasterPlanner.Controllers.API
 {
@@ -29,43 +30,33 @@ namespace GameMasterPlanner.Controllers.API
             //Switch this to get one session later
             var list = sessionRepository.GetSessionList(id);
 
-            List<SessionViewModel> sessionList = list.Select(x => new SessionViewModel() {
-                Id = x.Id,
-                Notes = x.Notes,
-                SessionNumber = x.SessionNumber,
-                Title = x.Title}).ToList();
-
+            List<SessionViewModel> sessionList = list.Select(x => ModelConverter.ToSessionViewModel(x)).ToList();
 
             return Request.CreateResponse(HttpStatusCode.OK, sessionList);
         }
 
         public HttpResponseMessage Post(List<SessionViewModel> sessionList)
         {
-            List<Session> dbSessions = new List<Session>();
+            List<Session> dbSessions = sessionList.Select(x => ModelConverter.ToDbSessionModel(x)).ToList();
 
-            foreach (SessionViewModel session in sessionList)
+            if (dbSessions.Count == 1)
             {
-                Session dbSession = new Session()
-                {
-                    Id = session.Id,
-                    CampaignId = session.CampaignId,
-                    Title = String.IsNullOrWhiteSpace(session.Title) ? String.Empty : session.Title.Trim(),
-                    Notes = String.IsNullOrWhiteSpace(session.Notes) ? String.Empty : session.Notes.Trim(),
-                    SessionNumber = session.SessionNumber,
-                    BaseMapId = session.BaseMapId
-                };
-
+                Session session = dbSessions.First();
                 if (session.Id > 0)
                 {
-                    sessionRepository.UpdateSession(dbSession);
+                    sessionRepository.UpdateSession(session);
                 }
                 else
                 {
-                    dbSession = sessionRepository.CreateSession(dbSession);
+                    session = sessionRepository.CreateSession(session);
                 }
-
-                dbSessions.Add(dbSession);
+            } else
+            {
+                sessionRepository.BulkSessionUpdate(dbSessions);
             }
+
+            // OMG FIX THIS LATER
+            sessionList = sessionRepository.GetSessionList(dbSessions.First().CampaignId).Select(x => ModelConverter.ToSessionViewModel(x)).ToList();
 
             return Request.CreateResponse(HttpStatusCode.OK, dbSessions);
         }

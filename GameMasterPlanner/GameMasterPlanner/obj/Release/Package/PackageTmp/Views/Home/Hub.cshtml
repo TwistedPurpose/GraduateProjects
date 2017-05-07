@@ -31,7 +31,7 @@
 
     <div class="row">
         <div class="col-md-1">
-            <input data-bind="value:CurrentSession().SessionNumber" style="width:100%" />
+            <span data-bind="text:CurrentSession().SessionNumber" style="width:100%"></span>
         </div>
 
         <div class="col-md-11">
@@ -113,8 +113,6 @@
             </div>
         </div>
     </div>
-
-
 </div>
 
 @Html.Partial("_AddCharacterModal")

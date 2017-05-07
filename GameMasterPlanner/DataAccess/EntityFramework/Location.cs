@@ -19,5 +19,8 @@ namespace DataAccess.EntityFramework
         public Nullable<int> ChildMapId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+    
+        public virtual Map Map { get; set; }
+        public virtual Map Map1 { get; set; }
     }
 }

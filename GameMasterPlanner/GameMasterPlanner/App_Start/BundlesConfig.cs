@@ -23,6 +23,11 @@ namespace GameMasterPlanner.App_Start
                    "~/Scripts/bootstrap.js",
                  "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/dragdrop").Include(
+                "~/Scripts/bootstrap.js",
+                "~/Scripts/respond.js",
+                "~/Scripts/Lib/knockout.dragdrop.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                 "~/Scripts/knockout-3.4.1.js"));
 

@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="GameMasterPlannerDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="GameMasterPlannerDBEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="C__RefactorLog" EntityType="GameMasterPlannerDBModel.C__RefactorLog" />
     <EntitySet Name="Campaigns" EntityType="GameMasterPlannerDBModel.Campaign" />
     <EntitySet Name="Characters" EntityType="GameMasterPlannerDBModel.Character" />
     <EntitySet Name="Histories" EntityType="GameMasterPlannerDBModel.History" />
@@ -25,6 +24,14 @@
       <End Role="Campaign" EntitySet="Campaigns" />
       <End Role="Session" EntitySet="Sessions" />
     </AssociationSet>
+    <AssociationSet Name="FK_Location_ToChildMap" Association="GameMasterPlannerDBModel.FK_Location_ToChildMap">
+      <End Role="Map" EntitySet="Maps" />
+      <End Role="Location" EntitySet="Locations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Location_ToParentMap" Association="GameMasterPlannerDBModel.FK_Location_ToParentMap">
+      <End Role="Map" EntitySet="Maps" />
+      <End Role="Location" EntitySet="Locations" />
+    </AssociationSet>
     <AssociationSet Name="FK_Session_ToMap" Association="GameMasterPlannerDBModel.FK_Session_ToMap">
       <End Role="Map" EntitySet="Maps" />
       <End Role="Session" EntitySet="Sessions" />
@@ -38,12 +45,6 @@
       <End Role="Session" EntitySet="Sessions" />
     </AssociationSet>
   </EntityContainer>
-  <EntityType Name="C__RefactorLog">
-    <Key>
-      <PropertyRef Name="OperationKey" />
-    </Key>
-    <Property Name="OperationKey" Type="Guid" Nullable="false" />
-  </EntityType>
   <EntityType Name="Campaign">
     <Key>
       <PropertyRef Name="Id" />
@@ -98,6 +99,8 @@
     <Property Name="ChildMapId" Type="Int32" />
     <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Map" Relationship="GameMasterPlannerDBModel.FK_Location_ToChildMap" FromRole="Location" ToRole="Map" />
+    <NavigationProperty Name="Map1" Relationship="GameMasterPlannerDBModel.FK_Location_ToParentMap" FromRole="Location" ToRole="Map" />
   </EntityType>
   <EntityType Name="Map">
     <Key>
@@ -106,6 +109,8 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ParentMapId" Type="Int32" />
     <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Locations" Relationship="GameMasterPlannerDBModel.FK_Location_ToChildMap" FromRole="Map" ToRole="Location" />
+    <NavigationProperty Name="Locations1" Relationship="GameMasterPlannerDBModel.FK_Location_ToParentMap" FromRole="Map" ToRole="Location" />
     <NavigationProperty Name="Sessions" Relationship="GameMasterPlannerDBModel.FK_Session_ToMap" FromRole="Map" ToRole="Session" />
   </EntityType>
   <EntityType Name="Session">
@@ -168,6 +173,30 @@
       </Principal>
       <Dependent Role="Session">
         <PropertyRef Name="CampaignId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Location_ToChildMap">
+    <End Type="GameMasterPlannerDBModel.Map" Role="Map" Multiplicity="0..1" />
+    <End Type="GameMasterPlannerDBModel.Location" Role="Location" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Map">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Location">
+        <PropertyRef Name="ChildMapId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Location_ToParentMap">
+    <End Type="GameMasterPlannerDBModel.Map" Role="Map" Multiplicity="1" />
+    <End Type="GameMasterPlannerDBModel.Location" Role="Location" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Map">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Location">
+        <PropertyRef Name="ParentMapId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

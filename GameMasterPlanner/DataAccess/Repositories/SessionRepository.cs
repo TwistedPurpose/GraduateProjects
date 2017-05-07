@@ -71,5 +71,20 @@ namespace DataAccess.Repositories
 
             db.SaveChanges();
         }
+
+        //For scailing later, will want to do this in a stored procedure
+        public void BulkSessionUpdate(IEnumerable<Session> dbSessions)
+        {
+            foreach(Session session in dbSessions)
+            {
+                db.Sessions.Attach(session);
+                var entry = db.Entry(session);
+
+                entry.State = EntityState.Modified;
+
+                entry.Property(e => e.CampaignId).IsModified = false;
+            }
+            db.SaveChanges();
+        }
     }
 }

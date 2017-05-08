@@ -12,6 +12,23 @@
 </div>
 
 <div class="row" data-bind="foreach:SortedSessionList">
+    @*<div class="row">
+        <ul data-bind="foreach: items">
+            <li data-bind="text: value,
+                                       css: { dragging: dragging },
+                                       dragZone: { name: 'sortable',
+                                         dragStart: dragStart,
+                                         dragEnd: dragEnd
+                                       },
+                                       dragEvents: {
+                                         accepts: 'sortable',
+                                         dragOver: reorder,
+                                         data: { items: $parent.items, item: $data }
+                                       }">
+            </li>
+        </ul>
+    </div>*@
+    
     <div class="row">
         <div class="col-md-2">
             <input data-bind="value: SessionNumber" />
@@ -22,10 +39,12 @@
         </div>
     </div>
 </div>
-@*<div class="row">
+
+<div class="row">
     <div>
-        <button data-bind="click:save"></button>
+        <button data-bind="click:save">Save</button>
     </div>
-</div>*@
+</div>
 
 @Scripts.Render("~/bundles/sessionManagement")
+@*@Scripts.Render("~/bundles/dragdrop")*@

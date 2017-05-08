@@ -6,16 +6,17 @@
 <div class="container-fluid" style="margin-top: 20px;">
 
     <div class="row">
-        <div class="col-md-2 col-md-offset-5">
-            <select data-bind="options: SessionList,
+        <div class="col-md-3">
+            <select style="height: 100%" data-bind="options: SessionList,
                    optionsText: function(item) {
-                       return item.Title;
+                       return item.NumberSessionTitle;
                    },
                    value: CurrentSession"></select>
+        </div>
+        <div class="col-md-9">
             <a data-bind="click:newSession">
                 <span class="glyphicon glyphicon-plus"></span>
             </a>
-
         </div>
     </div>
 

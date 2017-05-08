@@ -6,6 +6,12 @@
         this.CampaignId = campaignId;
         this.SessionList = ko.observableArray([]);
 
+        this.SortedSessionList = ko.computed(function () {
+            self.SessionList.sort(function (l, r) { return l.SessionNumber() > r.SessionNumber() ? 1 : -1; });
+
+            return self.SessionList();
+        });
+
         this.CurrentSession = ko.observable();
 
         this.ItemList = ko.observableArray([]);

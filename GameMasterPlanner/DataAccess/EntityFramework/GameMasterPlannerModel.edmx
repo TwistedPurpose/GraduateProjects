@@ -73,7 +73,8 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ParentMapId" Type="int" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Image" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Session">
           <Key>
@@ -385,7 +386,8 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ParentMapId" Type="Int32" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="Locations" Relationship="GameMasterPlannerDBModel.FK_Location_ToChildMap" FromRole="Map" ToRole="Location" />
           <NavigationProperty Name="Locations1" Relationship="GameMasterPlannerDBModel.FK_Location_ToParentMap" FromRole="Map" ToRole="Location" />
           <NavigationProperty Name="Sessions" Relationship="GameMasterPlannerDBModel.FK_Session_ToMap" FromRole="Map" ToRole="Session" />
@@ -557,6 +559,7 @@
           <EntitySetMapping Name="Maps">
             <EntityTypeMapping TypeName="GameMasterPlannerDBModel.Map">
               <MappingFragment StoreEntitySet="Map">
+                <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ParentMapId" ColumnName="ParentMapId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

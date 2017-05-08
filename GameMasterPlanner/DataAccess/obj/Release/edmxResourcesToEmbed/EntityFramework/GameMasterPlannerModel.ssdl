@@ -1,11 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="GameMasterPlannerDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="__RefactorLog">
-    <Key>
-      <PropertyRef Name="OperationKey" />
-    </Key>
-    <Property Name="OperationKey" Type="uniqueidentifier" Nullable="false" />
-  </EntityType>
   <EntityType Name="Campaign">
     <Key>
       <PropertyRef Name="Id" />
@@ -58,7 +52,7 @@
     <Property Name="ItemId" Type="int" Nullable="false" />
     <Property Name="SessionId" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="Locations">
+  <EntityType Name="Location">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
@@ -74,7 +68,8 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ParentMapId" Type="int" />
-    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Image" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="Session">
     <Key>
@@ -171,6 +166,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Location_ToChildMap">
+    <End Role="Map" Type="Self.Map" Multiplicity="0..1" />
+    <End Role="Location" Type="Self.Location" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Map">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Location">
+        <PropertyRef Name="ChildMapId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Location_ToParentMap">
+    <End Role="Map" Type="Self.Map" Multiplicity="1" />
+    <End Role="Location" Type="Self.Location" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Map">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Location">
+        <PropertyRef Name="ParentMapId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Session_ToCampaign">
     <End Role="Campaign" Type="Self.Campaign" Multiplicity="1" />
     <End Role="Session" Type="Self.Session" Multiplicity="*" />
@@ -196,14 +215,13 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="GameMasterPlannerDBModelStoreContainer">
-    <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Campaign" EntityType="Self.Campaign" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Character" EntityType="Self.Character" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CharacterSessions" EntityType="Self.CharacterSessions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="History" EntityType="Self.History" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ItemSession" EntityType="Self.ItemSession" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Map" EntityType="Self.Map" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Session" EntityType="Self.Session" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Campaign_ToHistory" Association="Self.FK_Campaign_ToHistory">
@@ -233,6 +251,14 @@
     <AssociationSet Name="FK_Items_Session_SessionId" Association="Self.FK_Items_Session_SessionId">
       <End Role="Session" EntitySet="Session" />
       <End Role="ItemSession" EntitySet="ItemSession" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Location_ToChildMap" Association="Self.FK_Location_ToChildMap">
+      <End Role="Map" EntitySet="Map" />
+      <End Role="Location" EntitySet="Location" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Location_ToParentMap" Association="Self.FK_Location_ToParentMap">
+      <End Role="Map" EntitySet="Map" />
+      <End Role="Location" EntitySet="Location" />
     </AssociationSet>
     <AssociationSet Name="FK_Session_ToCampaign" Association="Self.FK_Session_ToCampaign">
       <End Role="Campaign" EntitySet="Campaign" />

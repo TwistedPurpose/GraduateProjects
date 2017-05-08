@@ -862,10 +862,26 @@
 						<Relationship Name="TypeSpecifier">
 							<Entry>
 								<Element Type="SqlTypeSpecifier">
-									<Property Name="Length" Value="50" />
+									<Property Name="Length" Value="100" />
 									<Relationship Name="Type">
 										<Entry>
 											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[Map].[Image]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="IsMax" Value="True" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varbinary]" />
 										</Entry>
 									</Relationship>
 								</Element>
@@ -1138,36 +1154,7 @@
 			</Relationship>
 			<AttachedAnnotation Disambiguator="18" />
 			<AttachedAnnotation Disambiguator="17" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="23" />
 			<AttachedAnnotation Disambiguator="22" />
-		</Element>
-		<Element Type="SqlUniqueConstraint" Name="[dbo].[UQ_Session_SessionNumber]">
-			<Relationship Name="ColumnSpecifications">
-				<Entry>
-					<Element Type="SqlIndexedColumnSpecification">
-						<Relationship Name="Column">
-							<Entry>
-								<References Name="[dbo].[Session].[CampaignId]" />
-							</Entry>
-						</Relationship>
-					</Element>
-				</Entry>
-				<Entry>
-					<Element Type="SqlIndexedColumnSpecification">
-						<Relationship Name="Column">
-							<Entry>
-								<References Name="[dbo].[Session].[SessionNumber]" />
-							</Entry>
-						</Relationship>
-					</Element>
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Session]" />
-				</Entry>
-			</Relationship>
-			<AttachedAnnotation Disambiguator="23" />
 		</Element>
 	</Model>
 </DataSchemaModel>

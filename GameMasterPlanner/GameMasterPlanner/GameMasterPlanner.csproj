@@ -149,6 +149,7 @@
     <Content Include="Scripts\ViewModels\CharacterLibraryViewModel.js" />
     <Content Include="Scripts\ViewModels\CharacterViewModel.js" />
     <Content Include="Scripts\ViewModels\CampaignListViewModel.js" />
+    <Content Include="Scripts\ViewModels\FileUploaderViewModel.js" />
     <Content Include="Scripts\ViewModels\HubViewModel.js" />
     <Content Include="Scripts\ViewModels\ItemLibraryViewModel.js" />
     <Content Include="Scripts\ViewModels\ItemViewModel.js" />

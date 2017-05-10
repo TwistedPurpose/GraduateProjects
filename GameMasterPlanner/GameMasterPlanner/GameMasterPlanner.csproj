@@ -144,6 +144,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\knockout-3.4.1.debug.js" />
     <Content Include="Scripts\knockout-3.4.1.js" />
+    <Content Include="Scripts\Lib\knockout-file-bind.js" />
     <Content Include="Scripts\Lib\knockout.dragdrop.js" />
     <Content Include="Scripts\ViewModels\CampaignViewModel.js" />
     <Content Include="Scripts\ViewModels\CharacterLibraryViewModel.js" />
@@ -153,7 +154,7 @@
     <Content Include="Scripts\ViewModels\HubViewModel.js" />
     <Content Include="Scripts\ViewModels\ItemLibraryViewModel.js" />
     <Content Include="Scripts\ViewModels\ItemViewModel.js" />
-    <Content Include="Scripts\ViewModels\Map.js" />
+    <Content Include="Scripts\ViewModels\MapViewModel.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\ViewModels\SessionManagmentViewModel.js" />
     <Content Include="Scripts\ViewModels\SessionViewModel.js" />
@@ -194,12 +195,13 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\Hub.cshtml" />
     <Content Include="Views\Home\CharacterLibrary.cshtml" />
-    <Content Include="Views\Shared\_AddCharacterModal.cshtml" />
+    <Content Include="Views\Shared\_AddEditCharacterModal.cshtml" />
     <Content Include="Views\Shared\_ExistingCharacterModal.cshtml" />
     <Content Include="Views\Shared\_CrudItemModal.cshtml" />
     <Content Include="Views\Shared\_ExistingItemModal.cshtml" />
     <Content Include="Views\Home\ItemLibrary.cshtml" />
     <Content Include="Views\Home\SessionManagment.cshtml" />
+    <Content Include="Views\Shared\_UploadMapModal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -211,6 +213,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Shared\Modals\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccess\DataAccess.csproj">

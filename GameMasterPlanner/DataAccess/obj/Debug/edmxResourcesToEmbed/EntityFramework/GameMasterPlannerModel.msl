@@ -55,6 +55,7 @@
     <EntitySetMapping Name="Maps">
       <EntityTypeMapping TypeName="GameMasterPlannerDBModel.Map">
         <MappingFragment StoreEntitySet="Map">
+          <ScalarProperty Name="Image" ColumnName="Image" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ParentMapId" ColumnName="ParentMapId" />
           <ScalarProperty Name="Id" ColumnName="Id" />

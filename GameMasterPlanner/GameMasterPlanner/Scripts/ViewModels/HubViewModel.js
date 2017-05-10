@@ -19,37 +19,40 @@
         this.LocationList = ko.observableArray([]);
         this.OrganizationList = ko.observableArray([]);
 
-        let map = new GMaps({
-            div: '#map',
-            lat: 52.4801,
-            lng: -1.8835,
-            width: '100%',
-            height: '500px',
-            zoom: 7
-        });
+        // let map = new GMaps({
+        //     div: '#map',
+        //     lat: 52.4801,
+        //     lng: -1.8835,
+        //     width: '100%',
+        //     height: '500px',
+        //     zoom: 7
+        // });
 
-        map.setContextMenu({
-            control: 'map',
-            options: [{
-                title: 'Add marker',
-                name: 'add_marker',
-                action: function (e) {
-                    this.addMarker({
-                        lat: e.latLng.lat(),
-                        lng: e.latLng.lng(),
-                        title: 'New marker'
-                    });
-                }
-            }, {
-                title: 'Center here',
-                name: 'center_here',
-                action: function (e) {
-                    this.setCenter(e.latLng.lat(), e.latLng.lng());
-                }
-            }]
-        });
+        // map.setContextMenu({
+        //     control: 'map',
+        //     options: [{
+        //         title: 'Add marker',
+        //         name: 'add_marker',
+        //         action: function (e) {
+        //             this.addMarker({
+        //                 lat: e.latLng.lat(),
+        //                 lng: e.latLng.lng(),
+        //                 title: 'New marker'
+        //             });
+        //         }
+        //     }, {
+        //         title: 'Center here',
+        //         name: 'center_here',
+        //         action: function (e) {
+        //             this.setCenter(e.latLng.lat(), e.latLng.lng());
+        //         }
+        //     }]
+        // });
 
-        this.Map = map;
+        //this.Map = map;
+
+        this.uploadMapModal = ko.observable(false);
+        this.mapVM = new MapViewModel(null);
 
         this.showAddEditCharacterModal = ko.observable(false);
         this.existingCharacterModal = ko.observable(false);
@@ -305,6 +308,34 @@
                 self.ItemList.push(self.existingItemsVM.CompleteItemList()[index]);
             }
         });
+    }
+
+    //Shows upload modal for maps
+    showMapModal(){
+        this.uploadMapModal(true);
+    }
+
+    saveMap(){
+        this.uploadMapModal(false);
+
+        this.mapVM.setUploadedMap();
+
+        var canvas = $('#mapCanvas');
+        var ctx = canvas[0].getContext('2d');
+
+        var binary = atob(this.mapVM.ImageBLOB().split(',')[1]);
+
+        var array = [];
+        for (var i = 0; i < binary.length; i++) {
+            array.push(binary.charCodeAt(i));
+        }
+
+        let img = new Image();
+        img.src = URL.createObjectURL(new Blob([new Uint8Array(array)], {type: "image/jpeg"}));
+        img.onload = function (){
+            ctx.drawImage(img,0,0);
+        };
+        
     }
 }
 

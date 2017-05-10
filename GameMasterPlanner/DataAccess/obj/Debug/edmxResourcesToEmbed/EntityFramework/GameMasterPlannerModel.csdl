@@ -108,7 +108,8 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ParentMapId" Type="Int32" />
-    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
     <NavigationProperty Name="Locations" Relationship="GameMasterPlannerDBModel.FK_Location_ToChildMap" FromRole="Map" ToRole="Location" />
     <NavigationProperty Name="Locations1" Relationship="GameMasterPlannerDBModel.FK_Location_ToParentMap" FromRole="Map" ToRole="Location" />
     <NavigationProperty Name="Sessions" Relationship="GameMasterPlannerDBModel.FK_Session_ToMap" FromRole="Map" ToRole="Session" />

@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Item Library";
+}
+
+<h2>ItemLibrary</h2>
+
+<div class="row">
+    <div class="row">
+        <select data-bind="options: CampaignList,
+                   optionsText: function(item) { return item.Name; },
+                   value: CurrentCampaign"></select>
+    </div>
+
+    <div class="row">
+        <button class="btn btn-default" data-bind="click:createItem">Add Item</button>
+    </div>
+
+    <div class="row" style="margin-bottom: 10px; font-weight: bold">
+        <div class="col-md-2">
+            Item Name
+        </div>
+        <div class="col-md-10">
+            Sessions Item Is In
+        </div>
+    </div>
+    <div class="row" data-bind="foreach:ItemList">
+
+        <div class="row">
+            <div class="col-md-2">
+                <a data-bind="click:$parent.editItem">
+                    <span data-bind="text:Name"></span>
+                </a>
+            </div>
+            <div class="col-md-10" data-bind="foreach:SessionList">
+                <span data-bind="text:Title"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_CrudItemModal")
+
+@Scripts.Render("~/bundles/itemLibrary")

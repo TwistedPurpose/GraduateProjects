@@ -46,3 +46,6 @@ Ubuntu.vdi
 *.dll
 *.pdb
 *.config
+*.publish.xml
+*.pubxml
+*.user

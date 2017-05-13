@@ -19,38 +19,6 @@
         this.LocationList = ko.observableArray([]);
         this.OrganizationList = ko.observableArray([]);
 
-        // let map = new GMaps({
-        //     div: '#map',
-        //     lat: 52.4801,
-        //     lng: -1.8835,
-        //     width: '100%',
-        //     height: '500px',
-        //     zoom: 7
-        // });
-
-        // map.setContextMenu({
-        //     control: 'map',
-        //     options: [{
-        //         title: 'Add marker',
-        //         name: 'add_marker',
-        //         action: function (e) {
-        //             this.addMarker({
-        //                 lat: e.latLng.lat(),
-        //                 lng: e.latLng.lng(),
-        //                 title: 'New marker'
-        //             });
-        //         }
-        //     }, {
-        //         title: 'Center here',
-        //         name: 'center_here',
-        //         action: function (e) {
-        //             this.setCenter(e.latLng.lat(), e.latLng.lng());
-        //         }
-        //     }]
-        // });
-
-        //this.Map = map;
-
         this.uploadMapModal = ko.observable(false);
         this.mapVM = new MapViewModel(null);
 

@@ -62,6 +62,7 @@ namespace GameMasterPlanner.App_Start
             bundles.Add(new ScriptBundle("~/bundles/maps").Include(
                 "~/Scripts/gmaps.js",
                 "~/Scripts/Lib/knockout-file-bind.js",
+                "~/Scripts/Common/ImageZoomPan.js",
                 "~/Scripts/ViewModels/FileUploaderViewModel.js",
                 "~/Scripts/ViewModels/MapViewModel.js"));
 

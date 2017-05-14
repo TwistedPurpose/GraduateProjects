@@ -139,12 +139,12 @@
     <None Include="Properties\PublishProfiles\Local Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Common\Helper.js" />
+    <Content Include="Scripts\Common\ImageZoomPan.js" />
     <Content Include="Scripts\gmaps.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\knockout-3.4.1.debug.js" />
     <Content Include="Scripts\knockout-3.4.1.js" />
-    <Content Include="Scripts\Lib\jquery.panzoom.js" />
     <Content Include="Scripts\Lib\knockout-file-bind.js" />
     <Content Include="Scripts\Lib\knockout.dragdrop.js" />
     <Content Include="Scripts\ViewModels\CampaignViewModel.js" />
@@ -171,6 +171,8 @@
     <Compile Include="Controllers\API\CampaignController.cs" />
     <Compile Include="Controllers\API\CharacterController.cs" />
     <Compile Include="Controllers\API\ItemController.cs" />
+    <Compile Include="Controllers\API\MapController.cs" />
+    <Compile Include="Models\MapViewModel.cs" />
     <Compile Include="Controllers\API\SessionCharacterController.cs" />
     <Compile Include="Controllers\API\SessionController.cs" />
     <Compile Include="Controllers\API\SessionItemController.cs" />

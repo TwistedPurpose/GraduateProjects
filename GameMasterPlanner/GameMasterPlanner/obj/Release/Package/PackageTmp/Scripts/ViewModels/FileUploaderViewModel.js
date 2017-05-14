@@ -1,10 +1,7 @@
-﻿class FileUploaderViewModel {
+﻿class FileUploader {
     constructor() {
-        this.filePath = ko.observable();
-    }
-
-    fileUpload(data, e) {
-        let file = e.target.files[0];
-        let reader = new FileReader();
+        this.fileInput = ko.observable();
+        this.fileName = ko.observable();
+        this.reader = new FileReader();
     }
 }

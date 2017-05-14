@@ -12,6 +12,24 @@
             this.ImageBLOB = ko.observable();
         }
 
+        let self = this;
+
+        this.ImageType = ko.computed(function(){
+            if(self.ImageBLOB()){
+                return self.ImageBLOB().split(',')[0].split(';')[0].split(':')[1];
+            }
+            return null;
+        });
+
+        this.ImageData = ko.computed(function(){
+            if(self.ImageBLOB()){
+                return self.ImageBLOB().split(',')[1];
+            } else {
+                return null;
+            }
+            
+        });
+
         this.uploader = new FileUploader();
     }
 
@@ -20,6 +38,9 @@
     setUploadedMap(){
         this.Name(this.uploader.fileName());
         this.ImageBLOB(this.uploader.fileInput());
+    }
+
+    toJson(){
 
     }
 

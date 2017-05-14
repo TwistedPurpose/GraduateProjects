@@ -60,15 +60,14 @@
 
     <div class="row">
         <div class="col-sm-8 map">
-            <div class="google-map-canvas" id="map">
-            </div>
+            <canvas id="mapCanvas" class="panzoom" style="height:100%; width:100%"></canvas>
         </div>
 
         <div class="col-sm-4">
 
             <div class="row">
                 <div class="col-sm-4">
-                    <button class="btn btn-default disabled">Upload Map</button>
+                    <button class="btn btn-default" data-bind="click:showMapModal">Upload Map</button>
 
                     <button class="btn btn-default disabled">Set Root Map</button>
                 </div>
@@ -116,10 +115,11 @@
     </div>
 </div>
 
-@Html.Partial("_AddCharacterModal")
+@Html.Partial("_AddEditCharacterModal")
 @Html.Partial("_ExistingCharacterModal")
 @Html.Partial("_CrudItemModal")
 @Html.Partial("_ExistingItemModal")
+@Html.Partial("_UploadMapModal")
 
 
 <script>
@@ -127,6 +127,7 @@
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBLS0MX9AwHUlg0Zkvodyp3sjDPdrrB9c"></script>
+@Scripts.Render("~/bundles/maps")
 @Scripts.Render("~/bundles/character")
 @Scripts.Render("~/bundles/item")
 @Scripts.Render("~/bundles/hub")

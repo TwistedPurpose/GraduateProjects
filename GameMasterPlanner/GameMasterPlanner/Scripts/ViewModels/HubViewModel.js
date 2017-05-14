@@ -34,6 +34,8 @@
         this.addEditItemVM = new ItemViewModel(null);
         this.existingItemsVM = new ItemListViewModel(null);
 
+        this.imageZoomPan = new ImageZoomPan(null);
+
         this.editCharacter = (character) => {
             this.addEditCharacterVM.setupToEdit(character);
             this.showAddEditCharacterModal(true);
@@ -284,25 +286,24 @@
     }
 
     saveMap(){
+        self = this;
         this.uploadMapModal(false);
+
+        let img = new Image();
+        this.imageZoomPan = new ImageZoomPan(img);
 
         this.mapVM.setUploadedMap();
 
-        var canvas = $('#mapCanvas');
-        var ctx = canvas[0].getContext('2d');
-
-        var binary = atob(this.mapVM.ImageBLOB().split(',')[1]);
+        var binary = atob(self.mapVM.ImageData());
 
         var array = [];
         for (var i = 0; i < binary.length; i++) {
             array.push(binary.charCodeAt(i));
         }
 
-        let img = new Image();
-        img.src = URL.createObjectURL(new Blob([new Uint8Array(array)], {type: "image/jpeg"}));
-        img.onload = function (){
-            ctx.drawImage(img,0,0);
-        };
+        img.src = URL.createObjectURL(new Blob([new Uint8Array(array)], {type: self.mapVM.ImageType()}));
+        
+        this.imageZoomPan.redraw();
         
     }
 }

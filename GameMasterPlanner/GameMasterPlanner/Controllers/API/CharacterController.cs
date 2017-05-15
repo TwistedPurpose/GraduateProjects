@@ -49,6 +49,13 @@ namespace GameMasterPlanner.Controllers.API
             return Request.CreateResponse(HttpStatusCode.OK, characters);
         }
 
+        /// <summary>
+        /// Takes in a character model view and either creates a new entity of a character
+        /// or updates an existing character depending on if the ID is populated.
+        /// It also associates a character with a session is if the session Id is populated.
+        /// </summary>
+        /// <param name="character">Character view model to be updated/created/associated</param>
+        /// <returns>HTTP Response with modified or created character object</returns>
         public HttpResponseMessage Post(CharacterViewModel character)
         {
             Character dbCharacter = ModelConverter.ToDbCharacterModel(character);

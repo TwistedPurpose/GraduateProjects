@@ -19,9 +19,6 @@
         this.LocationList = ko.observableArray([]);
         this.OrganizationList = ko.observableArray([]);
 
-        this.uploadMapModal = ko.observable(false);
-        this.mapVM = new MapViewModel(null);
-
         this.showAddEditCharacterModal = ko.observable(false);
         this.existingCharacterModal = ko.observable(false);
 
@@ -33,6 +30,11 @@
 
         this.addEditItemVM = new ItemViewModel(null);
         this.existingItemsVM = new ItemListViewModel(null);
+
+        this.uploadMapModal = ko.observable(false);
+        this.mapModalVM = new MapViewModel(null);
+
+        this.Map = ko.observable();
 
         this.imageZoomPan = new ImageZoomPan(null);
 
@@ -69,6 +71,20 @@
                     itemsList.forEach(function (item) {
                         self.ItemList.push(new ItemViewModel(item));
                     });
+                });
+
+                $.getJSON(baseURL + 'api/Map/GetForSession?sessionId=' + self.CurrentSession().Id, function (map) {
+                    if (map) {
+                        self.Map = new MapViewModel(map);
+                        
+                        let img = new Image();
+                        self.imageZoomPan = new ImageZoomPan(img);
+
+                        img.src = URL.createObjectURL(self.Map.ImageBlob());
+
+                        self.imageZoomPan.redraw();
+                    }
+                    
                 });
             }
         });
@@ -281,30 +297,32 @@
     }
 
     //Shows upload modal for maps
-    showMapModal(){
+    showMapModal() {
         this.uploadMapModal(true);
     }
 
-    saveMap(){
+    saveMap() {
         self = this;
+
         this.uploadMapModal(false);
 
         let img = new Image();
         this.imageZoomPan = new ImageZoomPan(img);
+        this.mapModalVM.setUploadedMap();
 
-        this.mapVM.setUploadedMap();
+        this.Map = new MapViewModel(this.mapModalVM.toJson());
 
-        var binary = atob(self.mapVM.ImageData());
+        this.Map.SessionId = self.CurrentSession().Id;
 
-        var array = [];
-        for (var i = 0; i < binary.length; i++) {
-            array.push(binary.charCodeAt(i));
-        }
+        $.post(baseURL + 'api/Map', self.Map.toJson(), function (map){
+            self.Map = new MapViewModel(map);
+            self.imageZoomPan.redraw();
+        });
 
-        img.src = URL.createObjectURL(new Blob([new Uint8Array(array)], {type: self.mapVM.ImageType()}));
-        
+        img.src = URL.createObjectURL(this.Map.ImageBlob());
+
+        this.mapModalVM.clear();
         this.imageZoomPan.redraw();
-        
     }
 }
 

@@ -7,13 +7,18 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories
 {
-    public class BaseRepository
+    public class BaseRepository : IDisposable
     {
         protected GameMasterPlannerDBEntities db;
 
         public BaseRepository()
         {
             db = new GameMasterPlannerDBEntities();
+        }
+
+        public void Dispose()
+        {
+            db = null;
         }
     }
 }

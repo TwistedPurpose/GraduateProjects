@@ -1,4 +1,8 @@
-﻿using System;
+﻿using DataAccess.EntityFramework;
+using DataAccess.Repositories;
+using GameMasterPlanner.Helper;
+using GameMasterPlanner.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,40 +13,52 @@ namespace GameMasterPlanner.Controllers.API
 {
     public class MapController : ApiController
     {
-        // GET api/<controller>
-        public IEnumerable<string> Get()
+        private MapRepository mapRepository;
+
+        public MapController()
         {
-            return new string[] { "value1", "value2" };
+            mapRepository = new MapRepository();
         }
 
-        // GET api/<controller>/5
-        public string Get(int id)
-        {
-            return "value";
-        }
+        //// GET api/<controller>
+        //public IEnumerable<string> Get()
+        //{
+        //    return new string[] { "value1", "value2" };
+        //}
+
+        //// GET api/<controller>/5
+        //public string Get(int mapId)
+        //{
+        //    return "value";
+        //}
 
         // POST api/<controller>
-        public HttpResponseMessage Post(MapViewModel map)
+        public HttpResponseMessage Post(MapViewModel mapVm)
         {
+            Map map = ModelConverter.ToDbMapModel(mapVm);
+
+            // If the ID is not zero, then edit the map
             if(map.Id > 0)
             {
-
-            } else
+                mapRepository.UpdateMap(map);
+            } else // If the map has a zero id, then create a new map
             {
-
+                map = mapRepository.CreateMap(map);
             }
 
-            return Request.CreateResponse(HttpStatusCode.OK);
+            if (mapVm.SessionId > 0)
+            {
+                mapRepository.AddMapToSession(map.Id, mapVm.SessionId);
+            }
+
+            mapVm = ModelConverter.ToMapViewModel(mapRepository.GetMap(map.Id));
+
+            return Request.CreateResponse(HttpStatusCode.OK, mapVm);
         }
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
+        public HttpResponseMessage GetForSession(int sessionId)
         {
-        }
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
+            return Request.CreateResponse(HttpStatusCode.OK, ModelConverter.ToMapViewModel(mapRepository.GetMapInSession(sessionId)));
         }
     }
 }

@@ -92,6 +92,7 @@
     <Compile Include="Repositories\CampaignRepository.cs" />
     <Compile Include="Repositories\CharacterRepository.cs" />
     <Compile Include="Repositories\ItemRepository.cs" />
+    <Compile Include="Repositories\MapRepository.cs" />
     <Compile Include="Repositories\SessionRepository.cs" />
   </ItemGroup>
   <ItemGroup>

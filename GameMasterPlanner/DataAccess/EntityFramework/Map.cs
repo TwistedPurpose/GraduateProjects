@@ -26,6 +26,7 @@ namespace DataAccess.EntityFramework
         public Nullable<int> ParentMapId { get; set; }
         public string Name { get; set; }
         public byte[] Image { get; set; }
+        public string ImageType { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Location> Locations { get; set; }

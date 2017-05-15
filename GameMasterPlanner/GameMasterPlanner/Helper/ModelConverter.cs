@@ -140,5 +140,53 @@ namespace GameMasterPlanner.Helper
 
             return dbItem;
         }
+
+        /// <summary>
+        /// Converts a map view model to a database model
+        /// </summary>
+        /// <param name="mapVM">Map's view model</param>
+        /// <returns>Database entity of a map</returns>
+        public static Map ToDbMapModel(MapViewModel mapVm)
+        {
+            Map dbMap = null;
+
+            if(mapVm != null)
+            {
+                dbMap = new Map()
+                {
+                    Id = mapVm.Id,
+                    ParentMapId = mapVm.ParentMapId,
+                    Name = String.IsNullOrWhiteSpace(mapVm.Name) ? String.Empty : mapVm.Name.Trim(),
+                    Image = mapVm.Image,
+                    ImageType = String.IsNullOrWhiteSpace(mapVm.ImageType) ? String.Empty : mapVm.ImageType.Trim()
+                };
+            }
+
+            return dbMap;
+        }
+
+        /// <summary>
+        /// Converts a map entity to a map view model
+        /// </summary>
+        /// <param name="dbMap">Map entity to be turned into view model</param>
+        /// <returns>Map view model from the map entitiy</returns>
+        public static MapViewModel ToMapViewModel(Map dbMap)
+        {
+            MapViewModel mapVm = null;
+
+            if(dbMap != null)
+            {
+                mapVm = new MapViewModel()
+                {
+                    Id = dbMap.Id,
+                    ParentMapId = (int)dbMap.ParentMapId,
+                    Image = dbMap.Image,
+                    ImageType = String.IsNullOrWhiteSpace(dbMap.ImageType) ? String.Empty : dbMap.ImageType.Trim(),
+                    Name = String.IsNullOrWhiteSpace(dbMap.Name) ? String.Empty : dbMap.Name.Trim()
+                };
+            }
+
+            return mapVm;
+        }
     }
 }

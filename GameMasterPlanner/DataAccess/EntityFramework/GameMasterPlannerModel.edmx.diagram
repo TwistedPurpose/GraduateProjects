@@ -5,12 +5,12 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="fd812e1662a941e68bfd18370177b4ba" Name="Diagram1">
-        <EntityTypeShape EntityType="GameMasterPlannerDBModel.Campaign" Width="1.5" PointX="0.75" PointY="7.25" />
-        <EntityTypeShape EntityType="GameMasterPlannerDBModel.Character" Width="1.5" PointX="0.75" PointY="13.375" />
-        <EntityTypeShape EntityType="GameMasterPlannerDBModel.History" Width="1.5" PointX="1.5" PointY="10.625" />
-        <EntityTypeShape EntityType="GameMasterPlannerDBModel.Item" Width="1.5" PointX="0.75" PointY="16.75" />
+        <EntityTypeShape EntityType="GameMasterPlannerDBModel.Campaign" Width="1.5" PointX="0.75" PointY="10.75" />
+        <EntityTypeShape EntityType="GameMasterPlannerDBModel.Character" Width="1.5" PointX="0.75" PointY="7.5" />
+        <EntityTypeShape EntityType="GameMasterPlannerDBModel.History" Width="1.5" PointX="1.5" PointY="14.125" />
+        <EntityTypeShape EntityType="GameMasterPlannerDBModel.Item" Width="1.5" PointX="0.75" PointY="16.875" />
         <EntityTypeShape EntityType="GameMasterPlannerDBModel.Location" Width="1.5" PointX="3" PointY="6.625" />
-        <EntityTypeShape EntityType="GameMasterPlannerDBModel.Map" Width="1.5" PointX="0.75" PointY="3" />
+        <EntityTypeShape EntityType="GameMasterPlannerDBModel.Map" Width="1.5" PointX="0.75" PointY="2.875" />
         <EntityTypeShape EntityType="GameMasterPlannerDBModel.Session" Width="1.5" PointX="3" PointY="2.625" />
         <AssociationConnector Association="GameMasterPlannerDBModel.FK_Campaign_ToHistory" />
         <AssociationConnector Association="GameMasterPlannerDBModel.FK_Character_Campaign" />

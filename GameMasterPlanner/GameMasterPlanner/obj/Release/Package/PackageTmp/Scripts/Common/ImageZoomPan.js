@@ -84,7 +84,7 @@ class ImageZoomPan {
         self.ctx.clearRect(0, 0, self.canvas.width, self.canvas.height);
         self.ctx.restore();
 
-        self.ctx.drawImage(self.panZoomImage, 0, 0, self.canvas.width, self.canvas.height);
+        self.ctx.drawImage(self.panZoomImage, 0, 0);
     }
 
     // Adds ctx.getTransform() - returns an SVGMatrix

@@ -2,6 +2,7 @@
 (
 	[Id] INT identity NOT NULL PRIMARY KEY,
 	[ParentMapId] INT NULL,
-	[Name] nvarchar(100) NOT NULL, 
-    [Image] VARBINARY(MAX) NULL,
+	[Name] nvarchar(200) NOT NULL, 
+    [Image] VARBINARY(MAX) NULL, 
+    [ImageType] NVARCHAR(100) NULL,
 )

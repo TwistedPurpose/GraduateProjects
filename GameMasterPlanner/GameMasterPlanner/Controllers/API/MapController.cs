@@ -38,10 +38,11 @@ namespace GameMasterPlanner.Controllers.API
             Map map = ModelConverter.ToDbMapModel(mapVm);
 
             // If the ID is not zero, then edit the map
-            if(map.Id > 0)
+            if (map.Id > 0)
             {
                 mapRepository.UpdateMap(map);
-            } else // If the map has a zero id, then create a new map
+            }
+            else // If the map has a zero id, then create a new map
             {
                 map = mapRepository.CreateMap(map);
             }

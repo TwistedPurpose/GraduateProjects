@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Formatting;
 using System.Web.Http;
 
 namespace GameMasterPlanner
@@ -13,6 +14,8 @@ namespace GameMasterPlanner
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+
+            config.Formatters.Add(new BsonMediaTypeFormatter());
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

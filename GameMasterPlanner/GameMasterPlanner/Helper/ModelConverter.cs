@@ -150,14 +150,14 @@ namespace GameMasterPlanner.Helper
         {
             Map dbMap = null;
 
-            if(mapVm != null)
+            if (mapVm != null)
             {
                 dbMap = new Map()
                 {
                     Id = mapVm.Id,
                     ParentMapId = mapVm.ParentMapId,
                     Name = String.IsNullOrWhiteSpace(mapVm.Name) ? String.Empty : mapVm.Name.Trim(),
-                    Image = mapVm.Image,
+                    Image = Convert.FromBase64String(mapVm.Image),
                     ImageType = String.IsNullOrWhiteSpace(mapVm.ImageType) ? String.Empty : mapVm.ImageType.Trim()
                 };
             }
@@ -174,13 +174,13 @@ namespace GameMasterPlanner.Helper
         {
             MapViewModel mapVm = null;
 
-            if(dbMap != null)
+            if (dbMap != null)
             {
                 mapVm = new MapViewModel()
                 {
                     Id = dbMap.Id,
                     ParentMapId = (int)dbMap.ParentMapId,
-                    Image = dbMap.Image,
+                    Image = Convert.ToBase64String(dbMap.Image),
                     ImageType = String.IsNullOrWhiteSpace(dbMap.ImageType) ? String.Empty : dbMap.ImageType.Trim(),
                     Name = String.IsNullOrWhiteSpace(dbMap.Name) ? String.Empty : dbMap.Name.Trim()
                 };

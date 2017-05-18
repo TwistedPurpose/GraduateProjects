@@ -347,23 +347,10 @@
 
         this.Map.SessionId = self.CurrentSession().Id;
 
-        $.ajax({
-            url: baseURL + 'api/Map',
-            type: 'POST',
-            data: JSON.stringify(data),
-            dataType: 'json',
-            contentType: 'application/bson',
-            success: function (map) {
-                if (map) {
-                    alert('yay!');
-                }
-            }
+        $.post(baseURL + 'api/Map', self.Map.toJson(), function (map) {
+            self.Map = new MapViewModel(map);
+            self.imageZoomPan.redraw();
         });
-
-        // $.post(baseURL + 'api/Map', self.Map.toJson(), function (map) {
-        //     self.Map = new MapViewModel(map);
-        //     self.imageZoomPan.redraw();
-        // });
 
         img.src = URL.createObjectURL(this.Map.ImageBlob());
 

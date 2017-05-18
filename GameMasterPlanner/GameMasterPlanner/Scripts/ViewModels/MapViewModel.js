@@ -1,18 +1,11 @@
 ﻿class MapViewModel {
     constructor(data) {
         if (data) {
-            var binary = atob(data.Image);
-
-            var array = [];
-            for (var i = 0; i < binary.length; i++) {
-                array.push(binary.charCodeAt(i));
-            }
-
             this.Id = data.Id;
             this.ParentMapId = data.ParentMapId;
             this.SessionId = data.SessionId;
             this.Name = ko.observable(data.Name);
-            this.Image = ko.observable(new Uint8Array(array));
+            this.Image = ko.observable(data.Image);
             this.ImageType = ko.observable(data.ImageType);
         } else {
             this.Id;
@@ -28,7 +21,14 @@
         this.ImageBlob = ko.computed(function () {
             if (self.Image() && self.ImageType()) {
 
-                return new Blob([self.Image()], { type: self.ImageType() });
+                var binary = atob(self.Image());
+
+                var array = [];
+                for (var i = 0; i < binary.length; i++) {
+                    array.push(binary.charCodeAt(i));
+                }
+
+                return new Blob([new Uint8Array(array)], { type: self.ImageType() });
             } else {
                 return null;
             }
@@ -60,7 +60,7 @@
             Id: self.Id,
             ParentMapId: self.ParentMapId,
             SessionId: self.SessionId,
-            Name: self.Name(),
+            Name: self.Name(), //knockout elements
             Image: self.Image(),
             ImageType: self.ImageType()
         };
@@ -75,6 +75,7 @@
         this.Name(null);
         this.Image(null);
         this.ImageType(null);
+        this.ImageString = null;
     }
 
 } 

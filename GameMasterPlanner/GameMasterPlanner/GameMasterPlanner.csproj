@@ -172,6 +172,7 @@
     <Compile Include="Controllers\API\CharacterController.cs" />
     <Compile Include="Controllers\API\ItemController.cs" />
     <Compile Include="Controllers\API\MapController.cs" />
+    <Compile Include="Controllers\API\MapImageController.cs" />
     <Compile Include="Models\MapViewModel.cs" />
     <Compile Include="Controllers\API\SessionCharacterController.cs" />
     <Compile Include="Controllers\API\SessionController.cs" />
@@ -216,7 +217,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Shared\Modals\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccess\DataAccess.csproj">

@@ -35,6 +35,7 @@ namespace GameMasterPlanner.Controllers.API
         // POST api/<controller>
         public HttpResponseMessage Post(MapViewModel mapVm)
         {
+
             Map map = ModelConverter.ToDbMapModel(mapVm);
 
             // If the ID is not zero, then edit the map

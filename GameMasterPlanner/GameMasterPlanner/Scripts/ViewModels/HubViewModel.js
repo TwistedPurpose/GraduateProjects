@@ -35,41 +35,10 @@
         this.mapModalVM = new MapViewModel(null);
 
         /// https://jsfiddle.net/TwistedPurpose/76m79n8b/ for future gmap stuff?
-        // let map = new GMaps({
-        //     div: '#map',
-        //     lat: 52.4801,
-        //     lng: -1.8835,
-        //     width: '100%',
-        //     height: '500px',
-        //     zoom: 7
-        // });
-
-        // map.setContextMenu({
-        //     control: 'map',
-        //     options: [{
-        //         title: 'Add marker',
-        //         name: 'add_marker',
-        //         action: function (e) {
-        //             this.addMarker({
-        //                 lat: e.latLng.lat(),
-        //                 lng: e.latLng.lng(),
-        //                 title: 'New marker'
-        //             });
-        //         }
-        //     }, {
-        //         title: 'Center here',
-        //         name: 'center_here',
-        //         action: function (e) {
-        //             this.setCenter(e.latLng.lat(), e.latLng.lng());
-        //         }
-        //     }]
-        // });
-
-        // this.googleMap = map;
 
         this.Map = ko.observable();
 
-        this.imageZoomPan = new ImageZoomPan(null);
+        //this.imageZoomPan = new ImageZoomPan(null);
 
         this.editCharacter = (character) => {
             this.addEditCharacterVM.setupToEdit(character);
@@ -109,14 +78,18 @@
                 $.getJSON(baseURL + 'api/Map/GetForSession?sessionId=' + self.CurrentSession().Id, function (map) {
                     if (map) {
                         self.Map = new MapViewModel(map);
+                        self.updateMap();
 
-                        let img = new Image();
-                        self.imageZoomPan = new ImageZoomPan(img);
+                        // let img = new Image();
+                        // self.imageZoomPan = new ImageZoomPan(img);
 
-                        img.src = URL.createObjectURL(self.Map.ImageBlob());
+                        // img.src = URL.createObjectURL(self.Map.ImageBlob());
 
-                        self.imageZoomPan.redraw();
+                        // self.imageZoomPan.redraw();
                     }
+
+
+
 
                 });
             }
@@ -339,8 +312,8 @@
 
         this.uploadMapModal(false);
 
-        let img = new Image();
-        this.imageZoomPan = new ImageZoomPan(img);
+        // let img = new Image();
+        // this.imageZoomPan = new ImageZoomPan(img);
         this.mapModalVM.setUploadedMap();
 
         this.Map = new MapViewModel(this.mapModalVM.toJson());
@@ -349,13 +322,64 @@
 
         $.post(baseURL + 'api/Map', self.Map.toJson(), function (map) {
             self.Map = new MapViewModel(map);
-            self.imageZoomPan.redraw();
+            //self.imageZoomPan.redraw();
+            self.updateMap();
         });
 
-        img.src = URL.createObjectURL(this.Map.ImageBlob());
+        // img.src = URL.createObjectURL(this.Map.ImageBlob());
 
         this.mapModalVM.clear();
-        this.imageZoomPan.redraw();
+        // this.imageZoomPan.redraw();
+    }
+
+    updateMap() {
+        let self = this;
+        let gmap = new GMaps({
+            div: '#map',
+            lat: 0,
+            lng: 0,
+            width: '100%',
+            height: '500px',
+            zoom: 7,
+            mapTypeControlOptions: {
+                mapTypeIds: ["WorldMap", "hybrid", "roadmap", "satellite", "terrain"]
+            }
+        });
+
+        gmap.addMapType("WorldMap", {
+            getTileUrl: function (coord, zoom) {
+                return baseURL + 'api/MapImage?id=' + self.Map.Id;
+                // return "https://a.tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+            },
+            tileSize: new google.maps.Size(720, 480),
+            name: "Fantasy World Map",
+            maxZoom: 18
+        });
+
+        gmap.setContextMenu({
+            control: 'map',
+            options: [{
+                title: 'Add marker',
+                name: 'add_marker',
+                action: function (e) {
+                    this.addMarker({
+                        lat: e.latLng.lat(),
+                        lng: e.latLng.lng(),
+                        title: 'New marker'
+                    });
+                }
+            }, {
+                title: 'Center here',
+                name: 'center_here',
+                action: function (e) {
+                    this.setCenter(e.latLng.lat(), e.latLng.lng());
+                }
+            }]
+        });
+
+        gmap.setMapTypeId("WorldMap");
+
+        this.googleMap = gmap;
     }
 }
 

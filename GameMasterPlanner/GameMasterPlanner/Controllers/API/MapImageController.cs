@@ -1,33 +1,40 @@
-﻿using Newtonsoft.Json;
+﻿using DataAccess.EntityFramework;
+using DataAccess.Repositories;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 
 namespace GameMasterPlanner.Controllers.API
 {
     public class MapImageController : ApiController
     {
-        public HttpResponseMessage Post(byte[] image)
-        {
-            MemoryStream ms = new MemoryStream(image);
-            using (BsonReader reader = new BsonReader(ms))
-            {
-                JsonSerializer serializer = new JsonSerializer();
+        private MapRepository mapRepository;
 
-                MapImage imageFromClient = serializer.Deserialize<MapImage>(reader);
-            }
-            return Request.CreateResponse(HttpStatusCode.OK);
+        public MapImageController()
+        {
+            mapRepository = new MapRepository();
         }
 
-        public class MapImage
+        public HttpResponseMessage Get(int id)
         {
-            public int Id { get; set; }
-            public byte[] Image { get; set; }
+            Map m = mapRepository.GetMap(id);
+
+
+            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+            result.Content = new ByteArrayContent(m.Image);
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+            return result;
+
+            //Bitmap.Clone();
+
         }
     }
 }

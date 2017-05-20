@@ -348,11 +348,17 @@
 
         gmap.addMapType("WorldMap", {
             getTileUrl: function (coord, zoom) {
+                // var normalizedCoord = getNormalizedCoord(coord, zoom);
+                // if (!normalizedCoord) {
+                //     return null;
+                // }
+                // var bound = Math.pow(2, zoom);
+                // return baseURL + 'api/MapImage?id=' + self.Map.Id + '&zoom=' + zoom + '&x=' + normalizedCoord.x + '&y=' + (bound - normalizedCoord.y - 1);
                 return baseURL + 'api/MapImage?id=' + self.Map.Id + '&zoom=' + zoom + '&x='+ coord.x +'&y='+coord.y;
             },
             tileSize: new google.maps.Size(256, 256),
             name: "Fantasy World Map",
-            maxZoom: 0,
+            maxZoom: 4,
             minZoom: 0,
             radius: 1738000
         });

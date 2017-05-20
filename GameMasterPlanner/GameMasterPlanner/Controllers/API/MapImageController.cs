@@ -40,6 +40,9 @@ namespace GameMasterPlanner.Controllers.API
 
         public HttpResponseMessage Get(int id, int zoom, int x, int y)
         {
+
+            int sideLength = 256 * (int)Math.Pow(2,zoom);
+
             Map m = mapRepository.GetMap(id);
 
             Bitmap map;
@@ -48,18 +51,13 @@ namespace GameMasterPlanner.Controllers.API
                 Bitmap tile;
                 map = new Bitmap(ms);
 
-                int sideLength = 256;
-
-                Size tileSize = new Size(sideLength, sideLength);
+                
 
                 int numTilesX = (int)Math.Floor(((double)map.Width) / ((double)sideLength));
 
                 int numTilesY = (int)Math.Floor(((double)map.Height) / ((double)sideLength));
 
-                if (numTilesX == x || numTilesY == y)
-                {
-                    tile = null;
-                } else if (x < 0  ||  y < 0 || x > numTilesX || y > numTilesY)
+                if (x < 0 || y < 0 || x > numTilesX || y > numTilesY)
                 {
                     tile = new Bitmap(sideLength, sideLength);
                     using (Graphics gfx = Graphics.FromImage(tile))
@@ -70,13 +68,52 @@ namespace GameMasterPlanner.Controllers.API
                             gfx.FillRectangle(brush, 0, 0, sideLength, sideLength);
                         }
                     }
-                } else
+                }
+                else
                 {
-                    Point p = new Point(Math.Abs((x % numTilesX) * sideLength), Math.Abs((y % numTilesY) * sideLength));
+                    Point p = new Point(Math.Abs((x % (numTilesX+1)) * sideLength), Math.Abs((y % (numTilesY+1)) * sideLength));
+                    Size tileSize;
 
-                    Rectangle rectangleTile = new Rectangle(p, tileSize);
+                    if (numTilesX == x || numTilesY == y)
+                    {
+                        int xVariableSize = sideLength;
+                        int yVariableSize = sideLength;
 
-                    tile = map.Clone(rectangleTile, map.PixelFormat);
+                        if (numTilesX == x)
+                        {
+                            xVariableSize = map.Width % sideLength;
+                        }
+
+                        if(numTilesY == y)
+                        {
+                            yVariableSize = map.Height % sideLength;
+                        }
+
+                        tile = new Bitmap(sideLength, sideLength);
+                        using (Graphics gfx = Graphics.FromImage(tile))
+                        {
+
+                            using (SolidBrush brush = new SolidBrush(Color.FromArgb(0, 0, 0)))
+                            {
+                                gfx.FillRectangle(brush, 0, 0, sideLength, sideLength);
+                            }
+
+                            tileSize = new Size(xVariableSize, yVariableSize);
+                            Rectangle rectangleTile = new Rectangle(p, tileSize);
+
+                            gfx.DrawImage(map.Clone(rectangleTile, map.PixelFormat), rectangleTile);
+                        }
+                    } else
+                    {
+                        tileSize = new Size(sideLength, sideLength);
+
+                        Rectangle rectangleTile = new Rectangle(p, tileSize);
+
+                        tile = map.Clone(rectangleTile, map.PixelFormat);
+                    }
+
+
+
                 }
 
                 ImageConverter converter = new ImageConverter();
@@ -86,7 +123,7 @@ namespace GameMasterPlanner.Controllers.API
 
                 HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
                 result.Content = new ByteArrayContent(returnImage);
-                result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+                result.Content.Headers.ContentType = new MediaTypeHeaderValue(m.ImageType);
                 return result;
             }
             //Bitmap.Clone();

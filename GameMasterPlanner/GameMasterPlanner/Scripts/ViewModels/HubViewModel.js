@@ -358,7 +358,7 @@
             },
             tileSize: new google.maps.Size(256, 256),
             name: "Fantasy World Map",
-            maxZoom: 4,
+            maxZoom: 1,
             minZoom: 0,
             radius: 1738000
         });

@@ -340,7 +340,7 @@
             lng: 0,
             width: '100%',
             height: '500px',
-            zoom: 7,
+            zoom: 0,
             mapTypeControlOptions: {
                 mapTypeIds: ["WorldMap", "hybrid", "roadmap", "satellite", "terrain"]
             }
@@ -348,12 +348,13 @@
 
         gmap.addMapType("WorldMap", {
             getTileUrl: function (coord, zoom) {
-                return baseURL + 'api/MapImage?id=' + self.Map.Id;
-                // return "https://a.tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+                return baseURL + 'api/MapImage?id=' + self.Map.Id + '&zoom=' + zoom + '&x='+ coord.x +'&y='+coord.y;
             },
-            tileSize: new google.maps.Size(720, 480),
+            tileSize: new google.maps.Size(256, 256),
             name: "Fantasy World Map",
-            maxZoom: 18
+            maxZoom: 0,
+            minZoom: 0,
+            radius: 1738000
         });
 
         gmap.setContextMenu({

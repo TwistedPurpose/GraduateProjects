@@ -78,4 +78,16 @@
         this.ImageString = null;
     }
 
-} 
+}
+
+class MapListViewModel {
+    constructor(data) {
+        if (data) {
+            this.MapList = ko.observableArray(data.MapList);
+            this.SelectedMap = ko.observable(data.SelectedMapId);
+        } else {
+            this.MapList = ko.observableArray([]);
+            this.SelectedMap = ko.observable();
+        }
+    }
+}

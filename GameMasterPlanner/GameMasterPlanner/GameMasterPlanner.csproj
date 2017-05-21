@@ -173,6 +173,7 @@
     <Compile Include="Controllers\API\ItemController.cs" />
     <Compile Include="Controllers\API\MapController.cs" />
     <Compile Include="Controllers\API\MapImageController.cs" />
+    <Compile Include="Controllers\API\SessionMapController.cs" />
     <Compile Include="Models\MapViewModel.cs" />
     <Compile Include="Controllers\API\SessionCharacterController.cs" />
     <Compile Include="Controllers\API\SessionController.cs" />
@@ -206,6 +207,7 @@
     <Content Include="Views\Home\ItemLibrary.cshtml" />
     <Content Include="Views\Home\SessionManagment.cshtml" />
     <Content Include="Views\Shared\_UploadMapModal.cshtml" />
+    <Content Include="Views\Shared\_ExistingMapModal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

@@ -33,10 +33,12 @@
 
         this.uploadMapModal = ko.observable(false);
         this.mapModalVM = new MapViewModel(null);
+        this.existingMapModal = ko.observable(false);
+        this.existingMapVM = ko.observable(new MapListViewModel(null));
 
         /// https://jsfiddle.net/TwistedPurpose/76m79n8b/ for future gmap stuff?
 
-        this.Map = ko.observable();
+        this.Map = new MapViewModel(null);
 
         //this.imageZoomPan = new ImageZoomPan(null);
 
@@ -87,10 +89,6 @@
 
                         // self.imageZoomPan.redraw();
                     }
-
-
-
-
                 });
             }
         });
@@ -307,6 +305,38 @@
         this.uploadMapModal(true);
     }
 
+    showExistingMapModal() {
+        let self = this;
+
+        $.getJSON(baseURL + 'api/Map?id=' + self.CampaignId, function (mapList) {
+            let list = [];
+            mapList.forEach(function (map) {
+                list.push(new MapViewModel(map));
+            });
+
+            let data = { MapList: list, SelectedMapId: self.Map.Id };
+            self.existingMapVM(new MapListViewModel(data));
+
+            self.existingMapModal(true);
+        });
+
+    }
+
+    saveNewBaseMap() {
+        let self = this;
+
+        this.existingMapModal(false);
+
+        $.post(baseURL + 'api/SessionMap?mapId=' + self.existingMapVM().SelectedMap() + '&sessionId=' + self.CurrentSession().Id, function () {
+            $.getJSON(baseURL + 'api/Map/GetForSession?sessionId=' + self.CurrentSession().Id, function (map) {
+                if (map) {
+                    self.Map = new MapViewModel(map);
+                    self.updateMap();
+                }
+            });
+        });
+    }
+
     saveMap() {
         self = this;
 
@@ -348,17 +378,11 @@
 
         gmap.addMapType("WorldMap", {
             getTileUrl: function (coord, zoom) {
-                // var normalizedCoord = getNormalizedCoord(coord, zoom);
-                // if (!normalizedCoord) {
-                //     return null;
-                // }
-                // var bound = Math.pow(2, zoom);
-                // return baseURL + 'api/MapImage?id=' + self.Map.Id + '&zoom=' + zoom + '&x=' + normalizedCoord.x + '&y=' + (bound - normalizedCoord.y - 1);
-                return baseURL + 'api/MapImage?id=' + self.Map.Id + '&zoom=' + zoom + '&x='+ coord.x +'&y='+coord.y;
+                return baseURL + 'api/MapImage?id=' + self.Map.Id + '&zoom=' + zoom + '&x=' + coord.x + '&y=' + coord.y;
             },
             tileSize: new google.maps.Size(256, 256),
             name: "Fantasy World Map",
-            maxZoom: 1,
+            maxZoom: 0,
             minZoom: 0,
             radius: 1738000
         });
@@ -388,6 +412,8 @@
 
         this.googleMap = gmap;
     }
+
+
 }
 
 // The hubs view model to be bound to knockout

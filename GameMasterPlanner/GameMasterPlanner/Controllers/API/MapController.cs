@@ -20,18 +20,6 @@ namespace GameMasterPlanner.Controllers.API
             mapRepository = new MapRepository();
         }
 
-        //// GET api/<controller>
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        //// GET api/<controller>/5
-        //public string Get(int mapId)
-        //{
-        //    return "value";
-        //}
-
         // POST api/<controller>
         public HttpResponseMessage Post(MapViewModel mapVm)
         {
@@ -61,6 +49,12 @@ namespace GameMasterPlanner.Controllers.API
         public HttpResponseMessage GetForSession(int sessionId)
         {
             return Request.CreateResponse(HttpStatusCode.OK, ModelConverter.ToMapViewModel(mapRepository.GetMapInSession(sessionId)));
+        }
+
+        public HttpResponseMessage Get(int id)
+        {
+            List<MapViewModel> mapList = mapRepository.GetMapList(id).Select(x => { Map m  = x; m.Image = null; return ModelConverter.ToMapViewModel(m); }).ToList();
+            return Request.CreateResponse(HttpStatusCode.OK, mapList);
         }
     }
 }

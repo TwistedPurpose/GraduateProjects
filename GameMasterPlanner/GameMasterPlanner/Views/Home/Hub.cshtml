@@ -71,7 +71,7 @@
                 <div class="col-sm-4">
                     <button class="btn btn-default" data-bind="click:showMapModal">Upload Map</button>
 
-                    <button class="btn btn-default disabled">Set Root Map</button>
+                    <button class="btn btn-default" data-bind="click:showExistingMapModal">Set Root Map</button>
                 </div>
             </div>
 
@@ -122,6 +122,7 @@
 @Html.Partial("_CrudItemModal")
 @Html.Partial("_ExistingItemModal")
 @Html.Partial("_UploadMapModal")
+@Html.Partial("_ExistingMapModal")
 
 
 <script>

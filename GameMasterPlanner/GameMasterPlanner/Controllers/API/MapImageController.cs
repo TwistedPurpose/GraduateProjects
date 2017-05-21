@@ -28,17 +28,16 @@ namespace GameMasterPlanner.Controllers.API
         {
             Map m = mapRepository.GetMap(id);
 
-
             HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
             result.Content = new ByteArrayContent(m.Image);
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue(m.ImageType);
             return result;
         }
 
         public HttpResponseMessage Get(int id, int zoom, int x, int y)
         {
-
-            int sideLength = 256 * (int)Math.Pow(2,zoom);
+            // Add logic for Zoom
+            int sideLength = 256;
 
             Map m = mapRepository.GetMap(id);
 
@@ -47,8 +46,6 @@ namespace GameMasterPlanner.Controllers.API
             {
                 Bitmap tile;
                 map = new Bitmap(ms);
-
-                
 
                 int numTilesX = (int)Math.Floor(((double)map.Width) / ((double)sideLength));
 
@@ -86,11 +83,6 @@ namespace GameMasterPlanner.Controllers.API
                             yVariableSize = map.Height % sideLength;
                         }
 
-                        //tileSize = new Size(xVariableSize, yVariableSize);
-                        //Rectangle rectangleTile = new Rectangle(p, tileSize);
-
-                        //tile = map.Clone(rectangleTile, map.PixelFormat);
-
                         tileSize = new Size(xVariableSize, yVariableSize);
                         Rectangle rectangleTile = new Rectangle(p, tileSize);
 
@@ -118,22 +110,16 @@ namespace GameMasterPlanner.Controllers.API
                         tile = map.Clone(rectangleTile, map.PixelFormat);
                     }
 
-
-
                 }
 
                 ImageConverter converter = new ImageConverter();
                 byte[] returnImage = (byte[])converter.ConvertTo(tile, typeof(byte[]));
-
-
 
                 HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
                 result.Content = new ByteArrayContent(returnImage);
                 result.Content.Headers.ContentType = new MediaTypeHeaderValue(m.ImageType);
                 return result;
             }
-            //Bitmap.Clone();
-
         }
     }
 }

@@ -180,7 +180,7 @@ namespace GameMasterPlanner.Helper
                 {
                     Id = dbMap.Id,
                     ParentMapId = (int)dbMap.ParentMapId,
-                    Image = Convert.ToBase64String(dbMap.Image),
+                    Image = dbMap.Image != null ? Convert.ToBase64String(dbMap.Image) : String.Empty,
                     ImageType = String.IsNullOrWhiteSpace(dbMap.ImageType) ? String.Empty : dbMap.ImageType.Trim(),
                     Name = String.IsNullOrWhiteSpace(dbMap.Name) ? String.Empty : dbMap.Name.Trim()
                 };

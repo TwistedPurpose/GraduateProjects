@@ -76,5 +76,20 @@ namespace DataAccess.Repositories
 
             db.SaveChanges();
         }
+        
+        /// <summary>
+        /// Gets all maps for a campaign
+        /// </summary>
+        /// <param name="campaignId">Integer id of campaign to fetch maps</param>
+        /// <returns>Returns list of map entities</returns>
+        public List<Map> GetMapList(int campaignId)
+        {
+            //DO CAMPAIGN CHECK WHEN I IMPLEMENT CAMPAIGN ID
+            List<Map> mapList = (from maps in db.Maps
+                                 select maps).ToList();
+            // Should break out map image from table to reduce load times of this query
+
+            return mapList;
+        }
     }
 }

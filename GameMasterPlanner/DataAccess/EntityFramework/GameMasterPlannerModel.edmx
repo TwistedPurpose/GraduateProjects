@@ -5,13 +5,19 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="GameMasterPlannerDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__RefactorLog">
+          <Key>
+            <PropertyRef Name="OperationKey" />
+          </Key>
+          <Property Name="OperationKey" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
         <EntityType Name="Campaign">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" />
-          <Property Name="HistoryId" Type="int" />
+          <Property Name="History" Type="nvarchar" MaxLength="3000" />
         </EntityType>
         <EntityType Name="Character">
           <Key>
@@ -31,13 +37,6 @@
           </Key>
           <Property Name="CharacterId" Type="int" Nullable="false" />
           <Property Name="SessionId" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="History">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Item">
           <Key>
@@ -88,18 +87,6 @@
           <Property Name="SessionNumber" Type="int" Nullable="false" />
           <Property Name="Notes" Type="nvarchar(max)" />
         </EntityType>
-        <Association Name="FK_Campaign_ToHistory">
-          <End Role="History" Type="Self.History" Multiplicity="0..1" />
-          <End Role="Campaign" Type="Self.Campaign" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="History">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Campaign">
-              <PropertyRef Name="HistoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Character_Campaign">
           <End Role="Campaign" Type="Self.Campaign" Multiplicity="1" />
           <End Role="Character" Type="Self.Character" Multiplicity="*" />
@@ -221,19 +208,15 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="GameMasterPlannerDBModelStoreContainer">
+          <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Campaign" EntityType="Self.Campaign" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Character" EntityType="Self.Character" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CharacterSessions" EntityType="Self.CharacterSessions" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="History" EntityType="Self.History" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemSession" EntityType="Self.ItemSession" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Map" EntityType="Self.Map" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Session" EntityType="Self.Session" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Campaign_ToHistory" Association="Self.FK_Campaign_ToHistory">
-            <End Role="History" EntitySet="History" />
-            <End Role="Campaign" EntitySet="Campaign" />
-          </AssociationSet>
           <AssociationSet Name="FK_Character_Campaign" Association="Self.FK_Character_Campaign">
             <End Role="Campaign" EntitySet="Campaign" />
             <End Role="Character" EntitySet="Character" />
@@ -280,17 +263,13 @@
     <edmx:ConceptualModels>
       <Schema Namespace="GameMasterPlannerDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="GameMasterPlannerDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__RefactorLog" EntityType="GameMasterPlannerDBModel.C__RefactorLog" />
           <EntitySet Name="Campaigns" EntityType="GameMasterPlannerDBModel.Campaign" />
           <EntitySet Name="Characters" EntityType="GameMasterPlannerDBModel.Character" />
-          <EntitySet Name="Histories" EntityType="GameMasterPlannerDBModel.History" />
           <EntitySet Name="Items" EntityType="GameMasterPlannerDBModel.Item" />
           <EntitySet Name="Locations" EntityType="GameMasterPlannerDBModel.Location" />
           <EntitySet Name="Maps" EntityType="GameMasterPlannerDBModel.Map" />
           <EntitySet Name="Sessions" EntityType="GameMasterPlannerDBModel.Session" />
-          <AssociationSet Name="FK_Campaign_ToHistory" Association="GameMasterPlannerDBModel.FK_Campaign_ToHistory">
-            <End Role="History" EntitySet="Histories" />
-            <End Role="Campaign" EntitySet="Campaigns" />
-          </AssociationSet>
           <AssociationSet Name="FK_Character_Campaign" Association="GameMasterPlannerDBModel.FK_Character_Campaign">
             <End Role="Campaign" EntitySet="Campaigns" />
             <End Role="Character" EntitySet="Characters" />
@@ -324,14 +303,19 @@
             <End Role="Session" EntitySet="Sessions" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="C__RefactorLog">
+          <Key>
+            <PropertyRef Name="OperationKey" />
+          </Key>
+          <Property Name="OperationKey" Type="Guid" Nullable="false" />
+        </EntityType>
         <EntityType Name="Campaign">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="HistoryId" Type="Int32" />
-          <NavigationProperty Name="History" Relationship="GameMasterPlannerDBModel.FK_Campaign_ToHistory" FromRole="Campaign" ToRole="History" />
+          <Property Name="History" Type="String" MaxLength="3000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Characters" Relationship="GameMasterPlannerDBModel.FK_Character_Campaign" FromRole="Campaign" ToRole="Character" />
           <NavigationProperty Name="Items" Relationship="GameMasterPlannerDBModel.FK_Item_ToCampaign" FromRole="Campaign" ToRole="Item" />
           <NavigationProperty Name="Sessions" Relationship="GameMasterPlannerDBModel.FK_Session_ToCampaign" FromRole="Campaign" ToRole="Session" />
@@ -348,14 +332,6 @@
           <Property Name="Notes" Type="String" MaxLength="1000" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="Campaign" Relationship="GameMasterPlannerDBModel.FK_Character_Campaign" FromRole="Character" ToRole="Campaign" />
           <NavigationProperty Name="Sessions" Relationship="GameMasterPlannerDBModel.CharacterSessions" FromRole="Character" ToRole="Session" />
-        </EntityType>
-        <EntityType Name="History">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Campaigns" Relationship="GameMasterPlannerDBModel.FK_Campaign_ToHistory" FromRole="History" ToRole="Campaign" />
         </EntityType>
         <EntityType Name="Item">
           <Key>
@@ -409,18 +385,6 @@
           <NavigationProperty Name="Characters" Relationship="GameMasterPlannerDBModel.CharacterSessions" FromRole="Session" ToRole="Character" />
           <NavigationProperty Name="Items" Relationship="GameMasterPlannerDBModel.ItemSession" FromRole="Session" ToRole="Item" />
         </EntityType>
-        <Association Name="FK_Campaign_ToHistory">
-          <End Type="GameMasterPlannerDBModel.History" Role="History" Multiplicity="0..1" />
-          <End Type="GameMasterPlannerDBModel.Campaign" Role="Campaign" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="History">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Campaign">
-              <PropertyRef Name="HistoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Character_Campaign">
           <End Type="GameMasterPlannerDBModel.Campaign" Role="Campaign" Multiplicity="1" />
           <End Type="GameMasterPlannerDBModel.Character" Role="Character" Multiplicity="*" />
@@ -507,10 +471,17 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="GameMasterPlannerDBModelStoreContainer" CdmEntityContainer="GameMasterPlannerDBEntities">
+          <EntitySetMapping Name="C__RefactorLog">
+            <EntityTypeMapping TypeName="GameMasterPlannerDBModel.C__RefactorLog">
+              <MappingFragment StoreEntitySet="__RefactorLog">
+                <ScalarProperty Name="OperationKey" ColumnName="OperationKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Campaigns">
             <EntityTypeMapping TypeName="GameMasterPlannerDBModel.Campaign">
               <MappingFragment StoreEntitySet="Campaign">
-                <ScalarProperty Name="HistoryId" ColumnName="HistoryId" />
+                <ScalarProperty Name="History" ColumnName="History" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -524,14 +495,6 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="HistoryId" ColumnName="HistoryId" />
                 <ScalarProperty Name="CampaignId" ColumnName="CampaignId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Histories">
-            <EntityTypeMapping TypeName="GameMasterPlannerDBModel.History">
-              <MappingFragment StoreEntitySet="History">
-                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -62,7 +62,6 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Campaign.sql" />
-    <Build Include="Tables\History.sql" />
     <Build Include="UserSetup.sql" />
     <Build Include="Tables\Session.sql" />
     <Build Include="Tables\Map.sql" />

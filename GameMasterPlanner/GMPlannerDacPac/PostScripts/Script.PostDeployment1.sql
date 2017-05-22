@@ -10,13 +10,9 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
-insert into History values('A sweet history');
-insert into History values('The hero of Seattle, the one they call... Eric!');
-insert into History values('Scripting languages battle it out!');
-
-insert into Campaign values('Dr. Larson and The Mystery of the Green Tomb',1);
-insert into Campaign values('Dr. Larson and The Longest Knight',2);
-insert into Campaign values('Dr. Perl and the Ruby Python',3)
+insert into Campaign values('Dr. Larson and The Mystery of the Green Tomb', 'Too spooky!');
+insert into Campaign values('Dr. Larson and The Longest Knight','I heard he is so tall he can touch Azure clouds!');
+insert into Campaign values('Dr. Perl and the Ruby Python','Scripting will never be the same');
 
 insert into Session values('Trained to kill: A locomotive mystery!',1,null,1,'Some interesting notes here!');
 insert into Session values('A Dark and Stormy Knight',2,null,1,'Wow!  Other notes!');

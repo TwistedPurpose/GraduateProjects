@@ -4,21 +4,6 @@
 
 <div class="row" style="margin-top: 20px;">
     <div class="row">
-        <div class="col-md-4">
-            <textarea data-bind="value:newCampaginName" style="width: 100%"></textarea>
-        </div>
-        <div class="col-md-8">
-            <textarea data-bind="value:newCampaginHistory" style="width: 100%"></textarea>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <button data-bind="click:addCampagin" class="btn btn-default">Add Campaign</button>
-        </div>
-    </div>
-
-    <div class="row">
         <div class="col-md-12">
             <div class="row" style="margin-bottom: 10px; font-weight: bold">
                 <div class="col-md-4">Campaign Name</div>
@@ -27,11 +12,20 @@
             <div data-bind="foreach:campaignList">
                 <div class="row" style="margin-bottom: 10px">
                     <div class="col-md-4"><a data-bind="attr: { href: HubURL, value: Name }"><span data-bind="text: Name"></span></a></div>
-                    <div class="col-md-8" data-bind="text:History"></div>
+                    <div class="col-md-7" data-bind="text:History"></div>
+                    <div class="col-md-1"><a data-bind="click:$parent.editCampaign"><span class="glyphicon glyphicon-edit"></span></a></div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <button data-bind="click:showAddEditCampaignModal" class="btn btn-default">New Campaign</button>
+        </div>
+    </div>
 </div>
+
+@Html.Partial("_AddEditCampaignModal")
 
 @Scripts.Render("~/bundles/campaign")

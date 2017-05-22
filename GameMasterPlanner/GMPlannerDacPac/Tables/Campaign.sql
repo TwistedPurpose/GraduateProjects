@@ -2,7 +2,6 @@
 (
 	[Id] INT identity NOT NULL,
 	[Name] NVARCHAR(100) NULL,  
-    [HistoryId] INT NULL,
-	CONSTRAINT [PK_Campaign] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_Campaign_ToHistory] FOREIGN KEY ([HistoryId]) REFERENCES [History]([Id])
+    [History] NVARCHAR(3000) NULL,
+	CONSTRAINT [PK_Campaign] PRIMARY KEY ([Id])
 )

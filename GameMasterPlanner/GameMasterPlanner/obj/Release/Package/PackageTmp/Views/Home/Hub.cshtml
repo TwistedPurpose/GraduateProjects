@@ -71,7 +71,7 @@
                 <div class="col-sm-4">
                     <button class="btn btn-default" data-bind="click:showMapModal">Upload Map</button>
 
-                    <button class="btn btn-default disabled">Set Root Map</button>
+                    <button class="btn btn-default" data-bind="click:showExistingMapModal">Set Root Map</button>
                 </div>
             </div>
 
@@ -97,13 +97,13 @@
 
             <div class="row">
                 <div class="col-sm-4">
-                    <button class="btn btn-default" data-bind="click:addExistingItems">Include Existing Items</button>
+                    <button class="btn btn-default" data-bind="click:addExistingItems">Add existing items</button>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-sm-4">
-                    <button class="btn btn-default" data-bind="click:showAddEditItemModal">Add An Item</button>
+                    <button class="btn btn-default" data-bind="click:showAddEditItemModal">New Item</button>
                     <ul class="row" data-bind="foreach:ItemList">
                         <li>
                             <a data-bind="click:$parent.editItem">
@@ -122,6 +122,7 @@
 @Html.Partial("_CrudItemModal")
 @Html.Partial("_ExistingItemModal")
 @Html.Partial("_UploadMapModal")
+@Html.Partial("_ExistingMapModal")
 
 
 <script>

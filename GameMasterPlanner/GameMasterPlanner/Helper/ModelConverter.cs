@@ -48,7 +48,7 @@ namespace GameMasterPlanner.Helper
                     Name = String.IsNullOrWhiteSpace(vm.Name) ? String.Empty : vm.Name.Trim(),
                     Description = String.IsNullOrWhiteSpace(vm.CharDescription) ? String.Empty : vm.CharDescription.Trim(),
                     Notes = String.IsNullOrWhiteSpace(vm.Notes) ? String.Empty : vm.Notes.Trim(),
-                       // Add session conversion too?
+                    // Add session conversion too?
                 };
             }
 
@@ -58,8 +58,8 @@ namespace GameMasterPlanner.Helper
         public static Session ToDbSessionModel(SessionViewModel vm)
         {
             Session dbSession = null;
-            
-            if(vm != null)
+
+            if (vm != null)
             {
                 dbSession = new Session()
                 {
@@ -98,8 +98,8 @@ namespace GameMasterPlanner.Helper
         public static ItemViewModel ToItemViewModel(Item dbItem)
         {
             ItemViewModel vm = null;
-            
-            if(dbItem != null)
+
+            if (dbItem != null)
             {
                 vm = new ItemViewModel()
                 {
@@ -126,7 +126,7 @@ namespace GameMasterPlanner.Helper
         {
             Item dbItem = null;
 
-            if(itemVM != null)
+            if (itemVM != null)
             {
                 dbItem = new Item()
                 {
@@ -187,6 +187,40 @@ namespace GameMasterPlanner.Helper
             }
 
             return mapVm;
+        }
+
+        public static CampaignViewModel ToCampaignViewModel(Campaign dbCampaign)
+        {
+            CampaignViewModel campaignVm = null;
+
+            if (dbCampaign != null)
+            {
+                campaignVm = new CampaignViewModel()
+                {
+                    Id = dbCampaign.Id,
+                    Name = String.IsNullOrEmpty(dbCampaign.Name) ? String.Empty : dbCampaign.Name.Trim(),
+                    History = String.IsNullOrEmpty(dbCampaign.History) ? String.Empty : dbCampaign.History.Trim()
+                };
+            }
+
+            return campaignVm;
+        }
+
+        public static Campaign ToDBCampaign(CampaignViewModel campaignVm)
+        {
+            Campaign dbCampaign = null;
+
+            if (campaignVm != null)
+            {
+                dbCampaign = new Campaign()
+                {
+                    Id = campaignVm.Id,
+                    Name = String.IsNullOrEmpty(campaignVm.Name) ? String.Empty : campaignVm.Name.Trim(),
+                    History = String.IsNullOrEmpty(campaignVm.History) ? String.Empty : campaignVm.History.Trim()
+                };
+            }
+
+            return dbCampaign;
         }
     }
 }

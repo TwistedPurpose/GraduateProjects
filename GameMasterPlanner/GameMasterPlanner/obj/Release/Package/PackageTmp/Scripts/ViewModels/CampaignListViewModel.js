@@ -4,27 +4,28 @@
         data.forEach(function (campaign) {
             list.push(new Campaign(campaign));
         });
-        this.campaignList = ko.observableArray(list);
 
-        this.newCampaginName = ko.observable();
-        this.newCampaginHistory = ko.observable();
+        this.showAddEditCampaignModal = ko.observable(false);
+        this.addEditCampaignVM = ko.observable(new Campaign(null));
+
+        this.campaignList = ko.observableArray(list);
     }
 
-    addCampagin() {
+    createCampaign() {
+        this.showAddEditCampaignModal(true);
+    }
+
+    saveCampaign() {
         let self = this;
 
-        let data = { Name: self.newCampaginName(), History: self.newCampaginHistory()};
-        
-        this.campaignList.removeAll();
-        var list = this.campaignList;
-        
-        $.post(baseURL + 'api/Campaign', data, function (returnedData) {
+        self.showAddEditCampaignModal(false);
+
+        $.post(baseURL + 'api/Campaign', self.addEditCampaignVM().toJson(), function (returnedData) {
+            self.campaignList.removeAll();
             returnedData.forEach(function (campaign) {
-                list.push(new Campaign(campaign));
+                self.campaignList.push(new Campaign(campaign));
             });
         });
-
-        this.campaignList = list;
     }
 }
 

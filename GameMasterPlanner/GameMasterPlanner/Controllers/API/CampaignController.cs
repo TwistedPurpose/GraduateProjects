@@ -1,6 +1,7 @@
 ﻿using DataAccess.EntityFramework;
 using DataAccess.Models;
 using DataAccess.Repositories;
+using GameMasterPlanner.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,47 +13,45 @@ namespace GameMasterPlanner.Controllers.API
 {
     public class CampaignController : ApiController
     {
+        private SessionRepository sessionRepository;
+
+        public CampaignController()
+        {
+            sessionRepository = new SessionRepository();
+        }
 
         public HttpResponseMessage Get()
         {
             var repro = new CampaignRepository();
             var list = repro.GetCampaignList();
 
-            List<CampaignViewModel> returnList = list.Select(x => new CampaignViewModel() { Id = x.Id,
-                History = x.History == null ? "" : x.History.Description,
-                Name = x.Name }).ToList();
+            List<CampaignViewModel> returnList = list.Select(x => ModelConverter.ToCampaignViewModel(x)).ToList();
 
             return Request.CreateResponse(HttpStatusCode.OK, returnList);
         }
 
-        public HttpResponseMessage Post(CampaignViewModel newCampaign)
+        public HttpResponseMessage Post(CampaignViewModel campaignVM)
         {
             var repro = new CampaignRepository();
+            Campaign campaignDb = ModelConverter.ToDBCampaign(campaignVM);
 
-            Campaign campaignDb = new Campaign()
+            if (campaignVM.Id > 0)
             {
-                Name = newCampaign.Name.Trim()
-            };
-
-            Session newSession = new Session();
-
-            campaignDb.Sessions.Add(newSession);
-
-            if (!String.IsNullOrWhiteSpace(newCampaign.History))
+                repro.UpdateCampaign(campaignDb);
+            }
+            else
             {
+                campaignDb = repro.CreateCampaign(campaignDb);
 
-                var campaignHistory = new History()
+                Session firstSession = new Session()
                 {
-                    Description = newCampaign.History.Trim()
+                    CampaignId = campaignDb.Id
                 };
-                campaignDb.History = campaignHistory;
 
-                repro.CreateHistory(campaignHistory);
+                sessionRepository.CreateSession(firstSession);
             }
 
-            repro.CreateCampaign(campaignDb);
-
-            var list = repro.GetCampaignList();
+            //var list = repro.GetCampaignList();
             return Get();
         }
     }

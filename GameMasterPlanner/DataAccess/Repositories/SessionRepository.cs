@@ -34,11 +34,17 @@ namespace DataAccess.Repositories
 
         public Session CreateSession(Session newSession)
         {
-            var highestSessionNumber = (from sessions in db.Sessions
+            var sessionCollectionForCampaign = (from sessions in db.Sessions
                                                    where sessions.CampaignId == newSession.CampaignId
-                                                   select sessions).Max(s => s.SessionNumber);
+                                                   select sessions);
 
-            newSession.SessionNumber = highestSessionNumber + 1;
+            if (sessionCollectionForCampaign != null && sessionCollectionForCampaign.Count() > 0)
+            {
+                newSession.SessionNumber = sessionCollectionForCampaign.Max(s => s.SessionNumber) + 1;
+            } else
+            {
+                newSession.SessionNumber = 1;
+            }
 
             db.Sessions.Add(newSession);
             db.SaveChanges();

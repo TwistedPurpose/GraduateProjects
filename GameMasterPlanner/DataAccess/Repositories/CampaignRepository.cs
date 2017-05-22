@@ -1,6 +1,7 @@
 ﻿using DataAccess.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace DataAccess.Repositories
@@ -16,15 +17,20 @@ namespace DataAccess.Repositories
             return list.ToList();
         }
 
-        public void CreateCampaign(Campaign campaign)
+        public Campaign CreateCampaign(Campaign campaign)
         {
             db.Campaigns.Add(campaign);
             db.SaveChanges();
+            return campaign;
         }
 
-        public void CreateHistory(History history)
+        public void UpdateCampaign(Campaign campaign)
         {
-            db.Histories.Add(history);
+            db.Campaigns.Attach(campaign);
+            var campaignEntry = db.Entry(campaign);
+
+            campaignEntry.State = EntityState.Modified;
+
             db.SaveChanges();
         }
 

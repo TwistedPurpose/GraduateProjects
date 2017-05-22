@@ -208,6 +208,7 @@
     <Content Include="Views\Home\SessionManagment.cshtml" />
     <Content Include="Views\Shared\_UploadMapModal.cshtml" />
     <Content Include="Views\Shared\_ExistingMapModal.cshtml" />
+    <Content Include="Views\Shared\_AddEditCampaignModal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

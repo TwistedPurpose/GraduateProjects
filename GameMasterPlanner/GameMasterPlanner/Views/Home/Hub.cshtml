@@ -3,17 +3,17 @@
     ViewBag.Title = "Campaign Hub";
 }
 
-<div class="container-fluid" style="margin-top: 20px;">
+<div style="margin-top: 20px;">
 
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-sm-3">
             <select style="height: 100%" data-bind="options: SessionList,
                    optionsText: function(item) {
                        return item.NumberSessionTitle;
                    },
                    value: CurrentSession"></select>
         </div>
-        <div class="col-md-9">
+        <div class="col-sm-9">
             <a data-bind="click:newSession">
                 <span class="glyphicon glyphicon-plus"></span>
             </a>
@@ -21,91 +21,109 @@
     </div>
 
     <div class="row">
-        <div class="col-md-1">
+        <div class="col-sm-2">
             <span>Session Number</span>
         </div>
 
-        <div class="col-md-11">
+        <div class="col-sm-10">
             <span>Title</span>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-1">
+        <div class="col-sm-2">
             <span data-bind="text:CurrentSession().SessionNumber" style="width:100%"></span>
         </div>
 
-        <div class="col-md-11">
+        <div class="col-sm-10">
             <input data-bind="textInput:CurrentSession().Title" style="width:100%" />
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-sm-12">
             <span>Notes</span>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-sm-12">
             <textarea data-bind="textInput:CurrentSession().Notes" class="notes-text-edit" rows="12"></textarea>
         </div>
     </div>
+    <div class="row hub-button-bar">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="col-sm-3">
+                    <button data-bind="click:saveSession" class="btn btn-default">Save Session</button>
+                </div>
+                <div class="col-sm-3">
+                    <button class="btn btn-default" data-bind="click:showMapModal">Upload Map</button>
+                </div>
+                <div class="col-sm-3">
+                    <button class="btn btn-default" data-bind="click:createCharacter">New Character</button>
+                </div>
 
-    <div class="row" style="margin-bottom: 20px; margin-top:20px;">
-        <div class="col-md-12">
-            <button data-bind="click:saveSession" class="btn btn-default">Save Session</button>
+                <div class="col-sm-3">
+                    <button class="btn btn-default" data-bind="click:showAddEditItemModal">New Item</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="col-sm-3">
+                </div>
+
+                <div class="col-sm-3">
+                    <button class="btn btn-default" data-bind="click:showExistingMapModal">Set Root Map</button>
+                </div>
+                <div class="col-sm-3">
+                    <button class="btn btn-default" data-bind="click:addExistingCharacters">Add existing character</button>
+                </div>
+                <div class="col-sm-3">
+                    <button class="btn btn-default" data-bind="click:addExistingItems">Add existing items</button>
+                </div>
+            </div>
         </div>
     </div>
 
+
     <div class="row">
-        <div class="col-sm-8 map">
+        <div class="col-sm-12 map">
             <div class="google-map-canvas" id="map">
             </div>
             @*<canvas id="mapCanvas" style="height:100%; width:100%; border: thin solid;"></canvas>*@
         </div>
+    </div>
 
-        <div class="col-sm-4">
-
+    <div class="row">
+        <div class="col-sm-6">
             <div class="row">
-                <div class="col-sm-4">
-                    <button class="btn btn-default" data-bind="click:showMapModal">Upload Map</button>
-
-                    <button class="btn btn-default" data-bind="click:showExistingMapModal">Set Root Map</button>
-                </div>
+                <h4 class="col-sm-12">Chracter List</h4>
             </div>
-
             <div class="row">
-                <div class="col-sm-4">
-                    <button class="btn btn-default" data-bind="click:addExistingCharacters">Add existing character</button>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-4">
-                    <button class="btn btn-default" data-bind="click:createCharacter">New Character</button>
+                <div class="col-sm-12">
                     <ul class="row" data-bind="foreach:CharacterList">
-                        <li>
-                            <a data-bind="click:$parent.editCharacter">
+                        <li class="col-sm-12">
+                            <a  data-bind="click:$parent.editCharacter">
                                 <span data-bind="text:Name" />
                             </a>
                         </li>
                     </ul>
                 </div>
+            </div>
+        </div>
 
+        <div class="col-sm-6">
+            <div class="row">
+                <h4 class="col-sm-12">Item List</h4>
             </div>
 
             <div class="row">
-                <div class="col-sm-4">
-                    <button class="btn btn-default" data-bind="click:addExistingItems">Include Existing Items</button>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-4">
-                    <button class="btn btn-default" data-bind="click:showAddEditItemModal">Add An Item</button>
+                <div class="col-sm-12">
                     <ul class="row" data-bind="foreach:ItemList">
-                        <li>
+                        <li class="col-sm-12">
                             <a data-bind="click:$parent.editItem">
                                 <span data-bind="text:Name" />
                             </a>

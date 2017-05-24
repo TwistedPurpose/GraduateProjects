@@ -12,7 +12,8 @@
             <div data-bind="foreach:campaignList">
                 <div class="row" style="margin-bottom: 10px">
                     <div class="col-md-4"><a data-bind="attr: { href: HubURL, value: Name }"><span data-bind="text: Name"></span></a></div>
-                    <div class="col-md-8" data-bind="text:History"></div>
+                    <div class="col-md-7" data-bind="text:History"></div>
+                    <div class="col-md-1"><a data-bind="click:$parent.editCampaign"><span class="glyphicon glyphicon-edit"></span></a></div>
                 </div>
             </div>
         </div>

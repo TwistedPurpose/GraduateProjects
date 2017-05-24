@@ -55,45 +55,35 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="col-sm-3">
-                    <button data-bind="click:saveSession" class="btn btn-default">Save Session</button>
+                    <button data-bind="click:saveSession" class="btn btn-default">Save session</button>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-default" data-bind="click:showMapModal">Upload Map</button>
+                    <button class="btn btn-default" data-bind="click:showMapModal">Upload map</button>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-default" data-bind="click:createCharacter">New Character</button>
+                    <button class="btn btn-default" data-bind="click:createCharacter">New character</button>
                 </div>
 
                 <div class="col-sm-3">
-                    <button class="btn btn-default" data-bind="click:showAddEditItemModal">New Item</button>
+                    <button class="btn btn-default" data-bind="click:showAddEditItemModal">New item</button>
                 </div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-sm-12">
-                <div class="col-sm-3">
-                </div>
+                <div class="col-sm-3"></div>
 
                 <div class="col-sm-3">
-                    <button class="btn btn-default" data-bind="click:showExistingMapModal">Set Root Map</button>
+                    <button class="btn btn-default" data-bind="click:showExistingMapModal">Set map</button>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-default" data-bind="click:addExistingCharacters">Add existing character</button>
+                    <button class="btn btn-default" data-bind="click:addExistingCharacters">Add existing characters</button>
                 </div>
                 <div class="col-sm-3">
                     <button class="btn btn-default" data-bind="click:addExistingItems">Add existing items</button>
                 </div>
             </div>
-        </div>
-    </div>
-
-
-    <div class="row">
-        <div class="col-sm-12 map">
-            <div class="google-map-canvas" id="map">
-            </div>
-            @*<canvas id="mapCanvas" style="height:100%; width:100%; border: thin solid;"></canvas>*@
         </div>
     </div>
 
@@ -133,11 +123,17 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-sm-12 map">
+            <div class="google-map-canvas" id="map"></div>
+        </div>
+    </div>
 </div>
 
 @Html.Partial("_AddEditCharacterModal")
 @Html.Partial("_ExistingCharacterModal")
-@Html.Partial("_CrudItemModal")
+@Html.Partial("_AddEditItemModal")
 @Html.Partial("_ExistingItemModal")
 @Html.Partial("_UploadMapModal")
 @Html.Partial("_ExistingMapModal")

@@ -44,6 +44,7 @@ namespace GameMasterPlanner.App_Start
                 "~/Scripts/ViewModels/SessionManagmentViewModel.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/characterLibrary").Include(
+                "~/Scripts/ViewModels/SessionViewModel.js",
                 "~/Scripts/ViewModels/CampaignViewModel.js",
                 "~/Scripts/ViewModels/CharacterViewModel.js",
                 "~/Scripts/ViewModels/CharacterLibraryViewModel.js"));

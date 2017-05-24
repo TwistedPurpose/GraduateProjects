@@ -1,4 +1,4 @@
-﻿<div class="modal fade" id="existingItemModal" data-bind="modal: existingItemsModal">
+﻿<div class="modal fade plannter-modal" id="existingItemModal" data-bind="modal: existingItemsModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,7 +8,12 @@
                 </button>
             </div>
             <div class="modal-body" data-bind="with: existingItemsVM">
-                <select multiple="multiple" height="5" width="100%" data-bind="options:CompleteItemList, selectedOptions:SelectedItems, optionsText: 'Name', optionsValue: 'Id'"> </select>
+                <div data-bind="foreach:CompleteItemList">
+                    <div class="checkbox">
+                        <input class="col-sm-1" type="checkbox" data-bind="checkedValue: Id, checked:$parent.SelectedItems">
+                        <span data-bind="text:Name"></span>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-bind="click:associateItems">Save</button>

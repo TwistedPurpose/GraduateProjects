@@ -17,22 +17,24 @@
     </div>
 
     <div class="row" style="margin-bottom: 10px; font-weight: bold">
-        <div class="col-md-2">Character Name
+        <div class="col-sm-2">Character Name
         </div>
-        <div class="col-md-10">
+        <div class="col-sm-10">
             Sessions Character Is In
         </div>
     </div>
     <div class="row" data-bind="foreach:CharacterList">
         
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-sm-2">
                 <a data-bind="click:$parent.editCharacter">
                     <span data-bind="text:Name"></span>
                 </a>
             </div>
-            <div class="col-md-10" data-bind="foreach:SessionList">
-                <span data-bind="text:Title"></span>
+            <div class="col-sm-10" data-bind="foreach:SessionList">
+                <div class="row">
+                    <span class="col-sm-12" data-bind="text:NumberSessionTitle"></span>
+                </div>
             </div>
         </div>
     </div>

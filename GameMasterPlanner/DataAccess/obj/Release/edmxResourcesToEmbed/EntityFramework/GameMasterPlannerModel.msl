@@ -1,10 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="GameMasterPlannerDBModelStoreContainer" CdmEntityContainer="GameMasterPlannerDBEntities">
+    <EntitySetMapping Name="C__RefactorLog">
+      <EntityTypeMapping TypeName="GameMasterPlannerDBModel.C__RefactorLog">
+        <MappingFragment StoreEntitySet="__RefactorLog">
+          <ScalarProperty Name="OperationKey" ColumnName="OperationKey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Campaigns">
       <EntityTypeMapping TypeName="GameMasterPlannerDBModel.Campaign">
         <MappingFragment StoreEntitySet="Campaign">
-          <ScalarProperty Name="HistoryId" ColumnName="HistoryId" />
+          <ScalarProperty Name="History" ColumnName="History" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
@@ -18,14 +25,6 @@
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="HistoryId" ColumnName="HistoryId" />
           <ScalarProperty Name="CampaignId" ColumnName="CampaignId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Histories">
-      <EntityTypeMapping TypeName="GameMasterPlannerDBModel.History">
-        <MappingFragment StoreEntitySet="History">
-          <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

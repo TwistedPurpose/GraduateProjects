@@ -1,5 +1,6 @@
 ﻿class CampaignList {
     constructor(data) {
+        let self = this;
         let list = [];
         data.forEach(function (campaign) {
             list.push(new Campaign(campaign));
@@ -9,6 +10,15 @@
         this.addEditCampaignVM = ko.observable(new Campaign(null));
 
         this.campaignList = ko.observableArray(list);
+
+        this.editCampaign = (campaign) => {
+            this.addEditCampaignVM(campaign);
+            this.showAddEditCampaignModal(true);
+        }
+
+        $('#addEditCampaignModal').on('hidden.bs.modal', function () {
+            self.addEditCampaignVM(new Campaign(null));
+        });
     }
 
     createCampaign() {
@@ -26,6 +36,8 @@
                 self.campaignList.push(new Campaign(campaign));
             });
         });
+
+        self.addEditCampaignVM(new Campaign(null));
     }
 }
 

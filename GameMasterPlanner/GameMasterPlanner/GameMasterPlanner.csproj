@@ -202,7 +202,7 @@
     <Content Include="Views\Home\CharacterLibrary.cshtml" />
     <Content Include="Views\Shared\_AddEditCharacterModal.cshtml" />
     <Content Include="Views\Shared\_ExistingCharacterModal.cshtml" />
-    <Content Include="Views\Shared\_CrudItemModal.cshtml" />
+    <Content Include="Views\Shared\_AddEditItemModal.cshtml" />
     <Content Include="Views\Shared\_ExistingItemModal.cshtml" />
     <Content Include="Views\Home\ItemLibrary.cshtml" />
     <Content Include="Views\Home\SessionManagment.cshtml" />

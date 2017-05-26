@@ -5,15 +5,20 @@
 
 <div style="margin-top: 20px;">
 
+    @*<div class="row">
+        <div class="col-sm-12">
+            <h2 data-bind="text:CampaignTitle"></h2>
+        </div>
+    </div>*@
+
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-12">
             <select style="height: 100%" data-bind="options: SessionList,
                    optionsText: function(item) {
                        return item.NumberSessionTitle;
                    },
                    value: CurrentSession"></select>
-        </div>
-        <div class="col-sm-9">
+
             <a data-bind="click:newSession">
                 <span class="glyphicon glyphicon-plus"></span>
             </a>
@@ -21,21 +26,21 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-2">
-            <span>Session Number</span>
+        <div class="col-sm-1">
+            <h4>Session #</h4>
         </div>
 
-        <div class="col-sm-10">
-            <span>Title</span>
+        <div class="col-sm-11">
+            <h4>Title</h4>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-sm-2">
+        <div class="col-sm-1">
             <span data-bind="text:CurrentSession().SessionNumber" style="width:100%"></span>
         </div>
 
-        <div class="col-sm-10">
+        <div class="col-sm-11">
             <input data-bind="textInput:CurrentSession().Title" style="width:100%" />
         </div>
     </div>
@@ -55,17 +60,17 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="col-sm-3">
-                    <button data-bind="click:saveSession" class="btn btn-default">Save session</button>
+                    <button data-bind="click:saveSession" class="btn btn-default">Save Session</button>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-default" data-bind="click:showMapModal">Upload map</button>
+                    <button class="btn btn-default" data-bind="click:showMapModal">Upload Map</button>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-default" data-bind="click:createCharacter">New character</button>
+                    <button class="btn btn-default" data-bind="click:createCharacter">New Character</button>
                 </div>
 
                 <div class="col-sm-3">
-                    <button class="btn btn-default" data-bind="click:showAddEditItemModal">New item</button>
+                    <button class="btn btn-default" data-bind="click:showAddEditItemModal">New Item</button>
                 </div>
             </div>
         </div>
@@ -75,13 +80,13 @@
                 <div class="col-sm-3"></div>
 
                 <div class="col-sm-3">
-                    <button class="btn btn-default" data-bind="click:showExistingMapModal">Set map</button>
+                    <button class="btn btn-default" data-bind="click:showExistingMapModal">Set Session Map</button>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-default" data-bind="click:addExistingCharacters">Add existing characters</button>
+                    <button class="btn btn-default" data-bind="click:addExistingCharacters">Add/Remove Characters</button>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-default" data-bind="click:addExistingItems">Add existing items</button>
+                    <button class="btn btn-default" data-bind="click:addExistingItems">Add/Remove Items</button>
                 </div>
             </div>
         </div>

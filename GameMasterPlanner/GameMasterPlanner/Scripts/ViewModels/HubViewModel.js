@@ -52,11 +52,11 @@
             this.showItemModal(true);
         };
 
-        $('#addCharacterModal').on('hidden.bs.modal', function () {
+        $('#addEditItemModal').on('hidden.bs.modal', function () {
             self.addEditItemVM.clear();
         });
 
-        $('#addCharacterModal').on('hidden.bs.modal', function () {
+        $('#addEditCharacterModal').on('hidden.bs.modal', function () {
             self.addEditCharacterVM.clear();
         });
 

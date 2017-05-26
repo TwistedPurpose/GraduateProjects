@@ -2,40 +2,47 @@
 @{
     ViewBag.Title = "Item Library";
 }
+<div class="row">
+    <div class="col-sm-12">
+        <h2>Item Library</h2>
+    </div>
+</div>
 
-<h2>ItemLibrary</h2>
 
 <div class="row">
-    <div class="row">
+    <div class="col-sm-12">
         <select data-bind="options: CampaignList,
                    optionsText: function(item) { return item.Name; },
                    value: CurrentCampaign"></select>
     </div>
+</div>
 
-    <div class="row">
-        <button class="btn btn-default" data-bind="click:createItem">Add Item</button>
+<div class="row" style="margin-bottom: 10px; font-weight: bold">
+    <div class="col-sm-2">
+        Item Name
     </div>
-
-    <div class="row" style="margin-bottom: 10px; font-weight: bold">
-        <div class="col-md-2">
-            Item Name
-        </div>
-        <div class="col-md-10">
-            Sessions Item Is In
-        </div>
+    <div class="col-sm-10">
+        Sessions Item Is In
     </div>
-    <div class="row" data-bind="foreach:ItemList">
-
+</div>
+<div class="row" data-bind="foreach:ItemList">
+    <div class="col-sm-12">
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-sm-2">
                 <a data-bind="click:$parent.editItem">
                     <span data-bind="text:Name"></span>
                 </a>
             </div>
-            <div class="col-md-10" data-bind="foreach:SessionList">
+            <div class="col-sm-10" data-bind="foreach:SessionList">
                 <span data-bind="text:Title"></span>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <button class="btn btn-default" data-bind="click:createItem">Add Item</button>
     </div>
 </div>
 

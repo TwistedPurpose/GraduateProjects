@@ -9,17 +9,23 @@
             </div>
             <div class="modal-body" data-bind="with: mapModalVM">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-sm-12">
                         Name
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
-                        <input data-bind="textInput:Name" />
+                    <div class="col-sm-12">
+                        <input class="planner-modal-input-value" data-bind="textInput:Name" />
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        Image File
+                    </div>
+
+                </div>
                 <div class="row" data-bind="with: uploader">
-                    <div class="col-md-12">
+                    <div class="col-sm-12">
                         <input type="file"
                                data-bind="file: {data: fileInput, name: fileName, reader: reader}" />
                     </div>

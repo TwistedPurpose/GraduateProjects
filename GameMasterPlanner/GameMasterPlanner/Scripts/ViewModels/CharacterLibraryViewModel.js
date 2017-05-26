@@ -23,6 +23,10 @@
                         newSessionList.push(new SessionViewModel(session));
                     });
 
+                    newSessionList.sort(function(a,b){
+                        return a.SessionNumber() - b.SessionNumber();
+                    });
+
                     newCharacter.SessionList(newSessionList);
                     self.CharacterList.push(newCharacter);
                 });

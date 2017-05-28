@@ -36,11 +36,7 @@
         this.existingMapModal = ko.observable(false);
         this.existingMapVM = ko.observable(new MapListViewModel(null));
 
-        /// https://jsfiddle.net/TwistedPurpose/76m79n8b/ for future gmap stuff?
-
         this.Map = new MapViewModel(null);
-
-        //this.imageZoomPan = new ImageZoomPan(null);
 
         this.editCharacter = (character) => {
             this.addEditCharacterVM.setupToEdit(character);
@@ -80,16 +76,14 @@
                 $.getJSON(baseURL + 'api/Map/GetForSession?sessionId=' + self.CurrentSession().Id, function (map) {
                     if (map) {
                         self.Map = new MapViewModel(map);
-                        self.updateMap();
-
-                        // let img = new Image();
-                        // self.imageZoomPan = new ImageZoomPan(img);
-
-                        // img.src = URL.createObjectURL(self.Map.ImageBlob());
-
-                        // self.imageZoomPan.redraw();
+                    } else {
+                        self.Map = new MapViewModel(null);
                     }
+                    self.updateMap();
+
                 });
+
+
             }
         });
 
@@ -432,4 +426,7 @@ $.getJSON(baseURL + 'api/Session?id=' + campaignId, function (data) {
     }
 
     ko.applyBindings(hubViewModel);
+
+
 });
+

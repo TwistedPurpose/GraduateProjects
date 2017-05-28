@@ -23,3 +23,5 @@ insert into Character values(1,null,'Soren','The other guy!!','Notes and stuff')
 
 insert into CharacterSessions values(1,1);
 insert into CharacterSessions values(2,1);
+
+insert into Map values(0, 'Blank Map', null, null);

@@ -18,6 +18,7 @@ namespace GameMasterPlanner.Controllers.API
     public class MapImageController : ApiController
     {
         private MapRepository mapRepository;
+        private int sideLength = 256;
 
         public MapImageController()
         {
@@ -37,7 +38,6 @@ namespace GameMasterPlanner.Controllers.API
         public HttpResponseMessage Get(int id, int zoom, int x, int y)
         {
             // Add logic for Zoom
-            int sideLength = 256;
 
             Map m = mapRepository.GetMap(id);
 
@@ -51,57 +51,57 @@ namespace GameMasterPlanner.Controllers.API
 
                 int numTilesY = (int)Math.Floor(((double)map.Height) / ((double)sideLength));
 
-                if (x < 0 || y < 0 || x > numTilesX || y > numTilesY)
+                if ((x < 0 || y < 0 || x > numTilesX || y > numTilesY) )
                 {
-                    tile = new Bitmap(sideLength, sideLength);
-                    using (Graphics gfx = Graphics.FromImage(tile))
-                    {
-
-                        using (SolidBrush brush = new SolidBrush(Color.FromArgb(0, 0, 0)))
-                        {
-                            gfx.FillRectangle(brush, 0, 0, sideLength, sideLength);
-                        }
-                    }
+                    tile = CreateBlackTile();
                 }
                 else
                 {
-                    Point p = new Point(Math.Abs((x % (numTilesX+1)) * sideLength), Math.Abs((y % (numTilesY+1)) * sideLength));
+                    Point p = new Point(Math.Abs((x % (numTilesX + 1)) * sideLength), Math.Abs((y % (numTilesY + 1)) * sideLength));
                     Size tileSize;
 
-                    if (numTilesX == x || numTilesY == y)
+                    if ((numTilesX == x || numTilesY == y))
                     {
                         int xVariableSize = sideLength;
                         int yVariableSize = sideLength;
 
                         if (numTilesX == x)
                         {
-                            xVariableSize = map.Width % sideLength;
+                            xVariableSize = map.Width % (sideLength);
                         }
 
-                        if(numTilesY == y)
+                        if (numTilesY == y)
                         {
-                            yVariableSize = map.Height % sideLength;
+                            yVariableSize = map.Height % (sideLength);
                         }
 
-                        tileSize = new Size(xVariableSize, yVariableSize);
-                        Rectangle rectangleTile = new Rectangle(p, tileSize);
-
-                        tile = new Bitmap(sideLength, sideLength);
-
-                        Bitmap smallTile = map.Clone(rectangleTile, map.PixelFormat);
-
-                        using (Graphics gfx = Graphics.FromImage(tile))
+                        if(yVariableSize == 0 || xVariableSize == 0)
                         {
-                            smallTile.MakeTransparent();
+                            tile = CreateBlackTile();
+                        } else
+                        {
+                            tileSize = new Size(xVariableSize, yVariableSize);
+                            Rectangle rectangleTile = new Rectangle(p, tileSize);
 
-                            using (SolidBrush brush = new SolidBrush(Color.FromArgb(0, 0, 0)))
+                            tile = new Bitmap(sideLength, sideLength);
+
+                            Bitmap smallTile = map.Clone(rectangleTile, map.PixelFormat);
+
+                            using (Graphics gfx = Graphics.FromImage(tile))
                             {
-                                gfx.FillRectangle(brush, 0, 0, sideLength, sideLength);
+                                smallTile.MakeTransparent();
+
+                                using (SolidBrush brush = new SolidBrush(Color.FromArgb(0, 0, 0)))
+                                {
+                                    gfx.FillRectangle(brush, 0, 0, sideLength, sideLength);
+                                }
+
+                                gfx.DrawImage(smallTile, 0, 0);
                             }
 
-                            gfx.DrawImage(smallTile, 0, 0);
                         }
-                    } else
+                    } 
+                    else
                     {
                         tileSize = new Size(sideLength, sideLength);
 
@@ -120,6 +120,20 @@ namespace GameMasterPlanner.Controllers.API
                 result.Content.Headers.ContentType = new MediaTypeHeaderValue(m.ImageType);
                 return result;
             }
+        }
+
+        private Bitmap CreateBlackTile()
+        {
+            Bitmap tile = new Bitmap(sideLength, sideLength);
+            using (Graphics gfx = Graphics.FromImage(tile))
+            {
+
+                using (SolidBrush brush = new SolidBrush(Color.FromArgb(0, 0, 0)))
+                {
+                    gfx.FillRectangle(brush, 0, 0, sideLength, sideLength);
+                }
+            }
+            return tile;
         }
     }
 }

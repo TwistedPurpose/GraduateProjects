@@ -6,12 +6,6 @@
         this.CampaignList = ko.observableArray([]);
         this.SessionList = ko.observableArray([]);
 
-        this.SortedSessionList = ko.computed(function () {
-            self.SessionList.sort(function (l, r) { return l.SessionNumber() > r.SessionNumber() ? 1 : -1; });
-
-            return self.SessionList();
-        });
-
         //Current selected campaign in drop down
         this.CurrentCampaign = ko.observable();
 
@@ -23,12 +17,16 @@
                 sessionList.forEach(function (session) {
                     self.SessionList.push(new SessionViewModel(session));
                 });
+
+                self.sortSessionList();
             });
         });
     }
 
     save() {
         let self = this;
+
+        self.sortSessionList();
 
         let sessionVMList = [];
 
@@ -43,6 +41,11 @@
             dataType: 'json',
             contentType: 'application/json'
         });
+    }
+
+    sortSessionList(){
+        let self = this;
+        self.SessionList.sort(function (l, r) { return l.SessionNumber() > r.SessionNumber() ? 1 : -1; });
     }
 }
 

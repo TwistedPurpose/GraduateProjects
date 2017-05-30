@@ -9,19 +9,19 @@
     padding-right: 16px;
 }
 
-.plannter-modal textarea {
+.planner-modal textarea {
     width: 100%;
     resize: none;
     height: 4em;
 }
 
-.plannter-modal input {
+.planner-modal-input-value {
     width: 100%;
 }
 
-.modal-check-box-list {
+/*.modal-check-box-list {
     width: 100%;
-}
+}*/
 
 .hub-button-bar {
     margin-bottom: 20px; 

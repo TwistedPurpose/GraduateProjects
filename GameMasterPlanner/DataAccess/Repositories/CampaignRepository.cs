@@ -24,6 +24,14 @@ namespace DataAccess.Repositories
             return campaign;
         }
 
+        public dynamic GetCampaign(int campaignId)
+        {
+            Campaign c = (from campaign in db.Campaigns
+                          where campaign.Id == campaignId
+                          select campaign).FirstOrDefault();
+            return c;
+        }
+
         public void UpdateCampaign(Campaign campaign)
         {
             db.Campaigns.Attach(campaign);

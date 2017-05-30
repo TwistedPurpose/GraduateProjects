@@ -11,12 +11,26 @@
 
         //When current campaign is changed, empty out Item list and get all Items for that campaign
         this.CurrentCampaign.subscribe(function (newValue) {
-            $.getJSON(baseURL + 'api/Item/GetAll?campaignId=' + self.CurrentCampaign().Id, function (ItemList) {
+            $.getJSON(baseURL + 'api/Item/GetAll?campaignId=' + self.CurrentCampaign().Id, function (returnedList) {
                 self.ItemList.removeAll();
 
-                ItemList.forEach(function (Item) {
-                    self.ItemList.push(new ItemViewModel(Item));
+                returnedList.forEach(function (Item) {
+                    let newItem = new ItemViewModel(Item);
+                    let sessionList = newItem.SessionList();
+                    let newSessionList = [];
+
+                    sessionList.forEach(function (session) {
+                        newSessionList.push(new SessionViewModel(session));
+                    });
+
+                    newSessionList.sort(function (a, b) {
+                        return a.SessionNumber() - b.SessionNumber();
+                    });
+
+                    newItem.SessionList(newSessionList);
+                    self.ItemList.push(newItem);
                 });
+
             });
         });
 

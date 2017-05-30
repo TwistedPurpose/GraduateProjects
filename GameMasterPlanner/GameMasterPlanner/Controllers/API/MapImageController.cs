@@ -41,6 +41,13 @@ namespace GameMasterPlanner.Controllers.API
 
             Map m = mapRepository.GetMap(id);
 
+            if(m.Image == null)
+            {
+                HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+                result.Content = new ByteArrayContent(new byte[1]);
+                return result;
+            }
+
             Bitmap map;
             using (var ms = new MemoryStream(m.Image))
             {

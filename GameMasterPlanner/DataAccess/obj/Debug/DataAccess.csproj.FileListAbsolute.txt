@@ -27,3 +27,4 @@ D:\Documents\GraduateProjects\GameMasterPlanner\DataAccess\bin\Debug\EntityFrame
 D:\Documents\GraduateProjects\GameMasterPlanner\DataAccess\bin\Debug\EntityFramework.SqlServer.xml
 D:\Documents\GraduateProjects\GameMasterPlanner\DataAccess\obj\Debug\DataAccess.dll
 D:\Documents\GraduateProjects\GameMasterPlanner\DataAccess\obj\Debug\DataAccess.pdb
+D:\Documents\GraduateProjects\GameMasterPlanner\DataAccess\obj\Debug\DataAccess.csprojResolveAssemblyReference.cache

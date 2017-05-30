@@ -21,7 +21,3 @@ D:\Documents\GraduateProjects\GameMasterPlanner\GMPlannerDacPac\bin\Debug\GMPlan
 D:\Documents\GraduateProjects\GameMasterPlanner\GMPlannerDacPac\bin\Debug\GMPlannerDacPac.pdb
 D:\Documents\GraduateProjects\GameMasterPlanner\GMPlannerDacPac\obj\Debug\GMPlannerDacPac.dll
 D:\Documents\GraduateProjects\GameMasterPlanner\GMPlannerDacPac\obj\Debug\GMPlannerDacPac.pdb
-D:\Documents\GraduateProjects\GameMasterPlanner\GMPlannerDacPac\obj\Debug\Model.xml
-D:\Documents\GraduateProjects\GameMasterPlanner\GMPlannerDacPac\obj\Debug\refactor.xml
-D:\Documents\GraduateProjects\GameMasterPlanner\GMPlannerDacPac\obj\Debug\postdeploy.sql
-D:\Documents\GraduateProjects\GameMasterPlanner\GMPlannerDacPac\obj\Debug\predeploy.sql

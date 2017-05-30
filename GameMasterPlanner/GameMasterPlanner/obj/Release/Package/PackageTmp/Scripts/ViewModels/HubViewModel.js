@@ -4,6 +4,8 @@
         let self = this;
 
         this.CampaignId = campaignId;
+        this.CampaignTitle = ko.observable();
+
         this.SessionList = ko.observableArray([]);
 
         this.SortedSessionList = ko.computed(function () {
@@ -36,11 +38,7 @@
         this.existingMapModal = ko.observable(false);
         this.existingMapVM = ko.observable(new MapListViewModel(null));
 
-        /// https://jsfiddle.net/TwistedPurpose/76m79n8b/ for future gmap stuff?
-
         this.Map = new MapViewModel(null);
-
-        //this.imageZoomPan = new ImageZoomPan(null);
 
         this.editCharacter = (character) => {
             this.addEditCharacterVM.setupToEdit(character);
@@ -52,11 +50,11 @@
             this.showItemModal(true);
         };
 
-        $('#addCharacterModal').on('hidden.bs.modal', function () {
+        $('#addEditItemModal').on('hidden.bs.modal', function () {
             self.addEditItemVM.clear();
         });
 
-        $('#addCharacterModal').on('hidden.bs.modal', function () {
+        $('#addEditCharacterModal').on('hidden.bs.modal', function () {
             self.addEditCharacterVM.clear();
         });
 
@@ -81,14 +79,7 @@
                     if (map) {
                         self.Map = new MapViewModel(map);
                         self.updateMap();
-
-                        // let img = new Image();
-                        // self.imageZoomPan = new ImageZoomPan(img);
-
-                        // img.src = URL.createObjectURL(self.Map.ImageBlob());
-
-                        // self.imageZoomPan.redraw();
-                    }
+                    } 
                 });
             }
         });
@@ -419,6 +410,8 @@
 // The hubs view model to be bound to knockout
 let hubViewModel = new HubViewModel(campaignId);
 
+$.getJSON(baseURL + 'api/Campaign?id=')
+
 $.getJSON(baseURL + 'api/Session?id=' + campaignId, function (data) {
     // Fill sessions list
     data.forEach(function (sessionData) {
@@ -432,4 +425,7 @@ $.getJSON(baseURL + 'api/Session?id=' + campaignId, function (data) {
     }
 
     ko.applyBindings(hubViewModel);
+
+
 });
+

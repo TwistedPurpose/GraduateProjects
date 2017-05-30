@@ -3,48 +3,47 @@
     ViewBag.Title = "Session Managment";
 }
 
-<h2>Session Managment</h2>
-
 <div class="row">
-    <select data-bind="options: CampaignList,
-                   optionsText: function(campaign) { return campaign.Name; },
-                   value: CurrentCampaign"></select>
+    <div class="col-sm-12">
+        <h2>Session Managment</h2>
+    </div>
 </div>
 
-<div class="row" data-bind="foreach:SortedSessionList">
-    @*<div class="row">
-        <ul data-bind="foreach: items">
-            <li data-bind="text: value,
-                                       css: { dragging: dragging },
-                                       dragZone: { name: 'sortable',
-                                         dragStart: dragStart,
-                                         dragEnd: dragEnd
-                                       },
-                                       dragEvents: {
-                                         accepts: 'sortable',
-                                         dragOver: reorder,
-                                         data: { items: $parent.items, item: $data }
-                                       }">
-            </li>
-        </ul>
-    </div>*@
-    
-    <div class="row">
-        <div class="col-md-2">
-            <input data-bind="value: SessionNumber" />
-        </div>
+<div class="row">
+    <div class="col-sm-12">
+        <select data-bind="options: CampaignList,
+                   optionsText: function(campaign) { return campaign.Name; },
+                   value: CurrentCampaign"></select>
+    </div>
+</div>
 
-        <div class="col-md-10">
-            <span data-bind="text:Title"></span>
+<div class="row" style="margin-bottom: 10px; font-weight: bold">
+    <div class="col-sm-1">
+        Session #
+    </div>
+    <div class="col-sm-11">
+        Session Name
+    </div>
+</div>
+
+<div class="row" data-bind="foreach:SessionList" style="margin-bottom: 10px;">
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-1">
+                <input class="planner-modal-input-value" data-bind="value: SessionNumber" />
+            </div>
+
+            <div class="col-sm-11">
+                <span data-bind="text:Title"></span>
+            </div>
         </div>
     </div>
 </div>
 
 <div class="row">
-    <div>
-        <button data-bind="click:save">Save</button>
+    <div class="col-sm-12">
+        <button class="btn btn-default" data-bind="click:save">Save</button>
     </div>
 </div>
 
 @Scripts.Render("~/bundles/sessionManagement")
-@*@Scripts.Render("~/bundles/dragdrop")*@

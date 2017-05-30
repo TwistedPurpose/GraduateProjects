@@ -5,15 +5,16 @@
 
 <div style="margin-top: 20px;">
 
+    <h2>@ViewBag.CampaignTitle</h2>
+
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-12">
             <select style="height: 100%" data-bind="options: SessionList,
                    optionsText: function(item) {
                        return item.NumberSessionTitle;
                    },
                    value: CurrentSession"></select>
-        </div>
-        <div class="col-sm-9">
+
             <a data-bind="click:newSession">
                 <span class="glyphicon glyphicon-plus"></span>
             </a>
@@ -21,21 +22,21 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-2">
-            <span>Session Number</span>
+        <div class="col-sm-1">
+            <h4>Session #</h4>
         </div>
 
-        <div class="col-sm-10">
-            <span>Title</span>
+        <div class="col-sm-11">
+            <h4>Title</h4>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-sm-2">
+        <div class="col-sm-1">
             <span data-bind="text:CurrentSession().SessionNumber" style="width:100%"></span>
         </div>
 
-        <div class="col-sm-10">
+        <div class="col-sm-11">
             <input data-bind="textInput:CurrentSession().Title" style="width:100%" />
         </div>
     </div>
@@ -75,13 +76,13 @@
                 <div class="col-sm-3"></div>
 
                 <div class="col-sm-3">
-                    <button class="btn btn-default" data-bind="click:showExistingMapModal">Set Root Map</button>
+                    <button class="btn btn-default" data-bind="click:showExistingMapModal">Set Session Map</button>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-default" data-bind="click:addExistingCharacters">Add existing character</button>
+                    <button class="btn btn-default" data-bind="click:addExistingCharacters">Add/Remove Characters</button>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-default" data-bind="click:addExistingItems">Add existing items</button>
+                    <button class="btn btn-default" data-bind="click:addExistingItems">Add/Remove Items</button>
                 </div>
             </div>
         </div>
@@ -133,7 +134,7 @@
 
 @Html.Partial("_AddEditCharacterModal")
 @Html.Partial("_ExistingCharacterModal")
-@Html.Partial("_CrudItemModal")
+@Html.Partial("_AddEditItemModal")
 @Html.Partial("_ExistingItemModal")
 @Html.Partial("_UploadMapModal")
 @Html.Partial("_ExistingMapModal")

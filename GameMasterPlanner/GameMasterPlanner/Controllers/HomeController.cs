@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DataAccess.EntityFramework;
+using DataAccess.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,7 +18,10 @@ namespace GameMasterPlanner.Controllers
 
         public ActionResult Hub(int campaignId)
         {
+            var repro = new CampaignRepository();
             ViewBag.CampaignId = campaignId;
+            Campaign campaign = repro.GetCampaign(campaignId);
+            ViewBag.CampaignTitle = campaign.Name;
             return View("Hub", new { campaignId });
         }
 

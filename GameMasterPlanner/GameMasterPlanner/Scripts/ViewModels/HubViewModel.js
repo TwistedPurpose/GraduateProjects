@@ -4,6 +4,8 @@
         let self = this;
 
         this.CampaignId = campaignId;
+        this.CampaignTitle = ko.observable();
+
         this.SessionList = ko.observableArray([]);
 
         this.SortedSessionList = ko.computed(function () {
@@ -76,14 +78,9 @@
                 $.getJSON(baseURL + 'api/Map/GetForSession?sessionId=' + self.CurrentSession().Id, function (map) {
                     if (map) {
                         self.Map = new MapViewModel(map);
-                    } else {
-                        self.Map = new MapViewModel(null);
-                    }
-                    self.updateMap();
-
+                        self.updateMap();
+                    } 
                 });
-
-
             }
         });
 
@@ -412,6 +409,8 @@
 
 // The hubs view model to be bound to knockout
 let hubViewModel = new HubViewModel(campaignId);
+
+$.getJSON(baseURL + 'api/Campaign?id=')
 
 $.getJSON(baseURL + 'api/Session?id=' + campaignId, function (data) {
     // Fill sessions list

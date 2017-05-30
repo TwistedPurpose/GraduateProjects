@@ -2,39 +2,49 @@
 @{
     ViewBag.Title = "Character Library";
 }
-
-<h2>CharacterLibrary</h2>
+<div class="row">
+    <div class="col-sm-12">
+        <h2>Character Library</h2>
+    </div>
+</div>
 
 <div class="row">
-    <div class="row">
+    <div class="col-sm-12">
         <select data-bind="options: CampaignList,
                    optionsText: function(item) { return item.Name; },
                    value: CurrentCampaign"></select>
     </div>
+</div>
 
-    <div class="row">
-        <button class="btn btn-default" data-bind="click:createCharacter">Add Character</button>
+<div class="row" style="margin-bottom: 10px; font-weight: bold">
+    <div class="col-sm-2">
+        Character Name
     </div>
+    <div class="col-sm-10">
+        Sessions Character Is In
+    </div>
+</div>
 
-    <div class="row" style="margin-bottom: 10px; font-weight: bold">
-        <div class="col-md-2">Character Name
-        </div>
-        <div class="col-md-10">
-            Sessions Character Is In
-        </div>
-    </div>
-    <div class="row" data-bind="foreach:CharacterList">
-        
+<div class="row" style="margin-bottom: 10px;">
+    <div class="col-sm-12" data-bind="foreach:CharacterList">
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-sm-2">
                 <a data-bind="click:$parent.editCharacter">
                     <span data-bind="text:Name"></span>
                 </a>
             </div>
-            <div class="col-md-10" data-bind="foreach:SessionList">
-                <span data-bind="text:Title"></span>
+            <div class="col-sm-10" data-bind="foreach:SessionList">
+                <div class="row">
+                    <span class="col-sm-12" data-bind="text:NumberSessionTitle"></span>
+                </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <button class="btn btn-default" data-bind="click:createCharacter">Add Character</button>
     </div>
 </div>
 
